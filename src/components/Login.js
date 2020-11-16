@@ -185,12 +185,10 @@ function Login() {
 	return (
 		<div>
 			<div>
-				<button className={`btn login ${active === 'login' ? 'active' : ''}`} onClick={handleLogin}>
+				<button className={active === 'login' ? 'active' : ''} onClick={handleLogin}>
 					Login
 				</button>
-				<button
-					className={`btn signup ${active === 'signup' ? 'active' : ''}`}
-					onClick={handleSignup}>
+				<button className={active === 'signup' ? 'active' : ''} onClick={handleSignup}>
 					Sign up
 				</button>
 			</div>

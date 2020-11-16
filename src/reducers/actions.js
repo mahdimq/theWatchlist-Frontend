@@ -3,7 +3,6 @@ import {
 	LOGIN_USER,
 	LOGOUT_USER,
 	UPDATE_USER,
-	REMOVE_USER,
 	ADD_MOVIE,
 	REMOVE_MOVIE,
 	ADD_WATCHLIST,
@@ -25,15 +24,15 @@ const loginUser = (data) => {
 };
 
 // user logged in
-const gotUser = (user) => {
-	return { type: LOGIN_USER, payload: user };
+const gotUser = (token) => {
+	return { type: LOGIN_USER, payload: token };
 };
 
 // UPDATE USER
-const updateUser = (username, data) => {
+const updateUser = (id, data) => {
 	return async function (dispatch) {
 		try {
-			const user = await CapstoneApi.updateUser(username, data);
+			const user = await CapstoneApi.updateUser(id, data);
 			dispatch(userUpdated(user));
 		} catch (err) {
 			console.error(err);
@@ -63,7 +62,7 @@ const userRegistered = (user) => {
 const deleteUser = (id, token) => {
 	return async function (dispatch) {
 		try {
-			const alert = await CapstoneApi.deleteUser(id, token);
+			await CapstoneApi.deleteUser(id, token);
 			await dispatch(logoutUser());
 		} catch (err) {
 			console.error(err);
@@ -71,14 +70,14 @@ const deleteUser = (id, token) => {
 	};
 };
 
-// user logged out
+// LOGOUT USER
 const logoutUser = () => {
 	return { type: LOGOUT_USER };
 };
 
 // GET USER INFO
-const getUser = (token, username, email) => {
-	return { type: LOGIN_USER, payload: { token, username, email } };
+const getUser = (token, id, email) => {
+	return { type: LOGIN_USER, payload: { token, id, email } };
 };
 
 // ########################################################

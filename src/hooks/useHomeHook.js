@@ -6,8 +6,6 @@ export const useHomeHook = () => {
 	const [movies, setMovies] = useState({ movies: [] });
 	const [error, setError] = useState(false);
 
-	console.log(movies);
-
 	const fetchMovies = async () => {
 		setError(false);
 		setIsLoading(true);

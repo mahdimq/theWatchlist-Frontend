@@ -4,8 +4,8 @@ import watchlistReducer from './watchlistReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-	movie: movieReducer,
-	user: userReducer,
+	users: userReducer,
+	movies: movieReducer,
 	watchlist: watchlistReducer
 });
 

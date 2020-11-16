@@ -1,11 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 // Import logos here "Using temporary youtube logo"<--
 import logo from '../images/ylogo.png';
-import { logoutUser } from '../reducers/actions';
 
 const StyledHeader = styled.div`
 	background-color: #1c1c1c;
@@ -38,49 +36,38 @@ const StyledLogo = styled.img`
 `;
 
 function Header() {
-	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
-	console.log('THIS IS THE USER', user);
-
-	const handleLogout = () => {
-		dispatch(logoutUser());
-	};
-
 	return (
 		<StyledHeader>
-			<nav>
-				<Link exact to='/' className='header-content'>
+			<nav className='header-content'>
+				<Link to='/'>
 					<StyledLogo src={logo} alt='youtube' />
 				</Link>
-				{user.token ? (
-					<ul>
-						<li>
-							<Link to='/'>Home</Link>
-						</li>
 
-						<li>
-							<Link to='/movies'>Movies</Link>
-						</li>
+				{/* <ul>
+					<li>
+						<Link to='/'>Home</Link>
+					</li>
 
-						<li>
-							<Link to='/profile'>Profile</Link>
-						</li>
+					<li>
+						<Link to='/movies'>Movies</Link>
+					</li>
 
-						<li>
-							<Link to='/' onClick={handleLogout}>
-								Logout
-							</Link>
-						</li>
-					</ul>
-				) : (
-					<ul>
-						<li>
-							<Link style={{ color: 'white' }} to='/login'>
-								Login
-							</Link>
-						</li>
-					</ul>
-				)}
+					<li>
+						<Link to='/profile'>Profile</Link>
+					</li>
+
+					<li>
+						<Link to='/'>Logout</Link>
+					</li>
+				</ul> */}
+				{/* ================ USER NOT AUTH ============= */}
+				{/* <ul>
+					<li>
+						<Link style={{ color: 'white' }} to='/login'>
+							Login
+						</Link>
+					</li>
+				</ul> */}
 			</nav>
 		</StyledHeader>
 	);

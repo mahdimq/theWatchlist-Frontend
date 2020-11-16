@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-// import { decode } from 'jsonwebtoken';
-import { BrowserRouter } from 'react-router-dom';
+import { decode } from 'jsonwebtoken';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createGlobalStyle } from 'styled-components';
 
-// import CapstoneApi from './CapstoneApi';
-// import UserContext from './UserContext';
+// import { getUser } from './reducers/actions';
+import CapstoneApi from './CapstoneApi';
+import UserContext from './UserContext';
 import Header from './components/Header';
-import Routes from './Routes';
 import Footer from './components/Footer';
-import { getUser } from './reducers/actions';
+import Movie from './components/Movie';
+import Home from './Home';
 
 // Styled components
 const GlobalStyle = createGlobalStyle`
@@ -21,30 +22,42 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-	const [infoLoaded, setInfoLoaded] = useState(false);
-	const user = useSelector((state) => state.user);
-	const dispatch = useDispatch();
+	// With REDUX
 
-	// check if user is logged in, get token from local storage and save it to state
-	useEffect(() => {
-		async function checkUser() {
-			const initialValue = localStorage.getItem('capstone-token') || null;
+	// const [infoLoaded, setInfoLoaded] = useState(false);
+	// const user = useSelector((state) => state.user);
+	// console.log('USER OBJECT IN APP COMP: ', user);
+	// const dispatch = useDispatch();
 
-			if (user.token) {
-				localStorage.setItem('capstone-token', user.token);
-				localStorage.setItem('capstone-username', user.username);
-				localStorage.setItem('capstone-email', user.email);
-			} else if (initialValue) {
-				const username = localStorage.getItem('capstone-username');
-				const email = localStorage.getItem('capstone-email');
-				await dispatch(getUser(initialValue, username, email));
-			}
-			setInfoLoaded(true);
-		}
-		checkUser();
-	}, [user, dispatch]);
+	// // check if user is logged in, get token from local storage and save it to state
+	// useEffect(() => {
+	// 	async function checkUser() {
+	// 		const initialValue = localStorage.getItem('capstone-token') || null;
+	// 		let { username, email } = decode(initialValue);
+	// 		console.log('USERNAME IN APP COMP: ', username, email);
+	// 		if (user.token) {
+	// 			localStorage.setItem('capstone-token', user.token);
+	// 			localStorage.setItem('capstone-username', user.username);
+	// 			localStorage.setItem('capstone-email', user.email);
+	// 			console.log(user.username, user.email, user.token);
+	// 		} else if (initialValue) {
+	// 			const username = localStorage.getItem('capstone-username');
+	// 			const email = localStorage.getItem('capstone-email');
+	// 			await dispatch(getUser(initialValue, username, email));
+	// 		}
+	// 		setInfoLoaded(true);
+	// 	}
+	// 	checkUser();
+	// }, [user, dispatch]);
 
-	if (!infoLoaded) return <h1>Loading...</h1>;
+	// if (!infoLoaded) return <h1>Loading...</h1>;
+
+	// $*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$
+	// $*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$
+	// $*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$*$
+
+	// With CONTEXT
+
 	// const initialValue = localStorage.getItem('capstone-token') || null;
 	// const [token, setToken] = useState(initialValue);
 	// const [user, setUser] = useState(null);
@@ -79,12 +92,21 @@ function App() {
 
 	return (
 		<div>
-			<BrowserRouter>
-				<Header />
-				<Routes />
-				<Footer />
-				<GlobalStyle />
-			</BrowserRouter>
+			<Header />
+
+			<Switch>
+				<Route exact path='/'>
+					<Home />
+				</Route>
+				<Route exact path='/:movieId'>
+					<Movie />
+				</Route>
+
+				<Redirect to='/' />
+			</Switch>
+
+			<Footer />
+			<GlobalStyle />
 		</div>
 	);
 }

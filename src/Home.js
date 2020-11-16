@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import Grid from './components/Grid';
 import HeroImage from './components/HeroImage';
 import LoadMore from './components/LoadMore';
@@ -29,8 +27,6 @@ const poster_size = 'w500';
 function Home() {
 	const [{ movies, isLoading, error }, fetchMovies] = useHomeHook();
 	const [search, setSearch] = useState('');
-	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
 
 	// ######################################################################################################################
 	// ######################################################################################################################
@@ -109,30 +105,27 @@ function Home() {
 
 	return (
 		<>
-			{user ? (
-				<>
-					<HeroImage
-						image={`${IMAGE_URL}/${backdrop_size}/${movies.heroImage.backdrop_path}`}
-						title={movies.heroImage.original_title}
-						text={movies.heroImage.overview}
+			<HeroImage
+				image={`${IMAGE_URL}/${backdrop_size}/${movies.heroImage.backdrop_path}`}
+				title={movies.heroImage.original_title}
+				text={movies.heroImage.overview}
+			/>
+
+			<Search callback='search logic' />
+
+			<Grid header={search ? 'Search Result' : 'Popular Movies'}>
+				{movies.movies.map((film) => (
+					<MovieTile
+						key={film.id}
+						clickable={true}
+						image={film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster}
+						movieId={film.id}
+						movieTitle={film.original_title}
 					/>
+				))}
+			</Grid>
 
-					<Search callback='search logic' />
-
-					<Grid header={search ? 'Search Result' : 'Popular Movies'}>
-						{movies.movies.map((film) => (
-							<MovieTile
-								key={film.id}
-								clickable={true}
-								image={
-									film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
-								}
-								movieId={film.id}
-								movieTitle={film.original_title}
-							/>
-						))}
-					</Grid>
-					{/*
+			{/*
 					<Grid header='Trending Movies'>
 						{trending.movies.map((film) => (
 							<MovieTile
@@ -175,11 +168,7 @@ function Home() {
 						))}
 					</Grid> */}
 
-					<LoadMore />
-				</>
-			) : (
-				<Link to='/login'>Log In</Link>
-			)}
+			<LoadMore />
 		</>
 	);
 }

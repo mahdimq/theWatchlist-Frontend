@@ -32,28 +32,29 @@ class CapstoneApi {
 
 	static async login(data) {
 		// Data --> USERNAME & PASSWORD
-		let res = await this.request(`login`, data, 'post');
+		const res = await this.request(`login`, data, 'post');
 		return res.token;
 	}
 
 	static async register(data) {
-		// Data --> USER INFORMATION
-		let res = await this.request(`users`, data, 'post');
+		// Data --> USER INFORMATION (firstname, lastname, email)
+		const res = await this.request(`users`, data, 'post');
 		return res.token;
 	}
 
 	static async getUser(id) {
-		let res = await this.request(`users/${id}`);
+		const res = await this.request(`users/${id}`);
 		return res.user;
 	}
 
-	static async updateUser(username, data) {
-		let res = await this.request(`users/${username}`, data, 'patch');
+	static async updateUser(id, data) {
+		const res = await this.request(`users/${id}`, data, 'patch');
 		return res.user;
 	}
 
 	static async deleteUser(id, token) {
-		let res = await this.request(`users/${id}`, { _token: token }, 'delete');
+		const res = await this.request(`users/${id}`, { _token: token }, 'delete');
+		// return res.message;
 		return res.message;
 	}
 
@@ -70,6 +71,11 @@ class CapstoneApi {
 	static async getMovie(id) {
 		let res = await this.request(`movies/${id}`);
 		return res.movie;
+	}
+
+	static async getAllMovies() {
+		let res = await this.request(`movies/`);
+		return res;
 	}
 
 	// ########################################################
@@ -96,7 +102,6 @@ class CapstoneApi {
 	// ##################### API ENDPOINTS ####################
 	// ########################################################
 
-	// API ENPOINTS 👇
 	// static async getLatest() {
 	// 	const result = await this.request(`api/`, 'get');
 	// 	return result;
@@ -124,6 +129,18 @@ class CapstoneApi {
 
 	static async getAction() {
 		const result = await this.request(`api/action`);
+		return result;
+	}
+
+	// GET MOVIE BY ID
+	static async getById(movie_id) {
+		const result = await this.request(`api/${movie_id}`);
+		return result;
+	}
+
+	// GET MOVIE CREDITS BY ID
+	static async getMovieCredits(movie_id) {
+		const result = await this.request(`api/credits/${movie_id}`);
 		return result;
 	}
 }

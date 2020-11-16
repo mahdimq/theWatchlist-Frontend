@@ -2,27 +2,45 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-function MovieTile({ image, movieId, MovieTile, clickable }) {
+const StyledMovieTile = styled.div`
+	img {
+		width: 100%;
+		/* min-height: 340px; */
+		transition: all 0.3s;
+		object-fit: cover;
+		border-radius: 20px;
+		animation: animateMovieTile 0.5s;
+
+		:hover {
+			opacity: 0.8;
+		}
+
+		.clickable {
+			cursor: pointer;
+		}
+
+		@keyframes animateMovieTile {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: 1;
+			}
+		}
+	}
+`;
+
+function MovieTile({ image, movieId, clickable }) {
 	return (
-		<div>
+		<StyledMovieTile>
 			{clickable ? (
 				<Link to={`/${movieId}`}>
-					<img
-						style={{
-							borderRadius: '10px',
-							width: '100px',
-							height: '170px',
-							margin: '5px'
-						}}
-						className='clickable'
-						src={image}
-						alt='movie tile'
-					/>
+					<img className='clickable' src={image} alt='movietile' />
 				</Link>
 			) : (
-				<img src={image} alt='movie tile' />
+				<img src={image} alt='movietile' />
 			)}
-		</div>
+		</StyledMovieTile>
 	);
 }
 
