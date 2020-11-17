@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const StyledGrid = styled.div`
@@ -39,6 +40,7 @@ const StyledGridContent = styled.div`
 `;
 
 function Grid({ header, children }) {
+	console.log('CHILDREN: ', children);
 	return (
 		<StyledGrid>
 			<h1>{header}</h1>
@@ -47,4 +49,8 @@ function Grid({ header, children }) {
 	);
 }
 
+// Verify Proptypes
+Grid.propTypes = {
+	header: PropTypes.string
+};
 export default Grid;

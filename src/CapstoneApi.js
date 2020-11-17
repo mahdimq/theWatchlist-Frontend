@@ -143,6 +143,12 @@ class CapstoneApi {
 		const result = await this.request(`api/credits/${movie_id}`);
 		return result;
 	}
+
+	// SEARCH FOR A MOVIE
+	static async search(movie) {
+		const result = await this.request(`api/search/${movie}`);
+		return result;
+	}
 }
 
 export default CapstoneApi;

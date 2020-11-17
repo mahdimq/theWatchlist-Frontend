@@ -25,9 +25,31 @@ const poster_size = 'w500';
 // ****************************************************************
 
 function Home() {
-	const [{ movies, isLoading, error }, fetchMovies] = useHomeHook();
 	const [search, setSearch] = useState('');
+	const [
+		{
+			state: { movies, currentPage, totalPages, heroImage },
+			loading,
+			error
+		},
+		fetchMovies
+	] = useHomeHook(search);
 
+	const searchMovies = (search) => {
+		const endpoint = search ? CapstoneApi.search(search) : CapstoneApi.getPopular();
+
+		setSearch(search);
+		fetchMovies(endpoint);
+	};
+
+	const loadMoreMovies = () => {
+		const searchEnpoint = `${CapstoneApi.search(search)}&page=${currentPage + 1}`;
+		const popularEndpoint = `${CapstoneApi.getPopular()}&page=${currentPage + 1}`;
+
+		const endpoint = search ? searchEnpoint : popularEndpoint;
+
+		fetchMovies(endpoint);
+	};
 	// ######################################################################################################################
 	// ######################################################################################################################
 	// ######################################################################################################################
@@ -100,21 +122,21 @@ function Home() {
 	// ######################################################################################################################
 	// ######################################################################################################################
 
-	if (movies.movies.length === 0) return <Spinner />;
+	if (!movies[0]) return <Spinner />;
 	if (error) return <h3>Uh Oh! Something went wrong!</h3>;
 
 	return (
 		<>
 			<HeroImage
-				image={`${IMAGE_URL}/${backdrop_size}/${movies.heroImage.backdrop_path}`}
-				title={movies.heroImage.original_title}
-				text={movies.heroImage.overview}
+				image={`${IMAGE_URL}/${backdrop_size}/${heroImage.backdrop_path}`}
+				title={heroImage.original_title}
+				text={heroImage.overview}
 			/>
 
-			<Search callback='search logic' />
+			<Search callback={searchMovies} />
 
 			<Grid header={search ? 'Search Result' : 'Popular Movies'}>
-				{movies.movies.map((film) => (
+				{movies.map((film) => (
 					<MovieTile
 						key={film.id}
 						clickable={true}
@@ -167,8 +189,10 @@ function Home() {
 							/>
 						))}
 					</Grid> */}
-
-			<LoadMore />
+			{loading && <Spinner />}
+			{currentPage < totalPages && !loading && (
+				<LoadMore text='Load More' callback={loadMoreMovies} />
+			)}
 		</>
 	);
 }

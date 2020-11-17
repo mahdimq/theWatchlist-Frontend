@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -44,4 +45,9 @@ function MovieTile({ image, movieId, clickable }) {
 	);
 }
 
+MovieTile.propTypes = {
+	image: PropTypes.string,
+	movieId: PropTypes.number,
+	clickable: PropTypes.bool
+};
 export default MovieTile;

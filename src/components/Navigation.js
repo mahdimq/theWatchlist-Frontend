@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -44,5 +45,9 @@ function Navigation({ movie }) {
 		</StyledNavigation>
 	);
 }
+
+Navigation.propTypes = {
+	movie: PropTypes.string
+};
 
 export default Navigation;

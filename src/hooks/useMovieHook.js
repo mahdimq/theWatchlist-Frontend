@@ -10,9 +10,10 @@ export const useMovieHook = (movieId) => {
 	const fetchData = useCallback(async () => {
 		setError(false);
 		setLoading(true);
+
 		try {
-			const result = await await CapstoneApi.getById(movieId);
-			const credits = await await CapstoneApi.getMovieCredits(movieId);
+			const result = await CapstoneApi.getById(movieId);
+			const credits = await CapstoneApi.getMovieCredits(movieId);
 			const directors = credits.crew.filter((person) => person.job === 'Director');
 
 			setMovie({
