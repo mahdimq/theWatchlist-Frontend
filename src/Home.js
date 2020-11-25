@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState } from 'react';
 import Grid from './components/Grid';
 import HeroImage from './components/HeroImage';
 import LoadMore from './components/LoadMore';
@@ -42,11 +42,13 @@ function Home() {
 		fetchMovies(endpoint);
 	};
 
+	// NEED TO FIX
+	// ============
 	const loadMoreMovies = () => {
-		const searchEnpoint = `${CapstoneApi.search(search)}&page=${currentPage + 1}`;
+		const searchEndpoint = `${CapstoneApi.search(search)}&page=${currentPage + 1}`;
 		const popularEndpoint = `${CapstoneApi.getPopular()}&page=${currentPage + 1}`;
-
-		const endpoint = search ? searchEnpoint : popularEndpoint;
+		console.log('SHOW PAGINATION: ', searchEndpoint);
+		const endpoint = search ? searchEndpoint : popularEndpoint;
 
 		fetchMovies(endpoint);
 	};

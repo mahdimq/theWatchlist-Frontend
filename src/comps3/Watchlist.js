@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { decode } from 'jsonwebtoken';
 import { loadWatchlist } from '../actions/actions';
 
-import Grid from './Grid';
-import MovieTile from './MovieTile';
+import Grid from '../components/Grid';
+import MovieTile from '../components/MovieTile';
 import NoPoster from '../images/no_poster.jpg';
-import Spinner from './Spinner';
+import Spinner from '../components/Spinner';
 
 function Watchlist() {
 	const [isLoaded, setIsLoaded] = useState(false);

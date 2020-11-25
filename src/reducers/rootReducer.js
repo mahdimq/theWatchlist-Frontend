@@ -1,12 +1,14 @@
 import movieReducer from './movieReducer';
 import userReducer from './userReducer';
 import watchlistReducer from './watchlistReducer';
+import alertsReducer from './alertsReducer';
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
-	users: userReducer,
+	user: userReducer,
 	movies: movieReducer,
-	watchlist: watchlistReducer
+	watchlist: watchlistReducer,
+	alerts: alertsReducer
 });
 
 export default rootReducer;

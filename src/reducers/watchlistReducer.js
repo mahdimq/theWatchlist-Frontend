@@ -1,26 +1,31 @@
-import { ADD_WATCHLIST, REMOVE_WATCHLIST, GET_WATCHLIST } from './actionTypes';
+import {
+	ADD_WATCHLIST,
+	LOAD_WATCHLIST,
+	REMOVE_WATCHLIST,
+	LOGOUT_USER
+} from '../actions/actionTypes';
+
+/* Reducer for lists */
+
 const INITIAL_STATE = [];
 
-const watchlistReducer = (state = INITIAL_STATE, action) => {
+function lists(state = INITIAL_STATE, action) {
 	switch (action.type) {
-		case GET_WATCHLIST:
-			return [...action.payload];
-
 		case ADD_WATCHLIST:
-			const newWatchlist = {
-				id: action.payload.id,
-				movie: action.payload.movie
-			};
-			return [...state, newWatchlist];
+			return [...state, { ...action.payload }];
 
 		case REMOVE_WATCHLIST:
-			const idToRemove = action.id;
-			const watchlistCopy = state.filter((watchlist) => watchlist.id !== idToRemove);
-			return [...watchlistCopy];
+			return [...state.filter((l) => l.id !== action.payload.id)];
+
+		case LOAD_WATCHLIST:
+			return action.payload;
+
+		case LOGOUT_USER:
+			return INITIAL_STATE;
 
 		default:
 			return state;
 	}
-};
+}
 
-export default watchlistReducer;
+export default lists;

@@ -1,14 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useMovieHook } from '../hooks/useMovieHook';
+import { useMovieHook } from './hooks/useMovieHook';
 
 // Components
-import Navigation from './Navigation';
-import MovieInfoBar from './MovieInfoBar';
-import MovieInfo from './MovieInfo';
-import Grid from './Grid';
-import Spinner from './Spinner';
-import Actor from './Actor';
+import Navigation from './components/Navigation';
+import MovieInfoBar from './components/MovieInfoBar';
+import MovieInfo from './components/MovieInfo';
+import Grid from './components/Grid';
+import Spinner from './components/Spinner';
+import Actor from './components/Actor';
 
 function Movie() {
 	const { movieId } = useParams();

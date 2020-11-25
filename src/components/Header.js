@@ -1,73 +1,61 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { StyledHeader, StyledLogo } from '../styles/StyledComponents';
+import { useSelector, useDispatch } from 'react-redux';
+import { addAlert, logoutUser } from '../actions/actions';
 
 // Import logos here "Using temporary youtube logo"<--
 import logo from '../images/ylogo.png';
 
-const StyledHeader = styled.div`
-	background-color: #1c1c1c;
-	padding: 0 1.5em;
-	box-sizing: border-box;
-
-	.header-content {
-		max-width: 1280px;
-		min-height: 120px;
-		padding: 1.5em 0;
-		margin: 0 auto;
-		box-sizing: border-box;
-
-		@media screen and (max-width: 500px) {
-			max-width: 1280px;
-			min-height: 0px;
-		}
-	}
-`;
-
-const StyledLogo = styled.img`
-	width: 50px;
-	margin-top: 10px;
-	border-radius: 3px;
-
-	@media screen and (max-width: 500px) {
-		width: 30px;
-		margin-top: 5px;
-	}
-`;
-
 function Header() {
+	const user = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+
+	console.log('### USER IN HEADER ###: ', user);
+
+	const logout = async () => {
+		await dispatch(logoutUser());
+		localStorage.removeItem('user-token');
+		dispatch(addAlert('You have successfully logged out'));
+	};
+
 	return (
 		<StyledHeader>
 			<nav className='header-content'>
 				<Link to='/'>
 					<StyledLogo src={logo} alt='youtube' />
 				</Link>
+				<p>
+					{user.token ? (
+						<span style={{ float: 'right', color: 'white' }}>Welcome {user.username}</span>
+					) : null}
+				</p>
 
-				{/* <ul>
-					<li>
-						<Link to='/'>Home</Link>
-					</li>
-
-					<li>
-						<Link to='/movies'>Movies</Link>
-					</li>
-
-					<li>
-						<Link to='/profile'>Profile</Link>
-					</li>
-
-					<li>
-						<Link to='/'>Logout</Link>
-					</li>
-				</ul> */}
-				{/* ================ USER NOT AUTH ============= */}
-				{/* <ul>
-					<li>
-						<Link style={{ color: 'white' }} to='/login'>
-							Login
+				{user.token ? (
+					<ul style={{ display: 'flex' }}>
+						<Link to='/watchlist'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Watchlist</li>
 						</Link>
-					</li>
-				</ul> */}
+
+						<Link to='/account'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Account</li>
+						</Link>
+
+						<Link to='/' onClick={logout}>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Logout</li>
+						</Link>
+					</ul>
+				) : (
+					<ul style={{ display: 'flex' }}>
+						<Link to='/login'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Log In</li>
+						</Link>
+
+						<Link to='/signup'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Sign Up</li>
+						</Link>
+					</ul>
+				)}
 			</nav>
 		</StyledHeader>
 	);

@@ -4,10 +4,30 @@ const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
 
 class CapstoneApi {
 	static async request(endpoint, paramsOrData = {}, verb = 'get') {
-		paramsOrData._token = localStorage.getItem('capstone-token');
+		// static async request(endpoint, params = {}, verb = 'get') {
+		// 	const _token = localStorage.getItem('user-token');
+		// 	console.debug('API Call: ', endpoint, params, verb);
+		// 	let q;
+		// 	if (verb === 'get') {
+		// 		q = axios.get(`${BASE_URL}/${endpoint}`, { params: { _token, ...params } });
+		// 	} else if (verb === 'post') {
+		// 		q = axios.post(`${BASE_URL}/${endpoint}`, { _token, ...params });
+		// 	} else if (verb === 'patch') {
+		// 		q = axios.patch(`${BASE_URL}/${endpoint}`, { _token, ...params });
+		// 	}
 
+		// 	try {
+		// 		return (await q).data;
+		// 	} catch (err) {
+		// 		console.error('API Error:', err.response);
+		// 		let message = err.response.data.message;
+		// 		throw Array.isArray(message) ? message : [message];
+		// 	}
+		// }
+		if (!paramsOrData._token) {
+			paramsOrData._token = localStorage.getItem('user-token');
+		}
 		console.debug('API Call:', endpoint, paramsOrData, verb);
-
 		try {
 			return (
 				await axios({
@@ -33,17 +53,17 @@ class CapstoneApi {
 	static async login(data) {
 		// Data --> USERNAME & PASSWORD
 		const res = await this.request(`login`, data, 'post');
-		return res.token;
+		return res;
 	}
 
 	static async register(data) {
 		// Data --> USER INFORMATION (firstname, lastname, email)
 		const res = await this.request(`users`, data, 'post');
-		return res.token;
+		return res;
 	}
 
-	static async getUser(id) {
-		const res = await this.request(`users/${id}`);
+	static async getUser(id, data) {
+		const res = await this.request(`users/${id}`, data, 'get');
 		return res.user;
 	}
 
@@ -74,7 +94,7 @@ class CapstoneApi {
 	}
 
 	static async getAllMovies() {
-		let res = await this.request(`movies/`);
+		let res = await this.request(`movies`);
 		return res;
 	}
 
@@ -90,7 +110,7 @@ class CapstoneApi {
 
 	static async getWatchlist(id) {
 		let res = await this.request(`watchlist/${id}`);
-		return res.data;
+		return res;
 	}
 
 	static async deleteWatchlist(user_id, movie_id) {

@@ -1,18 +1,24 @@
-import { REGISTER_USER, LOGIN_USER, LOGOUT_USER, UPDATE_USER } from './actionTypes';
+import {
+	LOGIN_USER,
+	REGISTER_USER,
+	LOGOUT_USER,
+	UPDATE_USER,
+	FETCH_USER,
+	GET_USER_INFO
+} from '../actions/actionTypes';
 
-const INITIAL_STATE = {
-	username: null,
-	firstname: null,
-	lastname: null,
-	email: null
-};
+const INITIAL_STATE = {};
 
-const userReducer = (state = INITIAL_STATE, action) => {
+function userReducer(state = INITIAL_STATE, action) {
 	switch (action.type) {
-		case REGISTER_USER:
+		case LOGIN_USER:
+		case FETCH_USER:
+			return action.payload;
+
+		case GET_USER_INFO:
 			return { ...state, ...action.payload };
 
-		case LOGIN_USER:
+		case REGISTER_USER:
 			return action.payload;
 
 		case UPDATE_USER:
@@ -24,6 +30,6 @@ const userReducer = (state = INITIAL_STATE, action) => {
 		default:
 			return state;
 	}
-};
+}
 
 export default userReducer;
