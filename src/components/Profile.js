@@ -6,7 +6,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { StyledFormComp } from '../styles/StyledFormComp';
 
-const Account = () => {
+const Profile = () => {
 	const history = useHistory();
 	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
@@ -69,11 +69,11 @@ const Account = () => {
 					<button type='submit'>Update</button>
 					<button onClick={'ADD LOGIC'}>Cancel</button>
 					<button onClick={logout}>Logout</button>
-					<button onClick={deleteUser}>Delete Account</button>
+					<button onClick={deleteUser}>Delete Profile</button>
 				</Form>
 			</Formik>
 		</StyledFormComp>
 	);
 };
 
-export default Account;
+export default Profile;

@@ -4,10 +4,10 @@ import CapstoneApi from '../CapstoneApi';
 export const useHomeHook = (searchTerm) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [state, setState] = useState({ movies: [] });
-	// const [error, setError] = useState(false);
+	const [error, setError] = useState(false);
 
 	const fetchMovies = async () => {
-		// setError(false);
+		setError(false);
 		setIsLoading(true);
 
 		const isLoadMore = CapstoneApi.search('page');
@@ -24,7 +24,7 @@ export const useHomeHook = (searchTerm) => {
 			}));
 		} catch (err) {
 			console.error(err);
-			// setError(true);
+			setError(true);
 		}
 		setIsLoading(false);
 	};
@@ -35,5 +35,5 @@ export const useHomeHook = (searchTerm) => {
 
 	useEffect(() => {}, [searchTerm, state]);
 
-	return [{ state, isLoading }, fetchMovies];
+	return [{ state, isLoading, error }, fetchMovies];
 };

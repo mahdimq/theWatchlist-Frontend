@@ -23,7 +23,8 @@ function Header() {
 		<StyledHeader>
 			<nav className='header-content'>
 				<Link to='/'>
-					<StyledLogo src={logo} alt='youtube' />
+					<h4>HOME</h4>
+					{/* <StyledLogo src={logo} alt='youtube' /> */}
 				</Link>
 				<p>
 					{user.token ? (
@@ -33,12 +34,16 @@ function Header() {
 
 				{user.token ? (
 					<ul style={{ display: 'flex' }}>
+						<Link to='/movies'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Movies</li>
+						</Link>
+
 						<Link to='/watchlist'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Watchlist</li>
 						</Link>
 
-						<Link to='/account'>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Account</li>
+						<Link to='/profile'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Profile</li>
 						</Link>
 
 						<Link to='/' onClick={logout}>

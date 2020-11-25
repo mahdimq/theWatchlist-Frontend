@@ -27,16 +27,12 @@ function Routes({ user_id }) {
 				<Movies />
 			</Route>
 
-			<Route path='/watchlist'>
+			<Route path='/:user_id/watchlist'>
 				<Watchlist />
 			</Route>
 
 			<Route path='/account'>
 				<Account />
-			</Route>
-
-			<Route path='/users' exact>
-				<h1 style={{ color: 'white' }}>USERS COMPONENT COMES HERE</h1>
 			</Route>
 
 			<Redirect to='/' />

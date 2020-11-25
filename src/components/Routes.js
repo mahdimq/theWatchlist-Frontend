@@ -2,11 +2,12 @@ import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
 import Home from '../Home';
 import Login from './Login';
+
 import Registration from './Registration';
-// import Profile from './Profile';
-import Account from './Account';
+import Profile from './Profile';
 import Watchlist from './Watchlist';
 import Movie from '../Movie';
+import Movies from './Movies';
 
 function Routes() {
 	return (
@@ -21,18 +22,22 @@ function Routes() {
 
 			<Route path='/signup'>
 				<Registration />
-
-				<Route path='/watchlist'>
-					<Watchlist />
-				</Route>
 			</Route>
 
-			<Route exact path='/:movieId'>
+			<Route path='/watchlist'>
+				<Watchlist />
+			</Route>
+
+			<Route path='/:movieId'>
 				<Movie />
 			</Route>
 
-			<Route path='/account'>
-				<Account />
+			<Route path='/movies'>
+				<Movies />
+			</Route>
+
+			<Route path='/profile'>
+				<Profile />
 			</Route>
 
 			<Route path='/users' exact>

@@ -13,13 +13,15 @@ import Actor from './components/Actor';
 function Movie() {
 	const { movieId } = useParams();
 	const [movie, loading, error] = useMovieHook(movieId);
-	console.log('### MOVIE IN MOVIEINFO: ', movie);
 
 	if (error) return <div>Oops.. Please try again, error!</div>;
 	if (loading) return <Spinner />;
 
+	console.log('### MOVIE in MOVIE INFO: ', movie);
+
 	return (
 		<div>
+			<h1>MOVIE ID: {movieId}</h1>
 			<Navigation movie={movie.original_title} />
 			<MovieInfo movie={movie} />
 			<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue} />

@@ -40,7 +40,7 @@ export const loginUser = (data) => {
 			localStorage.setItem('user-token', user.token);
 			await dispatch(userLoggedIn(user));
 			// await dispatch(getUserData(user));
-			await dispatch(addAlert(`Welcome ${user.username}`, ''));
+			await dispatch(addAlert(`Welcome back ${user.username}`, ''));
 		} catch (err) {
 			console.log(err);
 		}
@@ -97,6 +97,7 @@ export const registerUser = (data) => {
 	return async function (dispatch) {
 		try {
 			const user = await CapstoneApi.register(data);
+			localStorage.setItem('user-token', user.token);
 			dispatch(userRegistered(user));
 			dispatch(addAlert(`Registration Successfull! Welcome ${data.username}!`, ''));
 		} catch (err) {

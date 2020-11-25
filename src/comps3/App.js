@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { decode } from 'jsonwebtoken';
 
 import Navigation from './Navigation';
@@ -10,7 +10,6 @@ import { getUserData } from '../actions/actions';
 function App() {
 	const [infoLoaded, setInfoLoaded] = useState(false);
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
 
 	/*Check if user is logged in, load token from localstorage
     and save in state if available */
@@ -34,7 +33,7 @@ function App() {
 		<div>
 			<Navigation />
 			<Alerts />
-			<Routes user_id={user.id} />
+			<Routes />
 		</div>
 	);
 }

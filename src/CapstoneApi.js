@@ -90,11 +90,14 @@ class CapstoneApi {
 
 	static async getMovie(id) {
 		let res = await this.request(`movies/${id}`);
+		console.log('### MOVIE DB API ###', res);
 		return res.movie;
 	}
 
 	static async getAllMovies() {
 		let res = await this.request(`movies`);
+		console.log('### MOVIE DB API ###', res);
+
 		return res;
 	}
 
@@ -155,12 +158,14 @@ class CapstoneApi {
 	// GET MOVIE BY ID
 	static async getById(movie_id) {
 		const result = await this.request(`api/${movie_id}`);
+		console.log('#### MOVIE API ###', result);
 		return result;
 	}
 
 	// GET MOVIE CREDITS BY ID
 	static async getMovieCredits(movie_id) {
 		const result = await this.request(`api/credits/${movie_id}`);
+		console.log('### GET MOVIE CREDITS API ###', result);
 		return result;
 	}
 

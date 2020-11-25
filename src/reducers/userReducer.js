@@ -13,13 +13,11 @@ function userReducer(state = INITIAL_STATE, action) {
 	switch (action.type) {
 		case LOGIN_USER:
 		case FETCH_USER:
+		case REGISTER_USER:
 			return action.payload;
 
 		case GET_USER_INFO:
 			return { ...state, ...action.payload };
-
-		case REGISTER_USER:
-			return action.payload;
 
 		case UPDATE_USER:
 			return { ...state, ...action.payload };

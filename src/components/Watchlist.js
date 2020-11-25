@@ -20,7 +20,7 @@ function Watchlist() {
 	console.log('#### USER IN WATCHLIST ###', user);
 
 	useEffect(() => {
-		async function checkUser() {
+		async function checkAuth() {
 			const token = localStorage.getItem('user-token') || null;
 			const { id } = decode(token);
 			if (user.id === id) {
@@ -28,7 +28,7 @@ function Watchlist() {
 			}
 			setIsLoaded(true);
 		}
-		checkUser();
+		checkAuth();
 	}, [dispatch, user.id]);
 
 	console.log('### WATCHLIST MOVIES ###', watchlist);

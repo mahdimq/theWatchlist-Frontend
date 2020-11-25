@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getAllFilms } from '../actions/actions';
 
-import Grid from '../components/Grid';
-import MovieTile from '../components/MovieTile';
+import Grid from './Grid';
+import MovieTile from './MovieTile';
+import Spinner from './Spinner';
+
 function Movies() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
@@ -12,7 +14,6 @@ function Movies() {
 
 	const IMAGE_URL = 'http://image.tmdb.org/t/p';
 	const poster_size = 'w500';
-	// console.log('### ID IN ###', id);
 
 	useEffect(() => {
 		async function getFilms() {
@@ -23,10 +24,11 @@ function Movies() {
 	}, [dispatch]);
 
 	if (!isLoaded) {
-		return <h3>Loading...</h3>;
+		return <Spinner />;
 	}
 
 	console.log('### MOVIE ###', movies);
+
 	return (
 		<Grid header='Movies in the DB'>
 			{movies.movie.map((film) => (
