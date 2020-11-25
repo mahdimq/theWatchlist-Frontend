@@ -8,6 +8,7 @@ import Profile from './Profile';
 import Watchlist from './Watchlist';
 import Movie from '../Movie';
 import Movies from './Movies';
+import Account from '../comps3/Account';
 
 function Routes() {
 	return (
@@ -16,32 +17,36 @@ function Routes() {
 				<Home />
 			</Route>
 
-			<Route path='/login'>
+			<Route exact path='/login'>
 				<Login />
 			</Route>
 
-			<Route path='/signup'>
+			<Route exact path='/signup'>
 				<Registration />
 			</Route>
 
-			<Route path='/watchlist'>
+			<Route exact path='/watchlist'>
 				<Watchlist />
 			</Route>
 
-			<Route path='/:movieId'>
-				<Movie />
+			<Route exact path='/account'>
+				<Account />
 			</Route>
 
-			<Route path='/movies'>
+			<Route exact path='/movies'>
 				<Movies />
 			</Route>
 
-			<Route path='/profile'>
+			<Route exact path='/profile'>
 				<Profile />
 			</Route>
 
-			<Route path='/users' exact>
+			<Route exact path='/users'>
 				<h1 style={{ color: 'white' }}>USERS COMPONENT COMES HERE</h1>
+			</Route>
+
+			<Route exact path='/:movieId'>
+				<Movie />
 			</Route>
 
 			<Redirect to='/' />

@@ -57,6 +57,9 @@ export const userLoggedIn = (user) => {
 export const getUserData = (token, username, id) => {
 	return { type: FETCH_USER, payload: { token, username, id } };
 };
+// export const getUserData = (user) => {
+// 	return { type: FETCH_USER, payload: user };
+// };
 
 // =====================================================
 // GET USER BIO

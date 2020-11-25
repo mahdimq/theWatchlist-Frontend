@@ -46,7 +46,7 @@ function Home() {
 	// ============
 	const loadMoreMovies = () => {
 		const searchEndpoint = `${CapstoneApi.search(search)}&page=${currentPage + 1}`;
-		const popularEndpoint = `${CapstoneApi.getPopular()}&page=${currentPage + 1}`;
+		const popularEndpoint = `${CapstoneApi.getPopular(currentPage + 1)}`;
 		console.log('SHOW PAGINATION: ', searchEndpoint);
 		const endpoint = search ? searchEndpoint : popularEndpoint;
 

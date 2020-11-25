@@ -11,8 +11,6 @@ function Header() {
 	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
-	console.log('### USER IN HEADER ###: ', user);
-
 	const logout = async () => {
 		await dispatch(logoutUser());
 		localStorage.removeItem('user-token');
@@ -45,7 +43,11 @@ function Header() {
 						<Link to='/profile'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Profile</li>
 						</Link>
-
+						{/* DELETE ACCOUNT */}
+						<Link to='/account'>
+							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Account</li>
+						</Link>
+						{/* ************** */}
 						<Link to='/' onClick={logout}>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Logout</li>
 						</Link>
