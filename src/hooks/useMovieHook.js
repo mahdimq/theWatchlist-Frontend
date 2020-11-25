@@ -12,7 +12,7 @@ export const useMovieHook = (movieId) => {
 		setLoading(true);
 
 		try {
-			// const result = await CapstoneApi.getById(movieId);
+			const result = await CapstoneApi.getById(movieId);
 			const credits = await CapstoneApi.getMovieCredits(movieId);
 			const directors = credits.crew.filter((person) => person.job === 'Director');
 

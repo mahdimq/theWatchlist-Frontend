@@ -8,7 +8,7 @@ import Account from './Account';
 import Watchlist from './Watchlist';
 import Movies from './Movies';
 
-function Routes({ user_id }) {
+function Routes() {
 	return (
 		<Switch>
 			<Route exact path='/'>
@@ -27,7 +27,7 @@ function Routes({ user_id }) {
 				<Movies />
 			</Route>
 
-			<Route path='/:user_id/watchlist'>
+			<Route path='/watchlist'>
 				<Watchlist />
 			</Route>
 
