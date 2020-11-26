@@ -45,7 +45,9 @@ const Login = () => {
 					<Field className='input-box' placeholder='Username' name='username' type='text' />
 
 					<Field className='input-box' placeholder='Password' name='password' type='password' />
-					<button type='submit'>Login</button>
+					<button className='form-btn' type='submit'>
+						Login
+					</button>
 				</Form>
 			</Formik>
 		</StyledFormComp>

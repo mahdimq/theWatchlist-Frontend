@@ -23,7 +23,7 @@ class CapstoneApi {
 		// 		let message = err.response.data.message;
 		// 		throw Array.isArray(message) ? message : [message];
 		// 	}
-		// }
+
 		if (!paramsOrData._token) {
 			paramsOrData._token = localStorage.getItem('user-token');
 		}
@@ -104,7 +104,7 @@ class CapstoneApi {
 
 	static async addWatchlist(id, data) {
 		let res = await this.request(`watchlist/${id}/add`, data, 'post');
-		console.log(res.data);
+		console.log('##### ADD WATCHLIST CAPSTONE API ###', res);
 		return res.data;
 	}
 

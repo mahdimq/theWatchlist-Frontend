@@ -3,10 +3,11 @@ import { Switch, Redirect, Route } from 'react-router-dom';
 import Home from '../comps3/Home';
 import Login from './Login';
 import Registration from './Registration';
-// import Profile from './Profile';
+import Profile from './Profile';
 import Account from './Account';
 import Watchlist from './Watchlist';
-import Movies from './Movies';
+import Movies from '../comps3/Movies';
+import Movie from './Movie';
 
 function Routes() {
 	return (
@@ -33,6 +34,14 @@ function Routes() {
 
 			<Route path='/account'>
 				<Account />
+			</Route>
+
+			<Route path='/profile'>
+				<Profile />
+			</Route>
+
+			<Route exact path='/:movieId'>
+				<Movie />
 			</Route>
 
 			<Redirect to='/' />

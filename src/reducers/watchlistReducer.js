@@ -12,10 +12,18 @@ const INITIAL_STATE = [];
 function lists(state = INITIAL_STATE, action) {
 	switch (action.type) {
 		case ADD_WATCHLIST:
-			return [...state, { ...action.payload }];
+			const newWatchlist = {
+				id: action.payload.id,
+				title: action.payload.title,
+				description: action.payload.description,
+				image: action.payload.image,
+				rating: action.payload.rating
+			};
+			// return [...state, { ...action.payload }];
+			return [...state, newWatchlist];
 
 		case REMOVE_WATCHLIST:
-			return [...state.filter((l) => l.id !== action.payload.id)];
+			return [...state.filter((movie) => movie.id !== action.payload.id)];
 
 		case LOAD_WATCHLIST:
 			return action.payload;

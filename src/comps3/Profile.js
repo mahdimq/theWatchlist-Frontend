@@ -1,15 +1,64 @@
 import React, { useState, useEffect } from 'react';
-import { addAlert, logoutUser, removeUser, updateUser } from '../actions/actions';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser, addAlert, updateUser, removeUser, getUserInfo } from '../actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { object, string } from 'yup';
+import { StyledFormComp } from '../styles/StyledFormComp';
 
-function Profile() {
+const initialValues = {
+	username: '',
+	password: '',
+	firstname: '',
+	lastname: '',
+	email: ''
+};
+
+const validationSchema = object().shape({
+	email: string().email()
+});
+
+const Profile = () => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const [emailData, setEmailData] = useState({ email: user.email });
-	// const [editVisible, setEditVisible] = useState(false);
 
+	const [userData, setUserData] = useState(initialValues);
+	const [isVisible, setIsVisible] = useState(false);
+
+	useEffect(() => {
+		const checkUser = async () => {
+			if (user.token) {
+				const userBio = await dispatch(getUserInfo(user.id));
+				setUserData(userBio.payload);
+				console.log('### USER BIO ###', userBio.payload);
+			} else {
+				dispatch(addAlert('Please login first'));
+				history.push('/login');
+			}
+		};
+		checkUser();
+	}, [dispatch, user.token, user.id]);
+
+	const savedValues = {
+		password: '',
+		firstname: userData.firstname || '',
+		lastname: userData.lastname || '',
+		email: userData.email || ''
+	};
+
+	const handleSubmit = async (data) => {
+		try {
+			const res = await dispatch(updateUser(user.id, data));
+			setIsVisible(false);
+		} catch (error) {
+			dispatch(addAlert(error));
+			console.error(error);
+		}
+	};
+
+	// Logout the user, remove token from localstorage
+	// then redirect user to homepage
 	async function logout() {
 		await dispatch(logoutUser());
 		localStorage.removeItem('user-token');
@@ -17,87 +66,64 @@ function Profile() {
 		history.push('/');
 	}
 
-	//Ensure user is logged in, otherwise redirect user to login page
-	useEffect(() => {
-		function confirmUser() {
-			if (!user.token) {
-				dispatch(addAlert('Please login first!'));
-				history.push('/login');
-			}
-		}
-		confirmUser();
-	}, [history, dispatch, user.token]);
-
-	async function handleSubmit(evt) {
-		evt.preventDefault();
-
-		try {
-			//update user email
-			await dispatch(updateUser(user.username, emailData));
-			setEditVisible(false);
-		} catch (errors) {
-			return (data) => ({ ...data, errors });
-		}
-	}
+	// Delete the user and remove token from localstorage
+	// then redirect user to homepage
 
 	async function deleteUser() {
 		localStorage.removeItem('user-token');
 		await dispatch(removeUser(user.id, user.token));
+		dispatch(addAlert('user deleted!'));
 		history.push('/');
 	}
 
-	/** Update local state w/curr state of input elem */
-
-	const handleChange = (evt) => {
-		const { value } = evt.target;
-		setEmailData({ email: value });
-	};
-
 	return (
-		<div className='Profile container-fluid'>
-			<div className='row p-3'>
-				<div className='text-left col-md-6 offset-md-3 col-lg-4 offset-lg-4 my-3'>
-					<h3>Username: {user.username}</h3>
-					{!editVisible && (
-						<>
-							<p>Email: {user.email}</p>
-							<button className='btn btn-primary btn-sm' onClick={() => setEditVisible(true)}>
-								Edit
+		<StyledFormComp>
+			{!isVisible && (
+				<>
+					<h4>First Name: {user.firstname}</h4>
+					<h4>Last Name: {user.lastname}</h4>
+					<h4>Email: {user.email}</h4>
+					<button className='form-btn' onClick={() => setIsVisible(true)}>
+						Edit
+					</button>
+				</>
+			)}
+			{isVisible && (
+				<>
+					<Formik
+						initialValues={savedValues || initialValues}
+						validationSchema={validationSchema}
+						onSubmit={handleSubmit}
+						enableReinitialize>
+						<Form>
+							<Field className='input-box' placeholder='First Name' name='firstname' type='text' />
+
+							<Field className='input-box' placeholder='Last Name' name='lastname' type='text' />
+
+							<Field className='input-box' placeholder='Email' name='email' type='email' />
+							<ErrorMessage name='email' />
+
+							<Field className='input-box' placeholder='Password' name='password' type='password' />
+							<ErrorMessage name='password' />
+
+							<button className='form-btn' type='submit'>
+								Update Up
 							</button>
-						</>
-					)}
-					{editVisible && (
-						<form onSubmit={handleSubmit}>
-							<div className='form-group'>
-								<label>Email</label>
-								<input
-									type='email'
-									name='email'
-									className='form-control'
-									value={emailData.email}
-									onChange={handleChange}
-								/>
-							</div>
-							<button type='submit' className='btn btn-primary btn-sm mr-3'>
-								Save
-							</button>
-							<button className='btn btn-primary btn-sm' onClick={() => setEditVisible(false)}>
-								Cancel
-							</button>
-						</form>
-					)}
-				</div>
-			</div>
-			<div className='container text-left col-md-6 offset-md-3 col-lg-4 offset-lg-4 py-5'>
-				<button className='btn btn-primary mr-3' onClick={logout}>
-					Logout
-				</button>
-				<button className='btn btn-primary' onClick={deleteUser}>
-					Delete Profile
-				</button>
-			</div>
-		</div>
+						</Form>
+					</Formik>
+					<button className='form-btn cancel' onClick={() => setIsVisible(false)}>
+						Cancel
+					</button>
+					<button className='form-btn logout' onClick={logout}>
+						Logout
+					</button>
+					<button className='form-btn delete' onClick={deleteUser}>
+						Delete Profile
+					</button>
+				</>
+			)}
+		</StyledFormComp>
 	);
-}
+};
 
 export default Profile;

@@ -272,11 +272,15 @@ export const StyledMovieInfo = styled.div`
 		margin: 0px 0 0 0;
 	}
 
-	.director {
+	.director,
+	.watchlist {
 		margin: 0 0 0 40px;
 
 		p {
 			margin: 0;
+		}
+		button + button {
+			margin: 0 15px 0;
 		}
 	}
 

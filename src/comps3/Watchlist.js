@@ -17,8 +17,6 @@ function Watchlist() {
 	const IMAGE_URL = 'http://image.tmdb.org/t/p';
 	const poster_size = 'w500';
 
-	console.log('#### USER IN WATCHLIST ###', user);
-
 	useEffect(() => {
 		async function checkUser() {
 			const token = localStorage.getItem('user-token') || null;
@@ -32,6 +30,7 @@ function Watchlist() {
 	}, [dispatch, user.id]);
 
 	console.log('### WATCHLIST MOVIES ###', watchlist);
+
 	if (!isLoaded) {
 		return <Spinner />;
 	}

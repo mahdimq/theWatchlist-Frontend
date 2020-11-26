@@ -1,15 +1,15 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useMovieHook } from './hooks/useMovieHook';
+import { useMovieHook } from '../hooks/useMovieHook';
 
 // Components
-import Navigation from './components/Navigation';
-import MovieInfoBar from './components/MovieInfoBar';
+import Navigation from './Navigation';
+import MovieInfoBar from '../components/MovieInfoBar';
 // import MovieInfo from './components/MovieInfo';
-import MovieInfo from './comps3/MovieInfo';
-import Grid from './components/Grid';
-import Spinner from './components/Spinner';
-import Actor from './components/Actor';
+import MovieInfo from './MovieInfo';
+import Grid from '../components/Grid';
+import Spinner from '../components/Spinner';
+import Actor from '../components/Actor';
 
 function Movie() {
 	const { movieId } = useParams();
@@ -18,12 +18,11 @@ function Movie() {
 	if (error) return <div>Oops.. Please try again, error!</div>;
 	if (loading) return <Spinner />;
 
-	console.log('### MOVIE in MOVIE INFO: ', movie);
+	console.log('### MOVIE ###: ', movie);
 
 	return (
 		<div>
 			<h1>MOVIE ID: {movieId}</h1>
-			<Navigation movie={movie.original_title} />
 			<MovieInfo movie={movie} />
 			<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue} />
 			<Grid header='Actors'>

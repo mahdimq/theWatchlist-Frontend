@@ -39,8 +39,7 @@ export const loginUser = (data) => {
 			const user = await CapstoneApi.login(data);
 			localStorage.setItem('user-token', user.token);
 			await dispatch(userLoggedIn(user));
-			// await dispatch(getUserData(user));
-			await dispatch(addAlert(`Welcome back ${user.username}`, 'green'));
+			await dispatch(addAlert(`Welcome back ${user.username}`));
 		} catch (err) {
 			console.log(err);
 		}
@@ -78,7 +77,7 @@ export const updateUser = (id, data) => {
 		try {
 			const user = await CapstoneApi.updateUser(id, data);
 			dispatch(userUpdated(user));
-			dispatch(addAlert(`User Information updated!`, 'blue'));
+			dispatch(addAlert(`User Information updated!`));
 		} catch (err) {
 			err.forEach((error) => dispatch(addAlert(error)));
 			console.error(err);
@@ -99,7 +98,7 @@ export const registerUser = (data) => {
 			const user = await CapstoneApi.register(data);
 			localStorage.setItem('user-token', user.token);
 			dispatch(userRegistered(user));
-			dispatch(addAlert(`Registration Successfull! Welcome ${data.username}!`, 'green'));
+			dispatch(addAlert(`Registration Successfull! Welcome ${data.username}!`));
 		} catch (err) {
 			console.error(err);
 		}
@@ -120,7 +119,7 @@ export const removeUser = (id, token) => {
 			await dispatch(logoutUser());
 			dispatch(addAlert(message));
 		} catch (err) {
-			err.forEach((error) => dispatch(addAlert(error, 'tomato')));
+			err.forEach((error) => dispatch(addAlert(error)));
 		}
 	};
 };
@@ -139,7 +138,8 @@ const addMovie = (data) => {
 	return async function (dispatch) {
 		try {
 			const res = await CapstoneApi.addMovie(data);
-			dispatch(movieAdded(res.data.movie));
+			console.log('##### ADD MOVIE ACTION ####', res);
+			dispatch(movieAdded(res));
 		} catch (err) {
 			console.error(err);
 		}
@@ -171,7 +171,6 @@ const gotMovie = (movieData) => {
 export const getAllFilms = () => {
 	return async function (dispatch) {
 		const movies = await CapstoneApi.getAllMovies();
-		console.log('### MOVIE ACTION ###', movies);
 		dispatch(gotMovie(movies));
 	};
 };
@@ -191,7 +190,7 @@ const removeMovie = () => {
 // ############# WATCHLIST STATE MANAGEMENT ###############
 // ########################################################
 // ADD MOVIE TO WATCHLIST
-export const addWatchlist = (user_id, movie_id) => {
+export const addToWatchlist = (user_id, movie_id) => {
 	return async function (dispatch) {
 		const res = await CapstoneApi.addWatchlist(user_id, movie_id);
 		dispatch(addedWatchlist(res.data.movie));

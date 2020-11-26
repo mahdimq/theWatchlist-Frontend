@@ -10,8 +10,8 @@ function Profile() {
 	const dispatch = useDispatch();
 
 	const INITIAL_STATE = {
-		firstname: user.firstname || undefined,
-		lastname: user.lastname || undefined,
+		firstname: '' || undefined,
+		lastname: '' || undefined,
 		email: user.email
 	};
 
