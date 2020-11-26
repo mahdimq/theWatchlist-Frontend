@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { decode } from 'jsonwebtoken';
-import { loadWatchlist } from '../actions/actions';
+import { loadWatchlist, addAlert } from '../actions/actions';
 
 import Grid from './Grid';
 import MovieTile from './MovieTile';
@@ -17,10 +17,9 @@ function Watchlist() {
 	const IMAGE_URL = 'http://image.tmdb.org/t/p';
 	const poster_size = 'w500';
 
-	console.log('#### USER IN WATCHLIST ###', user);
-
+	// Confirm if correct user then load the watchlist
 	useEffect(() => {
-		async function checkAuth() {
+		async function confirmUser() {
 			const token = localStorage.getItem('user-token') || null;
 			const { id } = decode(token);
 			if (user.id === id) {
@@ -28,10 +27,9 @@ function Watchlist() {
 			}
 			setIsLoaded(true);
 		}
-		checkAuth();
+		confirmUser();
 	}, [dispatch, user.id]);
 
-	console.log('### WATCHLIST MOVIES ###', watchlist);
 	if (!isLoaded) {
 		return <Spinner />;
 	}

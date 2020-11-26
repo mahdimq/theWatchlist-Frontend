@@ -40,7 +40,7 @@ export const loginUser = (data) => {
 			localStorage.setItem('user-token', user.token);
 			await dispatch(userLoggedIn(user));
 			// await dispatch(getUserData(user));
-			await dispatch(addAlert(`Welcome back ${user.username}`, ''));
+			await dispatch(addAlert(`Welcome back ${user.username}`, 'green'));
 		} catch (err) {
 			console.log(err);
 		}
@@ -57,9 +57,6 @@ export const userLoggedIn = (user) => {
 export const getUserData = (token, username, id) => {
 	return { type: FETCH_USER, payload: { token, username, id } };
 };
-// export const getUserData = (user) => {
-// 	return { type: FETCH_USER, payload: user };
-// };
 
 // =====================================================
 // GET USER BIO
@@ -81,7 +78,7 @@ export const updateUser = (id, data) => {
 		try {
 			const user = await CapstoneApi.updateUser(id, data);
 			dispatch(userUpdated(user));
-			dispatch(addAlert(`User Information updated!`, ''));
+			dispatch(addAlert(`User Information updated!`, 'blue'));
 		} catch (err) {
 			err.forEach((error) => dispatch(addAlert(error)));
 			console.error(err);
@@ -102,7 +99,7 @@ export const registerUser = (data) => {
 			const user = await CapstoneApi.register(data);
 			localStorage.setItem('user-token', user.token);
 			dispatch(userRegistered(user));
-			dispatch(addAlert(`Registration Successfull! Welcome ${data.username}!`, ''));
+			dispatch(addAlert(`Registration Successfull! Welcome ${data.username}!`, 'green'));
 		} catch (err) {
 			console.error(err);
 		}
@@ -123,7 +120,7 @@ export const removeUser = (id, token) => {
 			await dispatch(logoutUser());
 			dispatch(addAlert(message));
 		} catch (err) {
-			err.forEach((error) => dispatch(addAlert(error, 'danger')));
+			err.forEach((error) => dispatch(addAlert(error, 'tomato')));
 		}
 	};
 };

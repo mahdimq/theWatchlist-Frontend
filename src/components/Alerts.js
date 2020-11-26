@@ -7,14 +7,13 @@ import { removeAlerts } from '../actions/actions';
 function Alerts() {
 	const dispatch = useDispatch();
 	const alerts = useSelector((state) => state.alerts);
-	console.log('#### ALERTS ####:', alerts);
 
 	//flashed messages disappear after specified time
 	useEffect(() => {
 		if (alerts[0]) {
 			setTimeout(function () {
 				dispatch(removeAlerts());
-			}, 5000);
+			}, 2000);
 		}
 	});
 
@@ -24,7 +23,9 @@ function Alerts() {
 		return (
 			<div>
 				{alerts.map((a, i) => (
-					<h4 key={i}>{a.message}</h4>
+					<h4 style={{ color: `${a.type}` }} key={i}>
+						{a.message}
+					</h4>
 				))}
 			</div>
 		);

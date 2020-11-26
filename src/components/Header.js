@@ -43,11 +43,7 @@ function Header() {
 						<Link to='/profile'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Profile</li>
 						</Link>
-						{/* DELETE ACCOUNT */}
-						<Link to='/account'>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Account</li>
-						</Link>
-						{/* ************** */}
+
 						<Link to='/' onClick={logout}>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Logout</li>
 						</Link>

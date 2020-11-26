@@ -7,6 +7,7 @@ import { getUserData } from './actions/actions';
 import Alerts from './components/Alerts';
 import Routes from './components/Routes';
 import Header from './components/Header';
+import Spinner from './components/Spinner';
 
 // Styled components
 const GlobalStyle = createGlobalStyle`
@@ -16,39 +17,6 @@ const GlobalStyle = createGlobalStyle`
 		box-sizing: border-box;
 	}
 `;
-
-// function App() {
-// 	const [infoLoaded, setInfoLoaded] = useState(false);
-// 	const dispatch = useDispatch();
-
-// 	/*Check if user is logged in, load token from localstorage
-//     and save in state if available */
-// 	useEffect(() => {
-// 		async function checkUser() {
-// 			const token = localStorage.getItem('user-token') || null;
-// 			if (token) {
-// 				const { username, id } = decode(token);
-// 				await dispatch(getUserData(token, username, id));
-// 			}
-// 			setInfoLoaded(true);
-// 		}
-// 		checkUser();
-// 	}, [dispatch]);
-
-// 	if (!infoLoaded) {
-// 		return <Spinner />;
-// 	}
-
-// 	return (
-// 		<div>
-// 			<Alerts />
-// 			<Header />
-// 			<Routes />
-
-// 			<Footer />
-// 			<GlobalStyle />
-// 		</div>
-// 	);\
 
 function App() {
 	const [infoLoaded, setInfoLoaded] = useState(false);
@@ -69,7 +37,7 @@ function App() {
 	}, [dispatch]);
 
 	if (!infoLoaded) {
-		return <h3>Loading...</h3>;
+		return <Spinner />;
 	}
 
 	return (

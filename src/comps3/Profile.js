@@ -17,16 +17,16 @@ function Profile() {
 		history.push('/');
 	}
 
-	//bounces user to home page if not logged in
+	//Ensure user is logged in, otherwise redirect user to login page
 	useEffect(() => {
-		function redirect() {
+		function confirmUser() {
 			if (!user.token) {
-				//dispatch(addAlert(`You must be logged in to view that page!`, "danger"));
+				dispatch(addAlert('Please login first!'));
 				history.push('/login');
 			}
 		}
-		redirect();
-	}, [history, user.token]);
+		confirmUser();
+	}, [history, dispatch, user.token]);
 
 	async function handleSubmit(evt) {
 		evt.preventDefault();

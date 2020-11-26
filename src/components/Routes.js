@@ -29,10 +29,6 @@ function Routes() {
 				<Watchlist />
 			</Route>
 
-			<Route exact path='/account'>
-				<Account />
-			</Route>
-
 			<Route exact path='/movies'>
 				<Movies />
 			</Route>

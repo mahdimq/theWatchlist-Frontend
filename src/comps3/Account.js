@@ -1,114 +1,139 @@
 import React, { useState, useEffect } from 'react';
-import { logoutUser, addAlert, updateUser, removeUser } from '../actions/actions';
+import { logoutUser, addAlert, updateUser, removeUser, getUserInfo } from '../actions/actions';
 import { useHistory } from 'react-router-dom';
+import { StyledFormComp } from '../styles/StyledFormComp';
 import { useSelector, useDispatch } from 'react-redux';
 
 function Account() {
 	const history = useHistory();
+	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-	const user = useSelector((st) => st.user);
-	console.log('### USER FROM ACCOUNT ###', user.user);
-	const [userData, setUserData] = useState({
-		firstname: user.user.firstname,
-		lastname: user.user.lastname,
-		email: user.user.email
-	});
-	const [editVisible, setEditVisible] = useState(false);
 
-	async function logout() {
-		await dispatch(logoutUser());
-		localStorage.removeItem('user-token');
-		dispatch(addAlert('You have successfully logged out', 'success'));
-		history.push('/');
-	}
+	const INITIAL_STATE = {
+		firstname: user.firstname || undefined,
+		lastname: user.lastname || undefined,
+		email: user.email
+	};
 
-	//bounces user to home page if not logged in
+	const [formData, setFormData] = useState(INITIAL_STATE);
+	const [isVisible, setIsVisible] = useState(false);
+
+	// Ensure user is logged in otherwise redirect to login page
 	useEffect(() => {
-		function redirect() {
-			if (!user.token) {
-				//dispatch(addAlert(`You must be logged in to view that page!`, "danger"));
+		async function confirmUser() {
+			if (user.token) {
+				await dispatch(getUserInfo(user.id));
+			} else {
+				dispatch(addAlert('Please login first!'));
 				history.push('/login');
 			}
 		}
-		redirect();
-	}, [history, dispatch, user.token]);
+		confirmUser();
+	}, [dispatch, history, user.token, user.id]);
 
-	async function handleSubmit(evt) {
-		evt.preventDefault();
+	// Update the user information in localstate with form values
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setFormData((data) => ({ ...data, [name]: value }));
+	};
 
+	// HANDLE SUBMIT FUNCTION
+	async function handleSubmit(e) {
+		e.preventDefault();
 		try {
-			//update user email
-			await dispatch(updateUser(user.user.id, userData));
-			setEditVisible(false);
+			//update user information
+			await dispatch(updateUser(user.id, formData));
+			setIsVisible(false);
 		} catch (errors) {
-			return setUserData((data) => ({ ...data, errors }));
+			console.error(errors);
 		}
 	}
 
-	async function deleteUser() {
+	// Logout the user, remove token from localstorage
+	// then redirect user to homepage
+	async function logout() {
+		await dispatch(logoutUser());
 		localStorage.removeItem('user-token');
-		await dispatch(removeUser(user.user.id, user.token));
+		dispatch(addAlert('You have successfully logged out'));
 		history.push('/');
 	}
 
-	/** Update local state w/curr state of input elem */
+	// Delete the user and remove token from localstorage
+	// then redirect user to homepage
 
-	const handleChange = (evt) => {
-		const { name, value } = evt.target;
-		setUserData((prevData) => ({
-			...prevData,
-			[name]: value
-		}));
-	};
+	async function deleteUser() {
+		localStorage.removeItem('user-token');
+		await dispatch(removeUser(user.id, user.token));
+		dispatch(addAlert('user deleted!'));
+		history.push('/');
+	}
 
 	return (
-		<>
-			<div>
-				<h3>Username: {user.user.username}</h3>
-				<h3>First Name: {user.user.firstname}</h3>
-				{!editVisible && (
-					<>
-						<p>First Name: {user.user.firstname}</p>
-						<p>Last Name: {user.user.lastname}</p>
-						<p>Email: {user.user.email}</p>
-						<button onClick={() => setEditVisible(true)}>Edit</button>
-					</>
-				)}
-				{editVisible && (
-					<form onSubmit={handleSubmit}>
-						<div>
-							<label>First Name</label>
-							<input
-								type='text'
-								name='firstname'
-								value={userData.firstname}
-								onChange={handleChange}
-							/>
-						</div>
-						<div>
-							<label>First Name</label>
-							<input
-								type='text'
-								name='lastname'
-								value={userData.lastname}
-								onChange={handleChange}
-							/>
-						</div>
-						<div>
-							<label>Email</label>
-							<input type='email' name='email' value={userData.email} onChange={handleChange} />
-						</div>
-						<button type='submit'>Save</button>
-						<button onClick={() => setEditVisible(false)}>Cancel</button>
-					</form>
-				)}
-			</div>
+		<StyledFormComp>
+			{!isVisible && (
+				<>
+					<h4>First Name: {user.firstname}</h4>
+					<h4>Last Name: {user.lastname}</h4>
+					<h4>Email: {user.email}</h4>
+					<button className='form-btn' onClick={() => setIsVisible(true)}>
+						Edit
+					</button>
+				</>
+			)}
+			{isVisible && (
+				<form onSubmit={handleSubmit}>
+					<input
+						className='input-box'
+						placeholder={user.firstname}
+						value={formData.firstname}
+						onChange={handleChange}
+						name='firstname'
+						type='text'
+					/>
 
-			<div>
-				<button onClick={logout}>Logout</button>
-				<button onClick={deleteUser}>Delete Account</button>
-			</div>
-		</>
+					<input
+						className='input-box'
+						placeholder={user.lastname}
+						value={formData.lastname}
+						onChange={handleChange}
+						name='lastname'
+						type='text'
+					/>
+
+					<input
+						className='input-box'
+						placeholder={user.email}
+						value={formData.email}
+						onChange={handleChange}
+						name='email'
+						type='email'
+					/>
+
+					<input
+						className='input-box'
+						placeholder='Password'
+						value={formData.password}
+						onChange={handleChange}
+						name='password'
+						type='password'
+					/>
+					<small>Please enter password to update profile</small>
+
+					<button className='form-btn' type='submit'>
+						Update
+					</button>
+					<button className='form-btn cancel' onClick={() => setIsVisible(false)}>
+						Cancel
+					</button>
+					<button className='form-btn logout' onClick={logout}>
+						Logout
+					</button>
+					<button className='form-btn delete' onClick={deleteUser}>
+						Delete Profile
+					</button>
+				</form>
+			)}
+		</StyledFormComp>
 	);
 }
 

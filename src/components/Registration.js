@@ -68,7 +68,9 @@ const Registration = () => {
 					<Field className='input-box' placeholder='Email' name='email' type='email' />
 					<ErrorMessage name='email' />
 
-					<button type='submit'>Sign Up</button>
+					<button className='form-btn' type='submit'>
+						Sign Up
+					</button>
 				</Form>
 			</Formik>
 		</StyledFormComp>

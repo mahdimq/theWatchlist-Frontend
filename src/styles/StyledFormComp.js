@@ -12,7 +12,7 @@ export const StyledFormComp = styled.div`
 		border-radius: 5px;
 		line-height: 22px;
 		background-color: transparent;
-		border: 2px solid #cc6666;
+		border: 1px solid #cc6666;
 		transition: all 0.3s;
 		padding: 13px;
 		margin-top: 15px;
@@ -24,10 +24,10 @@ export const StyledFormComp = styled.div`
 	}
 
 	.input-box:focus {
-		border: 2px solid #cc4949;
+		border: 1px solid #cc4949;
 	}
 
-	[type='submit'] {
+	.form-btn {
 		font-family: 'Montserrat', Arial, Helvetica, sans-serif;
 		width: 100%;
 		background: #cc6666;
@@ -42,7 +42,32 @@ export const StyledFormComp = styled.div`
 		margin-top: 20px;
 		font-weight: 700;
 	}
-	[type='submit']:hover {
+	.form-btn:hover {
 		background: #cc4949;
 	}
+
+	.cancel:hover {
+		background-color: blue;
+	}
+
+	.delete:hover {
+		background-color: tomato;
+	}
+
+	.logout:hover {
+		background-color: lightGreen;
+	}
 `;
+
+// export const StyledFormButton = styled.button`
+// 	border-radius: 5px;
+// 	border: 0;
+// 	cursor: pointer;
+// 	color: white;
+// 	font-size: 24px;
+// 	padding-top: 10px;
+// 	padding-bottom: 10px;
+// 	transition: all 0.3s;
+// 	background-color: slateGray;
+// 	margin: 10px 5px 10px 5px;
+// `;
