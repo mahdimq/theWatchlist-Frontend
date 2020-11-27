@@ -6,7 +6,7 @@ import Registration from './Registration';
 import Profile from './Profile';
 import Account from './Account';
 import Watchlist from './Watchlist';
-import Movies from '../comps3/Movies';
+import Movies from './Movies';
 import Movie from './Movie';
 
 function Routes() {

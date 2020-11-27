@@ -15,7 +15,8 @@ const initialValues = {
 };
 
 const validationSchema = object().shape({
-	email: string().email()
+	email: string().email(),
+	password: string().required()
 });
 
 const Profile = () => {
@@ -31,7 +32,6 @@ const Profile = () => {
 			if (user.token) {
 				const userBio = await dispatch(getUserInfo(user.id));
 				setUserData(userBio.payload);
-				console.log('### USER BIO ###', userBio.payload);
 			} else {
 				dispatch(addAlert('Please login first'));
 				history.push('/login');
@@ -49,7 +49,7 @@ const Profile = () => {
 
 	const handleSubmit = async (data) => {
 		try {
-			const res = await dispatch(updateUser(user.id, data));
+			await dispatch(updateUser(user.id, data));
 			setIsVisible(false);
 		} catch (error) {
 			dispatch(addAlert(error));
@@ -68,7 +68,6 @@ const Profile = () => {
 
 	// Delete the user and remove token from localstorage
 	// then redirect user to homepage
-
 	async function deleteUser() {
 		localStorage.removeItem('user-token');
 		await dispatch(removeUser(user.id, user.token));
@@ -105,6 +104,7 @@ const Profile = () => {
 
 							<Field className='input-box' placeholder='Password' name='password' type='password' />
 							<ErrorMessage name='password' />
+							<small style={{ display: 'block' }}>Please enter password to update profile</small>
 
 							<button className='form-btn' type='submit'>
 								Update Up

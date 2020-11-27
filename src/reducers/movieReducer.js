@@ -10,7 +10,11 @@ const movieReducer = (state = INITIAL_STATE, action) => {
 			return { ...state, movie: action.payload };
 
 		case REMOVE_MOVIE:
-			return {};
+			console.log('## MOVIES ACTION PAYLOAD ##', { id: action.payload.id });
+			return { ...state.filter((movie) => movie.id !== action.payload.id) };
+
+		// case REMOVE_MOVIE:
+		// 	return {};
 
 		default:
 			return state;

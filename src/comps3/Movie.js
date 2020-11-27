@@ -18,7 +18,7 @@ function Movie() {
 	if (error) return <div>Oops.. Please try again, error!</div>;
 	if (loading) return <Spinner />;
 
-	console.log('### MOVIE ###: ', movie);
+	console.log('### MOVIE IN COMPS# ###: ', movie);
 
 	return (
 		<div>

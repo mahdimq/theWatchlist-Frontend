@@ -1,53 +1,61 @@
 import React, { useState, useEffect } from 'react';
-import { logoutUser, addAlert, updateUser, removeUser, getUserInfo } from '../actions/actions';
 import { useHistory } from 'react-router-dom';
+import { logoutUser, addAlert, updateUser, removeUser, getUserInfo } from '../actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { object, string } from 'yup';
 import { StyledFormComp } from '../styles/StyledFormComp';
-import { useSelector, useDispatch } from 'react-redux';
 
-function Profile() {
+const initialValues = {
+	username: '',
+	password: '',
+	firstname: '',
+	lastname: '',
+	email: ''
+};
+
+const validationSchema = object().shape({
+	email: string().email(),
+	password: string().required()
+});
+
+const Profile = () => {
 	const history = useHistory();
-	const user = useSelector((state) => state.user);
 	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
 
-	const INITIAL_STATE = {
-		firstname: '' || undefined,
-		lastname: '' || undefined,
-		email: user.email
-	};
-
-	const [formData, setFormData] = useState(INITIAL_STATE);
+	const [userData, setUserData] = useState(initialValues);
 	const [isVisible, setIsVisible] = useState(false);
 
-	// Ensure user is logged in otherwise redirect to login page
 	useEffect(() => {
-		async function confirmUser() {
+		const checkUser = async () => {
 			if (user.token) {
-				await dispatch(getUserInfo(user.id));
+				const userBio = await dispatch(getUserInfo(user.id));
+				setUserData(userBio.payload);
 			} else {
-				dispatch(addAlert('Please login first!'));
+				dispatch(addAlert('Please login first'));
 				history.push('/login');
 			}
-		}
-		confirmUser();
-	}, [dispatch, history, user.token, user.id]);
+		};
+		checkUser();
+	}, [dispatch, user.token, user.id]);
 
-	// Update the user information in localstate with form values
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormData((data) => ({ ...data, [name]: value }));
+	const savedValues = {
+		password: '',
+		firstname: userData.firstname || '',
+		lastname: userData.lastname || '',
+		email: userData.email || ''
 	};
 
-	// HANDLE SUBMIT FUNCTION
-	async function handleSubmit(e) {
-		e.preventDefault();
+	const handleSubmit = async (data) => {
 		try {
-			//update user information
-			await dispatch(updateUser(user.id, formData));
+			await dispatch(updateUser(user.id, data));
 			setIsVisible(false);
-		} catch (errors) {
-			console.error(errors);
+		} catch (error) {
+			dispatch(addAlert(error));
+			console.error(error);
 		}
-	}
+	};
 
 	// Logout the user, remove token from localstorage
 	// then redirect user to homepage
@@ -60,7 +68,6 @@ function Profile() {
 
 	// Delete the user and remove token from localstorage
 	// then redirect user to homepage
-
 	async function deleteUser() {
 		localStorage.removeItem('user-token');
 		await dispatch(removeUser(user.id, user.token));
@@ -81,47 +88,29 @@ function Profile() {
 				</>
 			)}
 			{isVisible && (
-				<form onSubmit={handleSubmit}>
-					<input
-						className='input-box'
-						placeholder={user.firstname}
-						value={formData.firstname}
-						onChange={handleChange}
-						name='firstname'
-						type='text'
-					/>
+				<>
+					<Formik
+						initialValues={savedValues || initialValues}
+						validationSchema={validationSchema}
+						onSubmit={handleSubmit}
+						enableReinitialize>
+						<Form>
+							<Field className='input-box' placeholder='First Name' name='firstname' type='text' />
 
-					<input
-						className='input-box'
-						placeholder={user.lastname}
-						value={formData.lastname}
-						onChange={handleChange}
-						name='lastname'
-						type='text'
-					/>
+							<Field className='input-box' placeholder='Last Name' name='lastname' type='text' />
 
-					<input
-						className='input-box'
-						placeholder={user.email}
-						value={formData.email}
-						onChange={handleChange}
-						name='email'
-						type='email'
-					/>
+							<Field className='input-box' placeholder='Email' name='email' type='email' />
+							<ErrorMessage name='email' />
 
-					<input
-						className='input-box'
-						placeholder='Password'
-						value={formData.password}
-						onChange={handleChange}
-						name='password'
-						type='password'
-					/>
-					<small>Please enter password to update profile</small>
+							<Field className='input-box' placeholder='Password' name='password' type='password' />
+							<ErrorMessage name='password' />
+							<small style={{ display: 'block' }}>Please enter password to update profile</small>
 
-					<button className='form-btn' type='submit'>
-						Update
-					</button>
+							<button className='form-btn' type='submit'>
+								Update Up
+							</button>
+						</Form>
+					</Formik>
 					<button className='form-btn cancel' onClick={() => setIsVisible(false)}>
 						Cancel
 					</button>
@@ -131,10 +120,10 @@ function Profile() {
 					<button className='form-btn delete' onClick={deleteUser}>
 						Delete Profile
 					</button>
-				</form>
+				</>
 			)}
 		</StyledFormComp>
 	);
-}
+};
 
 export default Profile;

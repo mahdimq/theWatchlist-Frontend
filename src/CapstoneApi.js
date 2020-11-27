@@ -88,14 +88,19 @@ class CapstoneApi {
 		return res.movie;
 	}
 
-	static async getMovie(id) {
-		let res = await this.request(`movies/${id}`);
+	static async getMovie(movie_id) {
+		let res = await this.request(`movies/${movie_id}`);
 		return res.movie;
 	}
 
 	static async getAllMovies() {
 		let res = await this.request(`movies`);
 		return res;
+	}
+
+	static async deleteMovie(movie_id) {
+		let res = await this.request(`movies/${movie_id}`);
+		return res.message;
 	}
 
 	// ########################################################

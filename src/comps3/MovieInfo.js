@@ -4,7 +4,7 @@ import { StyledMovieInfo } from '../styles/StyledComponents';
 import NoPoster from '../images/no_poster.jpg';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMovie } from '../actions/actions';
+import { addMovie, removeMovie, addAlert } from '../actions/actions';
 
 const IMAGE_URL = 'http://image.tmdb.org/t/p';
 // const backdrop_size = 'w1280';
@@ -17,13 +17,13 @@ function MovieInfo({ movie }) {
 	const user = useSelector((state) => state.user);
 	const movies = useSelector((state) => state.movies);
 
-	console.log('### MOVIE PROP MOVIE INFO ###', movie);
-	console.log('### MOVIES REDUX in MOVIE INFO ###', movies);
-	console.log('### USE PARAMS MOVIE ID IN MOVIE INFO ###', movieId);
-	console.log('### USER STATE in MOVIE INFO ###', user);
-	console.log('### MOVIE STATE in LOCALSTATE ###', movieInfo);
+	// console.log('### MOVIE PROP MOVIE INFO ###', movie);
+	console.log('### MOVIES REDUX in MOVIE INFO ###', movies.id);
+	// console.log('### USE PARAMS MOVIE ID IN MOVIE INFO ###', movieId);
+	// console.log('### USER STATE in MOVIE INFO ###', user);
+	// console.log('### MOVIE STATE in LOCALSTATE ###', movieInfo);
 
-	const handleAddMovie = () => {
+	const handleAddMovie = async () => {
 		setMovieInfo({
 			id: movie.id,
 			title: movie.original_title,
@@ -31,17 +31,21 @@ function MovieInfo({ movie }) {
 			image: movie.poster_path,
 			rating: movie.vote_average
 		});
+		await dispatch(addMovie(movieInfo));
 	};
 
-	dispatch(addMovie(movieInfo));
+	const handleRemoveMovie = async () => {
+		await dispatch(removeMovie(movieId));
+		dispatch(addAlert('movie deleted'));
+	};
 
-	for (let i in movies) {
-		if (movieId === movies[i]) {
-			console.log('YES IS EXISTS', movies[i]);
-		} else {
-			console.log('NO LUCK', movies[i]);
-		}
-	}
+	// for (let i in movies) {
+	// 	if (movieId === movies[i]) {
+	// 		console.log('YES IS EXISTS', movies[i]);
+	// 	} else {
+	// 		console.log('NO LUCK', movies[i]);
+	// 	}
+	// }
 	// useEffect(() => {});
 
 	return (
@@ -76,7 +80,7 @@ function MovieInfo({ movie }) {
 						<div className='watchlist'>
 							<h3>ADD TO WATCHLIST</h3>
 							<button onClick={handleAddMovie}>Add</button>
-							<button>Remove</button>
+							<button onClick={handleRemoveMovie}>Remove</button>
 						</div>
 					</div>
 				</div>

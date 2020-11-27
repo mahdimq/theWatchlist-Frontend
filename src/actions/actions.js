@@ -138,7 +138,6 @@ const addMovie = (data) => {
 	return async function (dispatch) {
 		try {
 			const res = await CapstoneApi.addMovie(data);
-			console.log('##### ADD MOVIE ACTION ####', res);
 			dispatch(movieAdded(res));
 		} catch (err) {
 			console.error(err);
@@ -178,7 +177,15 @@ export const getAllFilms = () => {
 // =====================================================
 
 // REMOVE MOVIE FROM DATABASE
-const removeMovie = () => {
+export const removeMovie = (id) => {
+	return async function (dispatch) {
+		const res = await CapstoneApi.deleteMovie(id);
+		console.log('### REMOVE MOVIE ###', res);
+		dispatch(movieRemoved());
+	};
+};
+
+const movieRemoved = () => {
 	return {
 		type: REMOVE_MOVIE
 	};
@@ -230,4 +237,4 @@ const removedWatchlist = (movie_id) => {
 	return { type: REMOVE_WATCHLIST, payload: movie_id };
 };
 
-export { addMovie, getMovie, removeMovie };
+export { addMovie, getMovie };

@@ -7,7 +7,7 @@ import Grid from '../components/Grid';
 import MovieTile from '../components/MovieTile';
 
 function Movies() {
-	// const { movieId } = useParams();
+	const { movieId } = useParams();
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
 	const movies = useSelector((state) => state.movies);
