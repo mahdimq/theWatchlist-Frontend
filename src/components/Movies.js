@@ -27,7 +27,7 @@ function Movies() {
 		return <Spinner />;
 	}
 
-	console.log('### MOVIE ###', movies);
+	console.log('### MOVIE in MAIN COMP###', movies);
 
 	return (
 		<Grid header='Movies in the DB'>
@@ -35,9 +35,9 @@ function Movies() {
 				<MovieTile
 					key={film.id}
 					clickable={true}
-					image={`${IMAGE_URL}/${poster_size}/${film.image}`}
+					image={`${IMAGE_URL}/${poster_size}/${film.poster_path}`}
 					movieId={film.id}
-					movieTitle={film.title}
+					movieTitle={film.original_title}
 				/>
 			))}
 		</Grid>

@@ -84,7 +84,6 @@ class CapstoneApi {
 
 	static async addMovie(data) {
 		let res = await this.request(`movies/add`, data, 'post');
-		console.log('#### ADD MOVIE CAPSTONE API ####', res.movie);
 		return res.movie;
 	}
 
@@ -98,19 +97,19 @@ class CapstoneApi {
 		return res;
 	}
 
-	static async deleteMovie(movie_id) {
-		let res = await this.request(`movies/${movie_id}`);
-		return res.message;
+	static async deleteMovie(movie_id, token) {
+		let res = await this.request(`movies/${movie_id}`, { _token: token }, 'delete');
+		console.log('MOVIE DELETE CAPSTONE', res);
+		return res;
 	}
 
 	// ########################################################
 	// ################# WATCHLIST ENDPOINTS ##################
 	// ########################################################
 
-	static async addWatchlist(id, data) {
-		let res = await this.request(`watchlist/${id}/add`, data, 'post');
-		console.log('##### ADD WATCHLIST CAPSTONE API ###', res);
-		return res.data;
+	static async addWatchlist(user_id, data) {
+		let res = await this.request(`watchlist/${user_id}/add`, data, 'post');
+		return res;
 	}
 
 	static async getWatchlist(id) {
@@ -118,9 +117,9 @@ class CapstoneApi {
 		return res;
 	}
 
-	static async deleteWatchlist(user_id, movie_id) {
-		let res = await this.request(`watchlist/${user_id}/${movie_id}`, 'delete');
-		return res.message;
+	static async deleteWatchlist(user_id, movie_id, data) {
+		let res = await this.request(`watchlist/${user_id}/${movie_id}`, data, 'delete');
+		return res;
 	}
 
 	// ########################################################

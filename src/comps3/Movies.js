@@ -45,7 +45,7 @@ function Movies() {
 					clickable={true}
 					image={`${IMAGE_URL}/${poster_size}/${film.image}`}
 					movieId={film.id}
-					movieTitle={film.title}
+					movieTitle={film.original_title}
 				/>
 			))}
 		</Grid>

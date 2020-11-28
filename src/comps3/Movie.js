@@ -24,7 +24,7 @@ function Movie() {
 		<div>
 			<h1>MOVIE ID: {movieId}</h1>
 			<MovieInfo movie={movie} />
-			<MovieInfoBar time={movie.runtime} budget={movie.budget} revenue={movie.revenue} />
+			<MovieInfoBar time={movie.runtime} released={movie.release_date} revenue={movie.revenue} />
 			<Grid header='Actors'>
 				{movie.actors.map((actor) => (
 					<Actor key={actor.credit_id} actor={actor} />

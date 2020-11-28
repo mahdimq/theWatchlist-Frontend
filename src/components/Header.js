@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyledHeader, StyledLogo } from '../styles/StyledComponents';
+import { StyledHeader } from '../styles/StyledComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { addAlert, logoutUser } from '../actions/actions';
 
 // Import logos here "Using temporary youtube logo"<--
-import logo from '../images/ylogo.png';
+// import logo from '../images/ylogo.png';
 
 function Header() {
 	const user = useSelector((state) => state.user);

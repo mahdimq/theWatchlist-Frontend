@@ -40,9 +40,9 @@ function Watchlist() {
 				<MovieTile
 					key={film.id}
 					clickable={true}
-					image={film.image ? `${IMAGE_URL}/${poster_size}/${film.image}` : NoPoster}
+					image={film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster}
 					movieId={film.id}
-					movieTitle={film.title}
+					movieTitle={film.original_title}
 				/>
 			))}
 		</Grid>

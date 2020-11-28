@@ -7,20 +7,22 @@ import {
 
 /* Reducer for lists */
 
-const INITIAL_STATE = [];
+const INITIAL_STATE = {};
 
-function lists(state = INITIAL_STATE, action) {
+const watchlistReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case ADD_WATCHLIST:
-			const newWatchlist = {
-				id: action.payload.id,
-				title: action.payload.title,
-				description: action.payload.description,
-				image: action.payload.image,
-				rating: action.payload.rating
-			};
-			// return [...state, { ...action.payload }];
-			return [...state, newWatchlist];
+			// const newWatchlist = {
+			// 	id: action.payload.id,
+			// 	title: action.payload.title,
+			// 	description: action.payload.description,
+			// 	image: action.payload.image,
+			// 	rating: action.payload.rating
+			// };
+			// // return [...state, { ...action.payload }];
+			// return [...state, newWatchlist];
+			console.log('WATCHLIST REDUCER ACTION.PAYLOAD', action.payload);
+			return { ...action.payload };
 
 		case REMOVE_WATCHLIST:
 			return [...state.filter((movie) => movie.id !== action.payload.id)];
@@ -34,6 +36,6 @@ function lists(state = INITIAL_STATE, action) {
 		default:
 			return state;
 	}
-}
+};
 
-export default lists;
+export default watchlistReducer;

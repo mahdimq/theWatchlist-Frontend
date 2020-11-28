@@ -1,52 +1,58 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import MovieTile from '../components/MovieTile';
 import { StyledMovieInfo } from '../styles/StyledComponents';
 import NoPoster from '../images/no_poster.jpg';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMovie, removeMovie, addAlert } from '../actions/actions';
+import { addMovie, addAlert, addToWatchlist } from '../actions/actions';
 
 const IMAGE_URL = 'http://image.tmdb.org/t/p';
 // const backdrop_size = 'w1280';
 const poster_size = 'w500';
 
 function MovieInfo({ movie }) {
+	const history = useHistory();
 	const { movieId } = useParams();
-	const [movieInfo, setMovieInfo] = useState({});
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 	const movies = useSelector((state) => state.movies);
 
-	// console.log('### MOVIE PROP MOVIE INFO ###', movie);
-	console.log('### MOVIES REDUX in MOVIE INFO ###', movies.id);
-	// console.log('### USE PARAMS MOVIE ID IN MOVIE INFO ###', movieId);
-	// console.log('### USER STATE in MOVIE INFO ###', user);
-	// console.log('### MOVIE STATE in LOCALSTATE ###', movieInfo);
-
 	const handleAddMovie = async () => {
-		setMovieInfo({
+		const movieInfo = {
 			id: movie.id,
-			title: movie.original_title,
-			description: movie.overview,
-			image: movie.poster_path,
-			rating: movie.vote_average
-		});
+			original_title: movie.original_title,
+			overview: movie.overview,
+			poster_path: movie.poster_path,
+			vote_average: movie.vote_average,
+			runtime: movie.runtime,
+			released_year: movie.released_year,
+			backdrop_path: movie.backdrop_path,
+			_token: user.token
+		};
+
 		await dispatch(addMovie(movieInfo));
+		await dispatch(addToWatchlist(user.id, movieInfo));
+		console.log('movie added to watchlist', movies);
+		history.push('/watchlist');
 	};
 
 	const handleRemoveMovie = async () => {
-		await dispatch(removeMovie(movieId));
-		dispatch(addAlert('movie deleted'));
-	};
+		// const res = await CapstoneApi.deleteMovie(movieId, user.token);
+		// if (res.message) {
+		// 	alert(res.message);
+		// }
+		// history.push('/movies');
 
-	// for (let i in movies) {
-	// 	if (movieId === movies[i]) {
-	// 		console.log('YES IS EXISTS', movies[i]);
-	// 	} else {
-	// 		console.log('NO LUCK', movies[i]);
-	// 	}
-	// }
-	// useEffect(() => {});
+		// const res = await CapstoneApi.deleteWatchlist(user.id, movieId);
+		// if (res.message) {
+		// 	alert(res.message);
+		// }
+		// history.push('/watchlist');
+
+		await dispatch(addToWatchlist(user.id, movies));
+		alert(dispatch(addAlert('MOVIE REMOVED FROM WATCHLIST')));
+		history.push('/watchlist');
+	};
 
 	return (
 		<StyledMovieInfo backdrop={movie.backdrop_path}>

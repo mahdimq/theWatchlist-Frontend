@@ -38,7 +38,7 @@ const Profile = () => {
 			}
 		};
 		checkUser();
-	}, [dispatch, user.token, user.id]);
+	}, [history, dispatch, user.token, user.id]);
 
 	const savedValues = {
 		password: '',

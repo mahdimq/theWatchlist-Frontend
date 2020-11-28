@@ -16,18 +16,18 @@ function Watchlist() {
 	const IMAGE_URL = 'http://image.tmdb.org/t/p';
 	const poster_size = 'w500';
 
-	useEffect(() => {
-		async function getWatchlist() {
-			try {
-				await dispatch(loadWatchlist(user.id));
-				setIsLoaded(true);
-			} catch (err) {
-				dispatch(addAlert(err));
-				console.log('## ERROR ##', err);
-			}
-		}
-		getWatchlist();
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	async function getWatchlist() {
+	// 		try {
+	// 			await dispatch(loadWatchlist(user.id));
+	// 			setIsLoaded(true);
+	// 		} catch (err) {
+	// 			dispatch(addAlert(err));
+	// 			console.log('## ERROR ##', err);
+	// 		}
+	// 	}
+	// 	getWatchlist();
+	// }, [dispatch]);
 
 	console.log('### WATCHLIST MOVIES ###', watchlist);
 
@@ -36,17 +36,25 @@ function Watchlist() {
 	}
 
 	return (
-		<Grid header='Watch List'>
-			{watchlist.map((film) => (
-				<MovieTile
-					key={film.id}
-					clickable={true}
-					image={film.image ? `${IMAGE_URL}/${poster_size}/${film.image}` : NoPoster}
-					movieId={film.id}
-					movieTitle={film.title}
-				/>
-			))}
-		</Grid>
+		<>
+			{watchlist.length ? (
+				<Grid header='Watch List'>
+					{watchlist.map((film) => (
+						<MovieTile
+							key={film.id}
+							clickable={true}
+							image={
+								film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
+							}
+							movieId={film.id}
+							movieTitle={film.original_title}
+						/>
+					))}
+				</Grid>
+			) : (
+				<h1>Watchlist is Empty!</h1>
+			)}
+		</>
 	);
 }
 

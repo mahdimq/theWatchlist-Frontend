@@ -135,6 +135,7 @@ export const logoutUser = () => {
 // ########################################################
 // ADD MOVIE TO DATABASE
 const addMovie = (data) => {
+	console.log('$$$ DATA IN MOVIE ACTIONS $$$', data);
 	return async function (dispatch) {
 		try {
 			const res = await CapstoneApi.addMovie(data);
@@ -197,15 +198,20 @@ const movieRemoved = () => {
 // ############# WATCHLIST STATE MANAGEMENT ###############
 // ########################################################
 // ADD MOVIE TO WATCHLIST
-export const addToWatchlist = (user_id, movie_id) => {
+export const addToWatchlist = (user_id, data) => {
 	return async function (dispatch) {
-		const res = await CapstoneApi.addWatchlist(user_id, movie_id);
-		dispatch(addedWatchlist(res.data.movie));
+		try {
+			const res = await CapstoneApi.addWatchlist(user_id, data);
+			console.log('## RES IN WATCHLIST ##', res);
+			dispatch(addedWatchlist(res));
+		} catch (err) {
+			console.error(err);
+		}
 	};
 };
 
 // added to watchlist
-export const addedWatchlist = (movieData) => {
+const addedWatchlist = (movieData) => {
 	return { type: ADD_WATCHLIST, payload: movieData };
 };
 

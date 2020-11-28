@@ -9,6 +9,11 @@ const calculateTime = (time) => {
 	return `${hours}h ${mins}m`;
 };
 
+// Helper function to calculate formatted date
+const formatDate = (date) => {
+	// NEED TO ADD DATE FORMATTER IN HERE
+};
+
 // Helper function to calculate movie budget
 const convertMoney = (money) => {
 	const formatter = new Intl.NumberFormat(`en-us`, {
@@ -19,7 +24,7 @@ const convertMoney = (money) => {
 	return formatter.format(money);
 };
 
-function MovieInfoBar({ time, budget, revenue }) {
+function MovieInfoBar({ time, released, revenue }) {
 	return (
 		<StyledMovieInfoBar>
 			{/* MOVIE RUN TIME */}
@@ -28,17 +33,17 @@ function MovieInfoBar({ time, budget, revenue }) {
 					<span className='movieinfobar-info'>Running time: {calculateTime(time)}</span>
 				</div>
 
-				{/* MOVIE BUDGET */}
+				{/* RELEASE DATE  */}
 
 				<div className='movieinfobar-content-col'>
-					<span className='movieinfobar-info'>Budget: {convertMoney(budget)}</span>
+					<span className='movieinfobar-info'>Released: {released}</span>
 				</div>
 
 				{/* MOVIE REVENUE */}
 
-				<div className='movieinfobar-content-col'>
+				{/* <div className='movieinfobar-content-col'>
 					<span className='movieinfobar-info'>Revenue: {convertMoney(revenue)}</span>
-				</div>
+				</div> */}
 			</div>
 		</StyledMovieInfoBar>
 	);
