@@ -12,6 +12,8 @@ const calculateTime = (time) => {
 // Helper function to calculate formatted date
 const formatDate = (date) => {
 	// NEED TO ADD DATE FORMATTER IN HERE
+	let d = new Date(date);
+	return d.toDateString();
 };
 
 // Helper function to calculate movie budget
@@ -36,7 +38,7 @@ function MovieInfoBar({ time, released, revenue }) {
 				{/* RELEASE DATE  */}
 
 				<div className='movieinfobar-content-col'>
-					<span className='movieinfobar-info'>Released: {released}</span>
+					<span className='movieinfobar-info'>Released: {formatDate(released)}</span>
 				</div>
 
 				{/* MOVIE REVENUE */}

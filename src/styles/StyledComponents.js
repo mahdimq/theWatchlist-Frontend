@@ -231,6 +231,7 @@ export const StyledMovieInfo = styled.div`
 		color: #fff;
 		overflow: hidden;
 
+
 		h1 {
 			font-family: 'Abel', sans-serif;
 			font-size: 48px;
@@ -242,15 +243,16 @@ export const StyledMovieInfo = styled.div`
 		}
 
 		h3 {
-			font-size: 16px;
+			display: flex;
+			font-size: 1em;
 			line-height: 0;
-			margin-top: 30px;
+			margin-top: 2em;
 		}
 
 		p {
 			font-family: 'Abel', sans-serif;
-			font-size: 18px;
-			line-height: 26px;
+			font-size: 1em;
+			line-height: 1.5em;
 		}
 	}
 
@@ -287,6 +289,16 @@ export const StyledMovieInfo = styled.div`
 	@media screen and (max-width: 768px) {
 		min-height: 600px;
 		height: auto;
+
+		.rating-director {
+			flex-direction: column;
+			justfify-content: flex-start;
+			align-items: flex-start;
+		}
+
+	.director,
+	.watchlist {
+		margin: 0;
 	}
 
 	@keyframes animateMovieinfo {

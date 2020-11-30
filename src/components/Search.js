@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { StyledSearchBar, StyledSearchBarContent } from '../styles/StyledComponents';
+import CapstoneApi from '../CapstoneApi';
 
 function Search({ callback }) {
 	const [search, setSearch] = useState('');

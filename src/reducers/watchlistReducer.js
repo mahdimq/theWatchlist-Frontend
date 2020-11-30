@@ -12,23 +12,16 @@ const INITIAL_STATE = {};
 const watchlistReducer = (state = INITIAL_STATE, action) => {
 	switch (action.type) {
 		case ADD_WATCHLIST:
-			// const newWatchlist = {
-			// 	id: action.payload.id,
-			// 	title: action.payload.title,
-			// 	description: action.payload.description,
-			// 	image: action.payload.image,
-			// 	rating: action.payload.rating
-			// };
-			// // return [...state, { ...action.payload }];
-			// return [...state, newWatchlist];
-			console.log('WATCHLIST REDUCER ACTION.PAYLOAD', action.payload);
 			return { ...action.payload };
 
 		case REMOVE_WATCHLIST:
-			return [...state.filter((movie) => movie.id !== action.payload.id)];
+			return {};
+		// case REMOVE_WATCHLIST:
+		// 	return { ...state.filter((movie) => movie.id !== action.payload.id) };
 
 		case LOAD_WATCHLIST:
-			return action.payload;
+			console.log('WATCHLIST REDUCER LOAD ###', action.payload);
+			return { ...state, watchlist: action.payload };
 
 		case LOGOUT_USER:
 			return INITIAL_STATE;

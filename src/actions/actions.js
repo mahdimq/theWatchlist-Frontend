@@ -98,7 +98,7 @@ export const registerUser = (data) => {
 			const user = await CapstoneApi.register(data);
 			localStorage.setItem('user-token', user.token);
 			dispatch(userRegistered(user));
-			dispatch(addAlert(`Registration Successfull! Welcome ${data.username}!`));
+			dispatch(addAlert(`Registration Successful! Welcome ${data.username}!`));
 		} catch (err) {
 			console.error(err);
 		}
@@ -135,7 +135,7 @@ export const logoutUser = () => {
 // ########################################################
 // ADD MOVIE TO DATABASE
 const addMovie = (data) => {
-	console.log('$$$ DATA IN MOVIE ACTIONS $$$', data);
+	console.log('### DATA IN MOVIE ACTIONS ###', data);
 	return async function (dispatch) {
 		try {
 			const res = await CapstoneApi.addMovie(data);
@@ -215,19 +215,17 @@ const addedWatchlist = (movieData) => {
 	return { type: ADD_WATCHLIST, payload: movieData };
 };
 
-// RETRIEVE FROM WATCHLIST
+// RETRIEVE WATCHLIST FROM DATABASE
 export const loadWatchlist = (user_id) => {
 	return async function (dispatch) {
 		const res = await CapstoneApi.getWatchlist(user_id);
+		if (!res) dispatch(addAlert('NO MOVIES IN WATCHLIST'));
 		dispatch(gotWatchlist(res));
 	};
 };
 
 const gotWatchlist = (watchlist) => {
-	return {
-		type: LOAD_WATCHLIST,
-		payload: watchlist
-	};
+	return { type: LOAD_WATCHLIST, payload: watchlist };
 };
 
 // REMOVE FROM WATCHLIST

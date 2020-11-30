@@ -4,7 +4,7 @@ import { StyledMovieInfo } from '../styles/StyledComponents';
 import NoPoster from '../images/no_poster.jpg';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addMovie, addAlert, addToWatchlist } from '../actions/actions';
+import { addMovie, addAlert, addToWatchlist, removeWatchlist } from '../actions/actions';
 import CapstoneApi from '../CapstoneApi';
 
 const IMAGE_URL = 'http://image.tmdb.org/t/p';
@@ -17,6 +17,7 @@ function MovieInfo({ movie }) {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
 	const movies = useSelector((state) => state.movies);
+	const watchlist = useSelector((state) => state.watchlist);
 
 	const checkDbFirst = async (id) => {
 		console.log('CHECK IN DB FIRST TO ADD TO WATCHLIST');
@@ -50,25 +51,35 @@ function MovieInfo({ movie }) {
 
 		await dispatch(addMovie(movieInfo));
 		await dispatch(addToWatchlist(user.id, movieInfo));
-		console.log('movie added to watchlist', movies);
 		history.push('/watchlist');
 	};
 
+	console.log('##### WATCHLIST FROM MOVIE INFO ####', watchlist);
+
 	const handleRemoveMovie = async () => {
+		// const res = await dispatch(removeMovie(movieId, user.token));
+		// // if (res.message) {
+		// // dispatch(addAlert(res.message));
+		// console.log('RES IN MOVIE INFO ###', res);
+		// dispatch(addAlert('res', res));
+		// // }
+		// history.push('/movies');
+
 		// const res = await CapstoneApi.deleteMovie(movieId, user.token);
 		// if (res.message) {
-		// 	alert(res.message);
+		// 	dispatch(addAlert(res.message));
 		// }
 		// history.push('/movies');
 
-		const res = await CapstoneApi.deleteWatchlist(user.id, movieId);
-		if (res.message) {
-			alert(res.message);
-		}
-		history.push('/watchlist');
-
-		// alert(dispatch(addAlert('MOVIE REMOVED FROM WATCHLIST')));
+		// const res = await CapstoneApi.deleteWatchlist(user.id, movieId);
+		// if (res.message) {
+		// 	alert(res.message);
+		// }
 		// history.push('/watchlist');
+
+		await dispatch(removeWatchlist(user.id, movieId));
+		dispatch(addAlert('MOVIE REMOVED FROM WATCHLIST'));
+		history.push('/watchlist');
 	};
 
 	return (

@@ -27,10 +27,10 @@ function Routes() {
 			<Route exact path='/watchlist'>
 				<Watchlist />
 			</Route>
-
+			{/*
 			<Route exact path='/movies'>
 				<Movies />
-			</Route>
+			</Route> */}
 
 			<Route exact path='/profile'>
 				<Profile />

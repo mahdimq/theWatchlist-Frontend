@@ -10,7 +10,7 @@ import Spinner from './Spinner';
 function Movies() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
-	const movies = useSelector((state) => state.movies);
+	const { movie } = useSelector((state) => state.movies);
 
 	const IMAGE_URL = 'http://image.tmdb.org/t/p';
 	const poster_size = 'w500';
@@ -27,20 +27,27 @@ function Movies() {
 		return <Spinner />;
 	}
 
-	console.log('### MOVIE in MAIN COMP###', movies);
+	console.log('### MOVIE in MAIN COMP###', movie);
+	console.log('### MOVIES ARRAY ###', movie);
 
 	return (
-		<Grid header='Movies in the DB'>
-			{movies.movie.map((film) => (
-				<MovieTile
-					key={film.id}
-					clickable={true}
-					image={`${IMAGE_URL}/${poster_size}/${film.poster_path}`}
-					movieId={film.id}
-					movieTitle={film.original_title}
-				/>
-			))}
-		</Grid>
+		<>
+			{movie.length !== 0 ? (
+				<Grid header='Movies in the DB'>
+					{movie.map((film) => (
+						<MovieTile
+							key={film.id}
+							clickable={true}
+							image={`${IMAGE_URL}/${poster_size}/${film.poster_path}`}
+							movieId={film.id}
+							movieTitle={film.original_title}
+						/>
+					))}
+				</Grid>
+			) : (
+				<h1>NO MOVIES IN THE DATABASE</h1>
+			)}
+		</>
 	);
 }
 

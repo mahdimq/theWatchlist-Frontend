@@ -8,6 +8,7 @@ export const useMovieHook = (movieId) => {
 	const [error, setError] = useState(false);
 
 	const checkDbFirst = async (movie_id) => {
+		console.log('### MOVIE ID ###', movie_id);
 		console.log('CHECK IN DB FIRST');
 		let result = await CapstoneApi.getMovie(movie_id);
 		console.log('FOUND IN DB', result);

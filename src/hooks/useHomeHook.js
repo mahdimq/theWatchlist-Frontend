@@ -10,15 +10,22 @@ export const useHomeHook = (searchTerm) => {
 		setError(false);
 		setIsLoading(true);
 
-		const isLoadMore = CapstoneApi.search('page');
+		const isLoadMore = async (query) => {
+			try {
+				const result = await CapstoneApi.search(query);
+				console.log(result);
+			} catch (err) {
+				console.error(err);
+			}
+		};
 
 		try {
 			const result = await CapstoneApi.getPopular();
-			// const randIdx = Math.floor(Math.random() * 20); //<-- to get random hero image from popular movies
+			const randIdx = Math.floor(Math.random() * 20); //<-- to get random hero image from popular movies
 			setState((prevMovies) => ({
 				...prevMovies,
 				movies: isLoadMore !== -1 ? [...prevMovies.movies, ...result.results] : [...result.results],
-				heroImage: prevMovies.heroImage || result.results[0],
+				heroImage: prevMovies.heroImage || result.results[randIdx],
 				currentPage: result.page,
 				totalPages: result.total_pages
 			}));

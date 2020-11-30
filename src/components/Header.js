@@ -32,9 +32,9 @@ function Header() {
 
 				{user.token ? (
 					<ul style={{ display: 'flex' }}>
-						<Link to='/movies'>
+						{/* <Link to='/movies'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Movies</li>
-						</Link>
+						</Link> */}
 
 						<Link to='/watchlist'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Watchlist</li>
