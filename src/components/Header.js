@@ -4,8 +4,7 @@ import { StyledHeader } from '../styles/StyledComponents';
 import { useSelector, useDispatch } from 'react-redux';
 import { addAlert, logoutUser } from '../actions/actions';
 
-// Import logos here "Using temporary youtube logo"<--
-// import logo from '../images/ylogo.png';
+// Import logos here -->
 
 function Header() {
 	const user = useSelector((state) => state.user);

@@ -106,7 +106,7 @@ background:
     }
 
     p {
-      font-family: san-serif;
+      font-family: 'Roboto', sans-serif;;
       font-size: 22px;
       line-height: 26px;
       color: #fff;
@@ -169,6 +169,7 @@ export const StyledGridContent = styled.div`
 		grid-template-columns: repeat(1, 1fr);
 	}
 `;
+
 export const StyledMovieTile = styled.div`
 	img {
 		width: 100%;
