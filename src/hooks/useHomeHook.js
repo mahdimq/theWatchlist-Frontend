@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import CapstoneApi from '../CapstoneApi';
 
-export const useHomeHook = (searchTerm) => {
+export const useHomeHook = (endpoint) => {
+	//<-- pass on endpoint to use in the home page.
 	const [isLoading, setIsLoading] = useState(false);
 	const [state, setState] = useState({ movies: [] });
 	const [error, setError] = useState(false);
@@ -10,17 +11,18 @@ export const useHomeHook = (searchTerm) => {
 		setError(false);
 		setIsLoading(true);
 
-		const isLoadMore = async (query) => {
-			try {
-				const result = await CapstoneApi.search(query);
-				console.log(result);
-			} catch (err) {
-				console.error(err);
-			}
-		};
+		// const isLoadMore = endpoint.search('#something in the string#'); //<-- search for 'page' so the load button is active
+		const isLoadMore = endpoint;
 
 		try {
-			const result = await CapstoneApi.getPopular();
+			const result = await await endpoint;
+			console.log(result);
+		} catch (err) {
+			console.error(err);
+		}
+		try {
+			// const result = await CapstoneApi.getPopular(); //<-- popular movies
+			const result = await CapstoneApi.getTrending(); //<-- trending movies
 			const randIdx = Math.floor(Math.random() * 20); //<-- to get random hero image from popular movies
 			setState((prevMovies) => ({
 				...prevMovies,
@@ -39,8 +41,6 @@ export const useHomeHook = (searchTerm) => {
 	useEffect(() => {
 		fetchMovies();
 	}, []);
-
-	useEffect(() => {}, [searchTerm, state]);
 
 	return [{ state, isLoading, error }, fetchMovies];
 };

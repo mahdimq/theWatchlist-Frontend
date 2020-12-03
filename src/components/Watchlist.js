@@ -45,7 +45,7 @@ function Watchlist() {
 
 			confirmUser();
 		}
-	}, [dispatch, user.id]);
+	}, [dispatch, user.id, user.token, history]);
 
 	if (!isLoaded) {
 		return <Spinner />;

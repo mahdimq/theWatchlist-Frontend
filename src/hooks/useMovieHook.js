@@ -7,26 +7,28 @@ export const useMovieHook = (movieId) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	const checkDbFirst = async (movie_id) => {
-		console.log('### MOVIE ID ###', movie_id);
-		console.log('CHECK IN DB FIRST');
-		let result = await CapstoneApi.getMovie(movie_id);
-		console.log('FOUND IN DB', result);
-		if (!result) {
-			console.log('NOT FOUND IN DB', result);
-			result = await CapstoneApi.getById(movie_id);
-			console.log('PULLING FROM API', result);
-		}
-		return result;
-	};
+	// const checkDbFirst = async (movie_id) => {
+	// 	console.log('### MOVIE ID ###', movie_id);
+	// 	console.log('CHECK IN DB FIRST');
+	// 	let result = await CapstoneApi.getMovie(movie_id);
+	// 	console.log('FOUND IN DB', result);
+	// 	if (!result) {
+	// 		console.log('NOT FOUND IN DB', result);
+	// 		result = await CapstoneApi.getById(movie_id);
+	// 		console.log('PULLING FROM API', result);
+	// 	}
+	// 	return result;
+	// };
 
 	const fetchData = useCallback(async () => {
 		setError(false);
 		setLoading(true);
 
 		try {
-			// const result = await CapstoneApi.getById(movieId);
-			const result = await checkDbFirst(movieId);
+			// Pull from API
+			const result = await CapstoneApi.getById(movieId);
+			// Pull from Database
+			// const result = await checkDbFirst(movieId);
 			const credits = await CapstoneApi.getMovieCredits(movieId);
 			const directors = credits.crew.filter((person) => person.job === 'Director');
 

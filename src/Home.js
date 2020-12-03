@@ -25,7 +25,7 @@ const poster_size = 'w500';
 // ****************************************************************
 
 function Home() {
-	const [search, setSearch] = useState('');
+	const [searchQuery, setSearchQuery] = useState('');
 	const [
 		{
 			state: { movies, currentPage, totalPages, heroImage },
@@ -33,22 +33,23 @@ function Home() {
 			error
 		},
 		fetchMovies
-	] = useHomeHook(search);
+	] = useHomeHook();
 
-	const searchMovies = (search) => {
-		const endpoint = search ? CapstoneApi.search(search) : CapstoneApi.getPopular();
+	const searchMovies = (query) => {
+		const endpoint = searchQuery ? CapstoneApi.search(query) : CapstoneApi.getPopular();
 
-		setSearch(search);
+		setSearchQuery(query);
 		fetchMovies(endpoint);
 	};
 
 	// NEED TO FIX
 	// ============
 	const loadMoreMovies = () => {
-		const searchEndpoint = `${CapstoneApi.search(search)}&page=${currentPage + 1}`;
-		const popularEndpoint = `${CapstoneApi.getPopular(currentPage + 1)}`;
-		console.log('SHOW PAGINATION: ', searchEndpoint);
-		const endpoint = search ? searchEndpoint : popularEndpoint;
+		const searchEndpoint = CapstoneApi.search(searchQuery, currentPage + 1);
+		const popularEndpoint = CapstoneApi.getPopular(currentPage + 1);
+
+		console.log('## SEARCH ENDPOINT ###', searchEndpoint);
+		const endpoint = searchQuery ? searchEndpoint : popularEndpoint;
 
 		fetchMovies(endpoint);
 	};
@@ -137,7 +138,7 @@ function Home() {
 
 			<Search callback={searchMovies} />
 
-			<Grid header={search ? 'Search Result' : 'Popular Movies'}>
+			<Grid header={searchQuery ? 'Search Result' : 'Popular Movies'}>
 				{movies.map((film) => (
 					<MovieTile
 						key={film.id}
@@ -148,49 +149,19 @@ function Home() {
 					/>
 				))}
 			</Grid>
-
 			{/*
-					<Grid header='Trending Movies'>
-						{trending.movies.map((film) => (
-							<MovieTile
-								key={film.id}
-								clickable={true}
-								image={
-									film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
-								}
-								movieId={film.id}
-								movieTitle={film.original_title}
-							/>
-						))}
-					</Grid>
+			<Grid header='Comedy Movies'>
+				{comedy.movies.map((film) => (
+					<MovieTile
+						key={film.id}
+						clickable={true}
+						image={film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster}
+						movieId={film.id}
+						movieTitle={film.original_title}
+					/>
+				))}
+			</Grid> */}
 
-					<Grid header='Action Movies'>
-						{action.movies.map((film) => (
-							<MovieTile
-								key={film.id}
-								clickable={true}
-								image={
-									film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
-								}
-								movieId={film.id}
-								movieTitle={film.original_title}
-							/>
-						))}
-					</Grid>
-
-					<Grid header='Comedy Movies'>
-						{comedy.movies.map((film) => (
-							<MovieTile
-								key={film.id}
-								clickable={true}
-								image={
-									film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
-								}
-								movieId={film.id}
-								movieTitle={film.original_title}
-							/>
-						))}
-					</Grid> */}
 			{loading && <Spinner />}
 			{currentPage < totalPages && !loading && (
 				<LoadMore text='Load More' callback={loadMoreMovies} />

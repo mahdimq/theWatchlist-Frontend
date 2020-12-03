@@ -6,6 +6,9 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
 import { StyledFormComp } from '../styles/StyledFormComp';
 
+import Button from '@material-ui/core/Button';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+
 const initialValues = {
 	username: '',
 	password: '',
@@ -19,7 +22,28 @@ const validationSchema = object().shape({
 	password: string().required()
 });
 
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		root: {
+			'& > *': {
+				margin: theme.spacing(1),
+				width: '35ch'
+			},
+			display: 'flex',
+			flexWrap: 'wrap'
+		},
+		margin: {
+			margin: theme.spacing(1)
+		},
+		button: {
+			margin: theme.spacing(1)
+		}
+	})
+);
+
 const Profile = () => {
+	const classes = useStyles();
+
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
@@ -31,6 +55,7 @@ const Profile = () => {
 		const checkUser = async () => {
 			if (user.token) {
 				const userBio = await dispatch(getUserInfo(user.id));
+				console.log('#### USER BIO IN PROFILE PAGE ###', userBio);
 				setUserData(userBio.payload);
 			} else {
 				dispatch(addAlert('Please login first'));
@@ -82,9 +107,17 @@ const Profile = () => {
 					<h4>First Name: {user.firstname}</h4>
 					<h4>Last Name: {user.lastname}</h4>
 					<h4>Email: {user.email}</h4>
-					<button className='form-btn' onClick={() => setIsVisible(true)}>
+					{/* <button className='form-btn' onClick={() => setIsVisible(true)}>
 						Edit
-					</button>
+					</button> */}
+					<Button
+						variant='contained'
+						size='large'
+						color='secondary'
+						className={classes.button}
+						onClick={() => setIsVisible(true)}>
+						Edit Profile
+					</Button>
 				</>
 			)}
 			{isVisible && (
@@ -106,12 +139,44 @@ const Profile = () => {
 							<ErrorMessage name='password' />
 							<small style={{ display: 'block' }}>Please enter password to update profile</small>
 
-							<button className='form-btn' type='submit'>
-								Update Up
-							</button>
+							{/* <button className='form-btn' type='submit'>
+								Update
+							</button> */}
+							<Button
+								variant='contained'
+								size='large'
+								color='secondary'
+								className={classes.button}
+								type='submit'>
+								Update
+							</Button>
 						</Form>
 					</Formik>
-					<button className='form-btn cancel' onClick={() => setIsVisible(false)}>
+					<Button
+						variant='contained'
+						size='large'
+						color='secondary'
+						className={classes.button}
+						onClick={() => setIsVisible(false)}>
+						Cancel
+					</Button>
+					<Button
+						onClick={logout}
+						variant='contained'
+						size='large'
+						color='primary'
+						className={classes.button}>
+						Logout
+					</Button>
+					<Button
+						onClick={deleteUser}
+						variant='contained'
+						size='large'
+						color='primary'
+						className={classes.button}>
+						Delete
+					</Button>
+					{/* <button className='form-btn cancel' onClick={() => setIsVisible(false)}>
 						Cancel
 					</button>
 					<button className='form-btn logout' onClick={logout}>
@@ -119,7 +184,7 @@ const Profile = () => {
 					</button>
 					<button className='form-btn delete' onClick={deleteUser}>
 						Delete Profile
-					</button>
+					</button> */}
 				</>
 			)}
 		</StyledFormComp>

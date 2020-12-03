@@ -16,23 +16,23 @@ function Routes() {
 				<Home />
 			</Route>
 
-			<Route exact path='/login'>
+			<Route path='/login'>
 				<Login />
 			</Route>
 
-			<Route exact path='/signup'>
+			<Route path='/signup'>
 				<Registration />
 			</Route>
 
-			<Route exact path='/watchlist'>
+			<Route path='/watchlist'>
 				<Watchlist />
 			</Route>
 			{/*
-			<Route exact path='/movies'>
+			<Route path='/movies'>
 				<Movies />
 			</Route> */}
 
-			<Route exact path='/profile'>
+			<Route path='/profile'>
 				<Profile />
 			</Route>
 

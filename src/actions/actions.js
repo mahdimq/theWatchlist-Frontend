@@ -117,7 +117,6 @@ export const removeUser = (id, token) => {
 		try {
 			const message = await CapstoneApi.deleteUser(id, token);
 			await dispatch(logoutUser());
-			dispatch(addAlert(message));
 		} catch (err) {
 			err.forEach((error) => dispatch(addAlert(error)));
 		}

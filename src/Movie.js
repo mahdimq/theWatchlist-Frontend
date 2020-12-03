@@ -6,7 +6,6 @@ import { useMovieHook } from './hooks/useMovieHook';
 import Navigation from './components/Navigation';
 import MovieInfoBar from './components/MovieInfoBar';
 import MovieInfo from './components/MovieInfo';
-// import MovieInfo from './comps3/MovieInfo';
 import Grid from './components/Grid';
 import Spinner from './components/Spinner';
 import Actor from './components/Actor';
@@ -22,7 +21,6 @@ function Movie() {
 
 	return (
 		<div>
-			<h1>MOVIE ID: {movieId}</h1>
 			<Navigation movie={movie.original_title} />
 			<MovieInfo movie={movie} />
 			<MovieInfoBar time={movie.runtime} released={movie.release_date} revenue={movie.revenue} />

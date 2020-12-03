@@ -59,6 +59,7 @@ class CapstoneApi {
 	static async register(data) {
 		// Data --> USER INFORMATION (firstname, lastname, email)
 		const res = await this.request(`users`, data, 'post');
+		console.log('###### RES IN REGISTER #######', res);
 		return res;
 	}
 

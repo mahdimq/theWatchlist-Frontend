@@ -19,45 +19,52 @@ function Header() {
 	return (
 		<StyledHeader>
 			<nav className='header-content'>
-				<Link to='/'>
-					<h4>HOME</h4>
-					{/* <StyledLogo src={logo} alt='youtube' /> */}
-				</Link>
-				<p>
-					{user.token ? (
-						<span style={{ float: 'right', color: 'white' }}>Welcome {user.username}</span>
-					) : null}
-				</p>
+				<div
+					style={{
+						display: 'flex',
+						justifyContent: 'space-between',
+						alignItems: 'center'
+					}}>
+					<Link to='/'>
+						<h4>HOME</h4>
+						{/* <StyledLogo src={logo} alt='youtube' /> */}
+					</Link>
+					<p>
+						{user.token ? (
+							<span style={{ float: 'right', color: 'white' }}>Welcome {user.username}</span>
+						) : null}
+					</p>
 
-				{user.token ? (
-					<ul style={{ display: 'flex' }}>
-						{/* <Link to='/movies'>
+					{user.token ? (
+						<ul style={{ display: 'flex' }}>
+							{/* <Link to='/movies'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Movies</li>
 						</Link> */}
 
-						<Link to='/watchlist'>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Watchlist</li>
-						</Link>
+							<Link to='/watchlist'>
+								<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Watchlist</li>
+							</Link>
 
-						<Link to='/profile'>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Profile</li>
-						</Link>
+							<Link to='/profile'>
+								<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Profile</li>
+							</Link>
 
-						<Link to='/' onClick={logout}>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Logout</li>
-						</Link>
-					</ul>
-				) : (
-					<ul style={{ display: 'flex' }}>
-						<Link to='/login'>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Log In</li>
-						</Link>
+							<Link to='/' onClick={logout}>
+								<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Logout</li>
+							</Link>
+						</ul>
+					) : (
+						<ul style={{ display: 'flex' }}>
+							<Link to='/login'>
+								<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Log In</li>
+							</Link>
 
-						<Link to='/signup'>
-							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Sign Up</li>
-						</Link>
-					</ul>
-				)}
+							<Link to='/signup'>
+								<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Sign Up</li>
+							</Link>
+						</ul>
+					)}
+				</div>
 			</nav>
 		</StyledHeader>
 	);

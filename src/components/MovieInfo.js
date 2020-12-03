@@ -16,7 +16,6 @@ function MovieInfo({ movie }) {
 	const { movieId } = useParams();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const movies = useSelector((state) => state.movies);
 	const watchlist = useSelector((state) => state.watchlist);
 
 	const checkDbFirst = async (id) => {
@@ -37,17 +36,6 @@ function MovieInfo({ movie }) {
 
 		console.log('SPREADING TOKEN WITH MOVIE INFO...');
 		const movieInfo = { ...checkDB, _token: user.token };
-		// const movieInfo = {
-		// 	id: movie.id,
-		// 	original_title: movie.original_title,
-		// 	overview: movie.overview,
-		// 	poster_path: movie.poster_path,
-		// 	vote_average: movie.vote_average,
-		// 	runtime: movie.runtime,
-		// 	release_date: movie.release_date,
-		// 	backdrop_path: movie.backdrop_path,
-		// 	_token: user.token
-		// };
 
 		await dispatch(addMovie(movieInfo));
 		await dispatch(addToWatchlist(user.id, movieInfo));
@@ -71,12 +59,6 @@ function MovieInfo({ movie }) {
 		// }
 		// history.push('/movies');
 
-		// const res = await CapstoneApi.deleteWatchlist(user.id, movieId);
-		// if (res.message) {
-		// 	alert(res.message);
-		// }
-		// history.push('/watchlist');
-
 		await dispatch(removeWatchlist(user.id, movieId));
 		dispatch(addAlert('MOVIE REMOVED FROM WATCHLIST'));
 		history.push('/watchlist');
@@ -96,8 +78,19 @@ function MovieInfo({ movie }) {
 
 				<div className='movieinfo-text'>
 					<h1>{movie.title}</h1>
-					<h3>PLOT</h3>
+					<h3>
+						<em>{movie.tagline}</em>
+					</h3>
 					<p>{movie.overview}</p>
+					<p>
+						Genres:{' '}
+						{movie.genres.map((g) => (
+							<span style={{ color: 'tomato' }} key={g.id}>
+								{' '}
+								{g.name} |{' '}
+							</span>
+						))}
+					</p>
 
 					<div className='rating-director'>
 						<div>
