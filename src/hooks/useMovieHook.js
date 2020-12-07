@@ -46,8 +46,20 @@ export const useMovieHook = (movieId) => {
 		setLoading(false);
 	}, [movieId]);
 
+	const checkDbFirst = async (id) => {
+		console.log('CHECK IN DB FIRST TO ADD TO WATCHLIST');
+		let result = await CapstoneApi.getMovie(id);
+		console.log('FOUND IN DB FOR WATCHLIST', result);
+		if (!result) {
+			console.log('NOT FOUND IN DB', result);
+			result = await CapstoneApi.getById(id);
+			console.log('PULLING FROM API', result);
+		}
+		return result;
+	};
+
 	useEffect(() => {
 		fetchData();
 	}, [fetchData]);
-	return [movie, loading, error];
+	return [movie, loading, error, checkDbFirst];
 };

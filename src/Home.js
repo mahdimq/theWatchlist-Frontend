@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from './components/Grid';
 import HeroImage from './components/HeroImage';
 import LoadMore from './components/LoadMore';
@@ -13,16 +13,9 @@ import { useHomeHook } from './hooks/useHomeHook';
 // show default image if poster image doesn't exist
 import NoPoster from './images/no_poster.jpg';
 
-// ****************************************************************
-// ****************************************************************
-// Find out how to get the image URL and other details from backend
-// rather then frontend, or is frontend alright for this
 const IMAGE_URL = 'http://image.tmdb.org/t/p';
-
 const backdrop_size = 'w1280';
 const poster_size = 'w500';
-// ****************************************************************
-// ****************************************************************
 
 function Home() {
 	const [searchQuery, setSearchQuery] = useState('');
@@ -33,10 +26,13 @@ function Home() {
 			error
 		},
 		fetchMovies
-	] = useHomeHook();
+	] = useHomeHook(searchQuery);
+
+	console.log('#### DETAILS ####', movies);
 
 	const searchMovies = (query) => {
-		const endpoint = searchQuery ? CapstoneApi.search(query) : CapstoneApi.getPopular();
+		const endpoint =
+			searchQuery || query !== '' ? CapstoneApi.search(query) : CapstoneApi.getPopular();
 
 		setSearchQuery(query);
 		fetchMovies(endpoint);
@@ -44,85 +40,14 @@ function Home() {
 
 	// NEED TO FIX
 	// ============
-	const loadMoreMovies = () => {
-		const searchEndpoint = CapstoneApi.search(searchQuery, currentPage + 1);
+	const loadMoreMovies = (query) => {
+		const searchEndpoint = CapstoneApi.search(query, currentPage + 1);
 		const popularEndpoint = CapstoneApi.getPopular(currentPage + 1);
 
-		console.log('## SEARCH ENDPOINT ###', searchEndpoint);
 		const endpoint = searchQuery ? searchEndpoint : popularEndpoint;
 
 		fetchMovies(endpoint);
 	};
-	// ######################################################################################################################
-	// ######################################################################################################################
-	// ######################################################################################################################
-	// ######################################################################################################################
-	// SEPARATE STATE MANAGEMENT LOGIC TO CUSTOM HOOK OR REDUX
-	// const [action, setAction] = useState({ movies: [] });
-	// const [trending, setTrending] = useState({ movies: [] });
-	// const [comedy, setComedy] = useState({ movies: [] });
-
-	// // ######################################################################################################################
-	// // Need to separate different endpoint logic to hooks folder (or redux)
-	// // fetch action
-	// const fetchAction = async () => {
-	// 	try {
-	// 		const result = await CapstoneApi.getAction();
-	// 		const randIdx = Math.floor(Math.random() * 20); //<-- to get random hero image from popular movies
-	// 		setAction((prevMovies) => ({
-	// 			...prevMovies,
-	// 			movies: [...result.results],
-	// 			heroImage: prevMovies.heroImage || result.results[randIdx],
-	// 			currentPage: result.page,
-	// 			totalPages: result.total_pages
-	// 		}));
-	// 	} catch (err) {
-	// 		console.error(err);
-	// 	}
-	// };
-	// // ****************************************************************
-	// // fetch comedy
-	// const fetchComedy = async () => {
-	// 	try {
-	// 		const result = await CapstoneApi.getComedy();
-	// 		const randIdx = Math.floor(Math.random() * 20); //<-- to get random hero image from popular movies
-	// 		setComedy((prevMovies) => ({
-	// 			...prevMovies,
-	// 			movies: [...result.results],
-	// 			heroImage: prevMovies.heroImage || result.results[randIdx],
-	// 			currentPage: result.page,
-	// 			totalPages: result.total_pages
-	// 		}));
-	// 	} catch (err) {
-	// 		console.error(err);
-	// 	}
-	// };
-	// // ****************************************************************
-	// // fetch trending
-	// const fetchTrending = async () => {
-	// 	try {
-	// 		const result = await CapstoneApi.getTrending();
-	// 		const randIdx = Math.floor(Math.random() * 20); //<-- to get random hero image from popular movies
-	// 		setTrending((prevMovies) => ({
-	// 			...prevMovies,
-	// 			movies: [...result.results],
-	// 			heroImage: prevMovies.heroImage || result.results[randIdx],
-	// 			currentPage: result.page,
-	// 			totalPages: result.total_pages
-	// 		}));
-	// 	} catch (err) {
-	// 		console.error(err);
-	// 	}
-	// };
-
-	// useEffect(() => {
-	// 	fetchTrending();
-	// 	fetchComedy();
-	// 	fetchAction();
-	// }, []);
-	// ######################################################################################################################
-	// ######################################################################################################################
-	// ######################################################################################################################
 	// ######################################################################################################################
 
 	if (!movies[0]) return <Spinner />;
@@ -130,41 +55,50 @@ function Home() {
 
 	return (
 		<>
-			<HeroImage
-				image={`${IMAGE_URL}/${backdrop_size}/${heroImage.backdrop_path}`}
-				title={heroImage.original_title}
-				text={heroImage.overview}
-			/>
+			{!searchQuery && (
+				<HeroImage
+					image={`${IMAGE_URL}/${backdrop_size}/${heroImage.backdrop_path}`}
+					title={heroImage.original_title}
+					text={heroImage.overview}
+				/>
+			)}
 
 			<Search callback={searchMovies} />
 
-			<Grid header={searchQuery ? 'Search Result' : 'Popular Movies'}>
+			<Grid header={searchQuery ? 'Search Results' : 'Popular Movies'}>
 				{movies.map((film) => (
-					<MovieTile
-						key={film.id}
-						clickable={true}
-						image={film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster}
-						movieId={film.id}
-						movieTitle={film.original_title}
-					/>
+					<div key={film.id}>
+						<MovieTile
+							clickable={true}
+							image={
+								film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
+							}
+							movieId={film.id}
+							movieTitle={film.original_title}
+						/>
+						<p style={{ textAlign: 'center', margin: '0 auto' }}>{film.title}</p>
+					</div>
 				))}
 			</Grid>
-			{/*
-			<Grid header='Comedy Movies'>
-				{comedy.movies.map((film) => (
-					<MovieTile
-						key={film.id}
-						clickable={true}
-						image={film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster}
-						movieId={film.id}
-						movieTitle={film.original_title}
-					/>
-				))}
+
+			{/* <Grid header='Comedy Movies'>
+				<MovieTile
+					clickable={true}
+					image={
+						movies[0].poster_path
+							? `${IMAGE_URL}/${poster_size}/${movies[0].poster_path}`
+							: NoPoster
+					}
+					movieId={movies[0].id}
+					movieTitle={movies[0].original_title}
+				/>
 			</Grid> */}
 
 			{loading && <Spinner />}
-			{currentPage < totalPages && !loading && (
+			{currentPage < totalPages && !loading ? (
 				<LoadMore text='Load More' callback={loadMoreMovies} />
+			) : (
+				<h1>NO MORE RESULTS</h1>
 			)}
 		</>
 	);

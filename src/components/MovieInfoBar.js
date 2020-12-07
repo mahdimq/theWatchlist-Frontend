@@ -16,16 +16,6 @@ const formatDate = (date) => {
 	return d.toDateString();
 };
 
-// Helper function to calculate movie budget
-const convertMoney = (money) => {
-	const formatter = new Intl.NumberFormat(`en-us`, {
-		style: 'currency',
-		currency: 'USD',
-		minimumFractionDigits: 0
-	});
-	return formatter.format(money);
-};
-
 function MovieInfoBar({ time, released, revenue }) {
 	return (
 		<StyledMovieInfoBar>
@@ -40,12 +30,6 @@ function MovieInfoBar({ time, released, revenue }) {
 				<div className='movieinfobar-content-col'>
 					<span className='movieinfobar-info'>Released: {formatDate(released)}</span>
 				</div>
-
-				{/* MOVIE REVENUE */}
-
-				{/* <div className='movieinfobar-content-col'>
-					<span className='movieinfobar-info'>Revenue: {convertMoney(revenue)}</span>
-				</div> */}
 			</div>
 		</StyledMovieInfoBar>
 	);

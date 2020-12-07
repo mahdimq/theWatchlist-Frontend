@@ -26,21 +26,21 @@ function Header() {
 						alignItems: 'center'
 					}}>
 					<Link to='/'>
-						<h4>HOME</h4>
+						<h4>theWATCHlist</h4>
 						{/* <StyledLogo src={logo} alt='youtube' /> */}
 					</Link>
-					<p>
-						{user.token ? (
-							<span style={{ float: 'right', color: 'white' }}>Welcome {user.username}</span>
-						) : null}
-					</p>
 
 					{user.token ? (
 						<ul style={{ display: 'flex' }}>
 							{/* <Link to='/movies'>
 							<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Movies</li>
 						</Link> */}
-
+							{user.token ? (
+								<li style={{ marginLeft: '0.5em', listStyle: 'none', color: 'white' }}>
+									{' '}
+									Welcome {user.username}
+								</li>
+							) : null}
 							<Link to='/watchlist'>
 								<li style={{ marginLeft: '0.5em', listStyle: 'none' }}>Watchlist</li>
 							</Link>

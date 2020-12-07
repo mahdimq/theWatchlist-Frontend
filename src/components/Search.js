@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { StyledSearchBar, StyledSearchBarContent } from '../styles/StyledComponents';
-import CapstoneApi from '../CapstoneApi';
 
 function Search({ callback }) {
 	const [search, setSearch] = useState('');
@@ -14,13 +16,16 @@ function Search({ callback }) {
 
 		timeOut.current = setTimeout(() => {
 			callback(value);
-		}, 500);
+		}, 300);
 	};
+
+	console.log('### SEARCH PAGE RENDERING ###');
 
 	return (
 		<StyledSearchBar>
 			<StyledSearchBarContent>
-				<input type='text' placeholder='Search Movie' onChange={handleSearch} value={search} />
+				<FontAwesomeIcon className='search' icon={faSearch} />
+				<input type='text' placeholder='Search Movie...' onChange={handleSearch} value={search} />
 			</StyledSearchBarContent>
 		</StyledSearchBar>
 	);

@@ -127,16 +127,6 @@ class CapstoneApi {
 	// ##################### API ENDPOINTS ####################
 	// ########################################################
 
-	// static async getLatest() {
-	// 	const result = await this.request(`api/`, 'get');
-	// 	return result;
-	// }
-
-	// static async getTopRated() {
-	// 	const result = await this.request(`api/`);
-	// 	return result;
-	// }
-
 	static async getTrending() {
 		const result = await this.request(`api/trending`);
 		return result;
@@ -144,16 +134,6 @@ class CapstoneApi {
 
 	static async getPopular(page) {
 		const result = await this.request(`api/popular`, page, 'get');
-		return result;
-	}
-
-	static async getComedy() {
-		const result = await this.request(`api/comedy`);
-		return result;
-	}
-
-	static async getAction() {
-		const result = await this.request(`api/action`);
 		return result;
 	}
 
