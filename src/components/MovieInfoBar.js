@@ -1,34 +1,36 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StyledMovieInfoBar } from '../styles/StyledComponents';
+import { calculateTime, formatDate } from '../helpers/helpers';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 
-// Helper functions to help calculate the movie runtime
-const calculateTime = (time) => {
-	const hours = Math.floor(time / 60);
-	const mins = time % 60;
-	return `${hours}h ${mins}m`;
-};
-
-// Helper function to calculate formatted date
-const formatDate = (date) => {
-	// NEED TO ADD DATE FORMATTER IN HERE
-	let d = new Date(date);
-	return d.toDateString();
-};
-
-function MovieInfoBar({ time, released, revenue }) {
+function MovieInfoBar({ time, released, budget }) {
 	return (
 		<StyledMovieInfoBar>
 			{/* MOVIE RUN TIME */}
 			<div className='movieinfobar-content'>
 				<div className='movieinfobar-content-col'>
-					<span className='movieinfobar-info'>Running time: {calculateTime(time)}</span>
+					<span className='movieinfobar-info'>
+						<FontAwesomeIcon
+							className='icon'
+							style={{ color: 'orange', marginRight: '0.4em' }}
+							icon={faClock}
+						/>
+						Running time: {calculateTime(time)}
+					</span>
 				</div>
 
 				{/* RELEASE DATE  */}
-
 				<div className='movieinfobar-content-col'>
-					<span className='movieinfobar-info'>Released: {formatDate(released)}</span>
+					<span className='movieinfobar-info'>
+						<FontAwesomeIcon
+							className='icon'
+							style={{ color: 'skyBlue', marginRight: '0.4em' }}
+							icon={faCalendarAlt}
+						/>
+						Released: {formatDate(released)}
+					</span>
 				</div>
 			</div>
 		</StyledMovieInfoBar>
@@ -36,9 +38,7 @@ function MovieInfoBar({ time, released, revenue }) {
 }
 
 MovieInfoBar.propTypes = {
-	time: PropTypes.number,
-	budget: PropTypes.number,
-	revenue: PropTypes.number
+	time: PropTypes.number
 };
 
 export default MovieInfoBar;

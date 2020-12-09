@@ -17,8 +17,6 @@ function userReducer(state = INITIAL_STATE, action) {
 			return action.payload;
 
 		case GET_USER_INFO:
-			return { ...state, ...action.payload };
-
 		case UPDATE_USER:
 			return { ...state, ...action.payload };
 

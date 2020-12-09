@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+import { debounce } from 'lodash';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
@@ -8,6 +9,8 @@ import { StyledSearchBar, StyledSearchBarContent } from '../styles/StyledCompone
 function Search({ callback }) {
 	const [search, setSearch] = useState('');
 	const timeOut = useRef(null);
+	// Debounce waits a while before making an api call to limit api calls
+	const debouncedSave = useRef(debounce((nextVal) => setSearch(nextVal), 300)).current;
 
 	const handleSearch = (e) => {
 		const { value } = e.target;
@@ -16,10 +19,10 @@ function Search({ callback }) {
 
 		timeOut.current = setTimeout(() => {
 			callback(value);
-		}, 300);
+		}, 400);
+		debouncedSave(value);
+		console.log('## DEBOUNBCED ##', debouncedSave);
 	};
-
-	console.log('### SEARCH PAGE RENDERING ###');
 
 	return (
 		<StyledSearchBar>

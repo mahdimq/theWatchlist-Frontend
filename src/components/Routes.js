@@ -1,13 +1,14 @@
 import React from 'react';
 import { Switch, Redirect, Route } from 'react-router-dom';
+
+// Import Components
 import Home from '../Home';
 import Login from './Login';
-
 import Registration from './Registration';
 import Profile from './Profile';
 import Watchlist from './Watchlist';
 import Movie from '../Movie';
-import Movies from './Movies';
+// import Movies from './Movies'; <-- used for development
 
 function Routes() {
 	return (
@@ -27,6 +28,7 @@ function Routes() {
 			<Route path='/watchlist'>
 				<Watchlist />
 			</Route>
+
 			{/*
 			<Route path='/movies'>
 				<Movies />

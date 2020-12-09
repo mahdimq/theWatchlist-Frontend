@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { StyledActor } from '../styles/StyledComponents';
 import NoImage from '../images/no_poster.jpg';
-
-const IMAGE_URL = 'http://image.tmdb.org/t/p';
-const poster_size = 'w500';
+import { IMAGE_URL, poster_size } from '../helpers/config';
 
 function Actor({ actor }) {
 	return (

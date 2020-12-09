@@ -4,10 +4,10 @@ import { logoutUser, addAlert, updateUser, removeUser, getUserInfo } from '../ac
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
-import { StyledFormComp } from '../styles/StyledFormComp';
 
+// Import Styles
+import { StyledFormComp } from '../styles/StyledFormComp';
 import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 
 const initialValues = {
 	username: '',
@@ -22,28 +22,7 @@ const validationSchema = object().shape({
 	password: string().required()
 });
 
-const useStyles = makeStyles((theme: Theme) =>
-	createStyles({
-		root: {
-			'& > *': {
-				margin: theme.spacing(1),
-				width: '35ch'
-			},
-			display: 'flex',
-			flexWrap: 'wrap'
-		},
-		margin: {
-			margin: theme.spacing(1)
-		},
-		button: {
-			margin: theme.spacing(1)
-		}
-	})
-);
-
 const Profile = () => {
-	const classes = useStyles();
-
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
@@ -55,7 +34,6 @@ const Profile = () => {
 		const checkUser = async () => {
 			if (user.token) {
 				const userBio = await dispatch(getUserInfo(user.id));
-				console.log('#### USER BIO IN PROFILE PAGE ###', userBio);
 				setUserData(userBio.payload);
 			} else {
 				dispatch(addAlert('Please login first'));
@@ -77,7 +55,6 @@ const Profile = () => {
 			await dispatch(updateUser(user.id, data));
 			setIsVisible(false);
 		} catch (error) {
-			dispatch(addAlert(error));
 			console.error(error);
 		}
 	};
@@ -87,8 +64,7 @@ const Profile = () => {
 	async function logout() {
 		await dispatch(logoutUser());
 		localStorage.removeItem('user-token');
-		dispatch(addAlert('You have successfully logged out'));
-		history.push('/');
+		history.push('/login');
 	}
 
 	// Delete the user and remove token from localstorage
@@ -96,7 +72,7 @@ const Profile = () => {
 	async function deleteUser() {
 		localStorage.removeItem('user-token');
 		await dispatch(removeUser(user.id, user.token));
-		dispatch(addAlert('user deleted!'));
+		// dispatch(addAlert('user deleted!'));
 		history.push('/');
 	}
 
@@ -104,18 +80,22 @@ const Profile = () => {
 		<StyledFormComp>
 			{!isVisible && (
 				<>
-					<h4>First Name: {user.firstname}</h4>
-					<h4>Last Name: {user.lastname}</h4>
-					<h4>Email: {user.email}</h4>
-					{/* <button className='form-btn' onClick={() => setIsVisible(true)}>
-						Edit
-					</button> */}
+					<h3>
+						First Name: <span>{user.firstname}</span>
+					</h3>
+					<h3>
+						Last Name: <span>{user.lastname}</span>
+					</h3>
+					<h3>
+						Email: <span>{user.email}</span>
+					</h3>
+
 					<Button
 						variant='contained'
 						size='large'
 						color='secondary'
-						className={classes.button}
-						onClick={() => setIsVisible(true)}>
+						onClick={() => setIsVisible(true)}
+						className='profile-btn'>
 						Edit Profile
 					</Button>
 				</>
@@ -129,62 +109,60 @@ const Profile = () => {
 						enableReinitialize>
 						<Form>
 							<Field className='input-box' placeholder='First Name' name='firstname' type='text' />
-
 							<Field className='input-box' placeholder='Last Name' name='lastname' type='text' />
-
 							<Field className='input-box' placeholder='Email' name='email' type='email' />
 							<ErrorMessage name='email' />
 
-							<Field className='input-box' placeholder='Password' name='password' type='password' />
+							<Field
+								className='input-box'
+								placeholder='Please enter password to update profile'
+								name='password'
+								type='password'
+							/>
 							<ErrorMessage name='password' />
-							<small style={{ display: 'block' }}>Please enter password to update profile</small>
+							<div className='button-group'>
+								<div className='btn-col'>
+									<Button
+										className='profile-btns'
+										variant='contained'
+										size='large'
+										color='primary'
+										type='submit'>
+										Update
+									</Button>
 
-							{/* <button className='form-btn' type='submit'>
-								Update
-							</button> */}
-							<Button
-								variant='contained'
-								size='large'
-								color='secondary'
-								className={classes.button}
-								type='submit'>
-								Update
-							</Button>
+									<Button
+										className='profile-btns'
+										variant='contained'
+										size='large'
+										color='secondary'
+										onClick={() => setIsVisible(false)}>
+										Cancel
+									</Button>
+								</div>
+
+								<div className='btn-col'>
+									<Button
+										onClick={logout}
+										className='profile-btns'
+										variant='contained'
+										size='large'
+										color='default'>
+										Logout
+									</Button>
+
+									<Button
+										onClick={deleteUser}
+										className='profile-btns'
+										variant='contained'
+										size='large'
+										color='default'>
+										Delete
+									</Button>
+								</div>
+							</div>
 						</Form>
 					</Formik>
-					<Button
-						variant='contained'
-						size='large'
-						color='secondary'
-						className={classes.button}
-						onClick={() => setIsVisible(false)}>
-						Cancel
-					</Button>
-					<Button
-						onClick={logout}
-						variant='contained'
-						size='large'
-						color='primary'
-						className={classes.button}>
-						Logout
-					</Button>
-					<Button
-						onClick={deleteUser}
-						variant='contained'
-						size='large'
-						color='primary'
-						className={classes.button}>
-						Delete
-					</Button>
-					{/* <button className='form-btn cancel' onClick={() => setIsVisible(false)}>
-						Cancel
-					</button>
-					<button className='form-btn logout' onClick={logout}>
-						Logout
-					</button>
-					<button className='form-btn delete' onClick={deleteUser}>
-						Delete Profile
-					</button> */}
 				</>
 			)}
 		</StyledFormComp>

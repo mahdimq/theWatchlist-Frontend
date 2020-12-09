@@ -35,14 +35,10 @@ export const removeAlerts = () => {
 // LOGIN USER
 export const loginUser = (data) => {
 	return async function (dispatch) {
-		try {
-			const user = await CapstoneApi.login(data);
-			localStorage.setItem('user-token', user.token);
-			await dispatch(userLoggedIn(user));
-			await dispatch(addAlert(`Welcome back ${user.username}`));
-		} catch (err) {
-			console.log(err);
-		}
+		const user = await CapstoneApi.login(data);
+		localStorage.setItem('user-token', user.token);
+		await dispatch(userLoggedIn(user));
+		await dispatch(addAlert(`Welcome back ${user.username}`, 'success'));
 	};
 };
 
@@ -76,11 +72,12 @@ export const updateUser = (id, data) => {
 	return async function (dispatch) {
 		try {
 			const user = await CapstoneApi.updateUser(id, data);
-			dispatch(userUpdated(user));
-			dispatch(addAlert(`User Information updated!`));
+			await dispatch(userUpdated(user));
+			await dispatch(addAlert(`User Information updated!`, 'info'));
 		} catch (err) {
-			err.forEach((error) => dispatch(addAlert(error)));
-			console.error(err);
+			err.forEach((error) => {
+				dispatch(addAlert('Invalid Password', 'error'));
+			});
 		}
 	};
 };
@@ -94,14 +91,10 @@ const userUpdated = (user) => {
 // REGISTER A NEW USER
 export const registerUser = (data) => {
 	return async function (dispatch) {
-		try {
-			const user = await CapstoneApi.register(data);
-			localStorage.setItem('user-token', user.token);
-			dispatch(userRegistered(user));
-			dispatch(addAlert(`Registration Successful! Welcome ${data.username}!`));
-		} catch (err) {
-			console.error(err);
-		}
+		const user = await CapstoneApi.register(data);
+		localStorage.setItem('user-token', user.token);
+		await dispatch(userRegistered(user));
+		await dispatch(addAlert(`Registration Successful! Welcome ${data.username}!`, 'success'));
 	};
 };
 
@@ -115,10 +108,13 @@ const userRegistered = (user) => {
 export const removeUser = (id, token) => {
 	return async function (dispatch) {
 		try {
-			const message = await CapstoneApi.deleteUser(id, token);
-			await dispatch(logoutUser());
+			await CapstoneApi.deleteUser(id, token);
+			dispatch(addAlert('User has been deleted', 'error'));
+			await dispatch(logout());
 		} catch (err) {
-			err.forEach((error) => dispatch(addAlert(error)));
+			err.forEach((error) => {
+				dispatch(addAlert(error, 'error'));
+			});
 		}
 	};
 };
@@ -126,6 +122,12 @@ export const removeUser = (id, token) => {
 // =====================================================
 // LOGOUT USER
 export const logoutUser = () => {
+	return async function (dispatch) {
+		await dispatch(logout());
+		await dispatch(addAlert('User logged out', 'warning'));
+	};
+};
+export const logout = () => {
 	return { type: LOGOUT_USER };
 };
 
@@ -133,12 +135,12 @@ export const logoutUser = () => {
 // ################ MOVIE STATE MANAGEMENT ################
 // ########################################################
 // ADD MOVIE TO DATABASE
-const addMovie = (data) => {
+export const addMovie = (data) => {
 	console.log('### DATA IN MOVIE ACTIONS ###', data);
 	return async function (dispatch) {
 		try {
 			const res = await CapstoneApi.addMovie(data);
-			dispatch(movieAdded(res));
+			await dispatch(movieAdded(res));
 		} catch (err) {
 			console.error(err);
 		}
@@ -153,10 +155,10 @@ const movieAdded = (movieData) => {
 // =====================================================
 
 // RETRIEVE MOVIE FROM DATABASE
-const getMovie = (id) => {
+export const getMovie = (id) => {
 	return async function (dispatch) {
 		const res = await CapstoneApi.getMovie(id);
-		dispatch(gotMovie(res));
+		await dispatch(gotMovie(res));
 	};
 };
 
@@ -170,7 +172,7 @@ const gotMovie = (movieData) => {
 export const getAllFilms = () => {
 	return async function (dispatch) {
 		const movies = await CapstoneApi.getAllMovies();
-		dispatch(gotMovie(movies));
+		await dispatch(gotMovie(movies));
 	};
 };
 
@@ -181,7 +183,7 @@ export const removeMovie = (id) => {
 	return async function (dispatch) {
 		const res = await CapstoneApi.deleteMovie(id);
 		console.log('### REMOVE MOVIE ###', res);
-		dispatch(movieRemoved());
+		await dispatch(movieRemoved());
 	};
 };
 
@@ -201,10 +203,12 @@ export const addToWatchlist = (user_id, data) => {
 	return async function (dispatch) {
 		try {
 			const res = await CapstoneApi.addWatchlist(user_id, data);
-			console.log('## RES IN WATCHLIST ##', res);
-			dispatch(addedWatchlist(res));
+			await dispatch(addedWatchlist(res));
+			await dispatch(addAlert('Movie added to watchlist', 'info'));
 		} catch (err) {
-			console.error(err);
+			err.forEach((error) => {
+				dispatch(addAlert(error, 'error'));
+			});
 		}
 	};
 };
@@ -217,9 +221,15 @@ const addedWatchlist = (movieData) => {
 // RETRIEVE WATCHLIST FROM DATABASE
 export const loadWatchlist = (user_id) => {
 	return async function (dispatch) {
-		const res = await CapstoneApi.getWatchlist(user_id);
-		if (!res) dispatch(addAlert('NO MOVIES IN WATCHLIST'));
-		dispatch(gotWatchlist(res));
+		try {
+			const res = await CapstoneApi.getWatchlist(user_id);
+			if (!res) await dispatch(addAlert('NO MOVIES FOUND IN WATCHLIST', 'warning'));
+			await dispatch(gotWatchlist(res));
+		} catch (err) {
+			err.forEach((error) => {
+				dispatch(addAlert(error, 'error'));
+			});
+		}
 	};
 };
 
@@ -231,7 +241,8 @@ const gotWatchlist = (watchlist) => {
 export const removeWatchlist = (user_id, movie_id) => {
 	return async function (dispatch) {
 		await CapstoneApi.deleteWatchlist(user_id, movie_id);
-		dispatch(removedWatchlist(movie_id));
+		await dispatch(removedWatchlist(movie_id));
+		await dispatch(addAlert('Movie removed from watchlist', 'info'));
 	};
 };
 
@@ -239,5 +250,3 @@ export const removeWatchlist = (user_id, movie_id) => {
 const removedWatchlist = (movie_id) => {
 	return { type: REMOVE_WATCHLIST, payload: movie_id };
 };
-
-export { addMovie, getMovie };

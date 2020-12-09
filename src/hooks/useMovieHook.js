@@ -7,19 +7,6 @@ export const useMovieHook = (movieId) => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 
-	// const checkDbFirst = async (movie_id) => {
-	// 	console.log('### MOVIE ID ###', movie_id);
-	// 	console.log('CHECK IN DB FIRST');
-	// 	let result = await CapstoneApi.getMovie(movie_id);
-	// 	console.log('FOUND IN DB', result);
-	// 	if (!result) {
-	// 		console.log('NOT FOUND IN DB', result);
-	// 		result = await CapstoneApi.getById(movie_id);
-	// 		console.log('PULLING FROM API', result);
-	// 	}
-	// 	return result;
-	// };
-
 	const fetchData = useCallback(async () => {
 		setError(false);
 		setLoading(true);
@@ -27,6 +14,7 @@ export const useMovieHook = (movieId) => {
 		try {
 			// Pull from API
 			const result = await CapstoneApi.getById(movieId);
+
 			// Pull from Database
 			// const result = await checkDbFirst(movieId);
 			const credits = await CapstoneApi.getMovieCredits(movieId);
@@ -39,27 +27,14 @@ export const useMovieHook = (movieId) => {
 			});
 		} catch (err) {
 			setError(true);
-			console.log('ERROR FROM THE MOVIE HOOK', err);
 			console.error(err);
 		}
-
 		setLoading(false);
 	}, [movieId]);
-
-	const checkDbFirst = async (id) => {
-		console.log('CHECK IN DB FIRST TO ADD TO WATCHLIST');
-		let result = await CapstoneApi.getMovie(id);
-		console.log('FOUND IN DB FOR WATCHLIST', result);
-		if (!result) {
-			console.log('NOT FOUND IN DB', result);
-			result = await CapstoneApi.getById(id);
-			console.log('PULLING FROM API', result);
-		}
-		return result;
-	};
 
 	useEffect(() => {
 		fetchData();
 	}, [fetchData]);
-	return [movie, loading, error, checkDbFirst];
+
+	return [movie, loading, error];
 };

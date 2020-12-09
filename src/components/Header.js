@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { StyledHeader } from '../styles/StyledComponents';
+import { StyledHeader, StyledTMDBLogo } from '../styles/StyledComponents';
 import { useSelector, useDispatch } from 'react-redux';
-import { addAlert, logoutUser } from '../actions/actions';
+import { logoutUser } from '../actions/actions';
 
-// Import logos here -->
+// Import logos
+import TMDBLogo from '../images/tmdb_logo.svg';
 
 function Header() {
 	const user = useSelector((state) => state.user);
@@ -13,7 +14,6 @@ function Header() {
 	const logout = async () => {
 		await dispatch(logoutUser());
 		localStorage.removeItem('user-token');
-		dispatch(addAlert('You have successfully logged out'));
 	};
 
 	return (
@@ -64,6 +64,7 @@ function Header() {
 							</Link>
 						</ul>
 					)}
+					<StyledTMDBLogo src={TMDBLogo} alt='tmdb-logo' />
 				</div>
 			</nav>
 		</StyledHeader>

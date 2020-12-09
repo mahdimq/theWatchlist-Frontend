@@ -1,3 +1,6 @@
+// ============================================ //
+// ## COMPONENT USED DURING DEVELOPMENT ONLY ##
+// ============================================ //
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -26,9 +29,6 @@ function Movies() {
 	if (!isLoaded) {
 		return <Spinner />;
 	}
-
-	console.log('### MOVIE in MAIN COMP###', movie);
-	console.log('### MOVIES ARRAY ###', movie);
 
 	return (
 		<>

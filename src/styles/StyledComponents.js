@@ -1,23 +1,24 @@
-import styled from 'styled-components';
-import Modal, { BaseModalBackground } from 'styled-react-modal';
-
+import styled, { createGlobalStyle } from 'styled-components';
 const IMAGE_URL = 'http://image.tmdb.org/t/p';
 const backdrop_size = 'w1280';
 // const poster_size = 'w500';
 
-export const StyledModal = Modal.styled`
-  width: 100%;
-  height: 20rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: ${(props) => props.opacity};
-  transition: opacity ease 500ms;
+export const GlobalStyle = createGlobalStyle`
+	body {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		background-color: #000;
+		color: #fff;
+	}
 `;
 
-export const FadingBackground = styled(BaseModalBackground)`
-	// opacity: ${(props) => props.opacity};
-	transition: opacity ease 200ms;
+export const StyledTMDBLogo = styled.img`
+	width: 85px;
+	@media screen and (max-width: 500px) {
+		display: inline-block;
+		width: 60px;
+	}
 `;
 
 export const StyledHeader = styled.div`
@@ -79,14 +80,13 @@ export const StyledLogo = styled.img`
 `;
 
 export const StyledHero = styled.div`
-background:
-	linear-gradient(
-    to bottom,
-      rgba(0, 0, 0, 0.1) 39%,
-      rgba(0, 0, 0, 0.2) 41%,
-      rgba(0, 0, 0, 0.8) 100%
-    ),
-    url(${(props) => props.image}), #1c1c1c;
+	background: linear-gradient(
+			to bottom,
+			rgba(0, 0, 0, 0.1) 39%,
+			rgba(0, 0, 0, 0.2) 41%,
+			rgba(0, 0, 0, 0.8) 100%
+		),
+		url(${(props) => props.image}), #1c1c1c;
 
 	background-size: 100%, cover;
 	background-position: center, center;
@@ -99,66 +99,73 @@ background:
 		max-width: 1280px;
 		padding: 1.5em;
 		margin: 0 auto;
-  }
+	}
 
-  .heroimage-text {
-    z-index: 100;
-    max-width: 700px;
-    position: absolute;
-    bottom: 40px;
-    margin-right: 1.5em;
-    min-height: 100px;
-    color: #fff;
+	.heroimage-text {
+		z-index: 100;
+		max-width: 700px;
+		position: absolute;
+		bottom: 40px;
+		margin-right: 1.5em;
+		min-height: 100px;
+		color: #fff;
 
-    h1 {
-      font-family: sans-serif;
-      font-size: 3em;
-      color: #fff;
+		h1 {
+			font-family: 'Abel', sans-serif;
+			font-size: 3em;
+			color: #fff;
 
-      @media screen and (max-width: 720px) {
-        font-size: 38px;
-        color: #fff;
-      }
-    }
+			@media screen and (max-width: 720px) {
+				font-size: 2.5em;
+				color: #fff;
+			}
+		}
 
-    p {
-      font-family: 'Roboto', sans-serif;;
-      font-size: 22px;
-      line-height: 26px;
-      color: #fff;
+		p {
+			font-family: 'Abel', sans-serif;
+			font-size: 1.4em;
+			line-height: 1.4;
+			color: #fff;
 
-      @media screen and (max-width: 720px) {
-        font-sizeL 1em;
-        line-height: 20px;
-        color: #fff;
-      }
-    }
+			@media screen and (max-width: 720px) {
+				font-size: 1.2em;
+				line-height: 1.3;
+				color: #fff;
+			}
+		}
 
-    @media screen and (max-width: 720px) {
-      max-width: 100$
-    }
-  }
+		@media screen and (max-width: 720px) {
+			max-width: 100%;
+		}
+	}
 
-  @keyframes animateImage {
-    from {
-      opacity: 0
-    }
-    to {
-      opacity: 1
-    }
-  }
+	@keyframes animateImage {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
 `;
 
 export const StyledGrid = styled.div`
 	max-width: 1280px;
 	margin: 0 auto;
 	padding: 0 20px;
+
+	.movietile-title {
+		text-align: center;
+		margin: 0 auto;
+		font-family: 'Abel', sans-serif;
+	}
+
 	h1 {
 		font-family: 'Abel', sans-serif;
-		font-size: 42px;
+		font-size: 2.5em;
 
 		@media screen and (max-width: 768px) {
-			font-size: 22px;
+			font-size: 1.75em;
 		}
 	}
 `;
@@ -192,7 +199,7 @@ export const StyledMovieTile = styled.div`
 		/* min-height: 340px; */
 		transition: all 0.3s;
 		object-fit: cover;
-		border-radius: 20px;
+		border-radius: 10px;
 		animation: animateMovieTile 0.5s;
 
 		:hover {
@@ -261,9 +268,15 @@ export const StyledMovieInfo = styled.div`
 
 		h3 {
       display: flex;
-      flex-wrap: wrap;
-			font-size: 1em;
+      flex-wrap: no-wrap;
+			font-size: 1.1em;
 			margin: 0.75em auto 0.5em;
+			font-family: "Abel";
+			font-weight: bold;
+
+			@media screen and (min-width: 1000px) {
+				font-size: 1.3em !important;
+			}
 		}
 
 		p {
@@ -336,6 +349,7 @@ export const StyledMovieInfo = styled.div`
 	.button-group {
 		margin: 0;
 	}
+
 
 	@keyframes animateMovieinfo {
 		from {
@@ -425,24 +439,31 @@ export const StyledMovieInfoBar = styled.div`
 `;
 
 export const StyledLoadMoreBtn = styled.button`
-	background: #000;
+	box-sizing: inherit;
+	transition-property: all;
+	transition-duration: 0.6s;
+	transition-timing-function: ease;
+
+	background: #c20a0a;
 	width: 25%;
-	min-width: 200px;
-	height: 70px;
+	min-width: 10rem;
+	height: 2em;
 	color: #fff;
 	cursor: pointer;
-	transition: all 0.3s;
-	border-radius: 40px;
+
+	border-radius: 10px;
+	border: none;
 	font-family: 'Abel', sans-serif;
-	font-size: 28px;
+	font-size: 1.5em;
 	max-width: 1280px;
 	display: block;
-	margin: 20px auto;
-	padding: 0 20px;
+	margin: 1.5rem auto;
+	padding: 0 1.25em;
 	outline: none;
 
 	:hover {
 		opacity: 0.8;
+		color: #000;
 	}
 `;
 
@@ -494,15 +515,19 @@ export const StyledSearchBarContent = styled.div`
 `;
 
 export const StyledSpinner = styled.div`
-	border: 3px solid #f3f3f3;
-	border-top: 3px solid red;
-	border-bottom: 3px solid red;
-
+	border: 3px solid #2b2120;
+	border-top: 3px solid #c20a0a;
+	border-bottom: 3px solid #c20a0a;
+	position: absolute;
+	top: 40%;
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
 	border-radius: 50%;
 	width: 70px;
 	height: 70px;
 	animation: spin 0.8s infinite linear;
-	margin: 4em auto;
 
 	@keyframes spin {
 		0% {

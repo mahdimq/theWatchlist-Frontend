@@ -1,22 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { createGlobalStyle } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { decode } from 'jsonwebtoken';
 import { getUserData } from './actions/actions';
 
+// Import Components
 import Alerts from './components/Alerts';
 import Routes from './components/Routes';
 import Header from './components/Header';
 import Spinner from './components/Spinner';
 
 // Styled components
-const GlobalStyle = createGlobalStyle`
-	body {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-	}
-`;
+import { GlobalStyle } from './styles/StyledComponents';
 
 function App() {
 	const [infoLoaded, setInfoLoaded] = useState(false);

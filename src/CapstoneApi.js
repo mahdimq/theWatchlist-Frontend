@@ -3,27 +3,27 @@ import axios from 'axios';
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
 
 class CapstoneApi {
+	// static async request(endpoint, params = {}, verb = 'get') {
+	// 	const _token = localStorage.getItem('user-token');
+	// 	console.debug('API Call: ', endpoint, params, verb);
+	// 	let q;
+	// 	if (verb === 'get') {
+	// 		q = axios.get(`${BASE_URL}/${endpoint}`, { params: { _token, ...params } });
+	// 	} else if (verb === 'post') {
+	// 		q = axios.post(`${BASE_URL}/${endpoint}`, { _token, ...params });
+	// 	} else if (verb === 'patch') {
+	// 		q = axios.patch(`${BASE_URL}/${endpoint}`, { _token, ...params });
+	// 	}
+
+	// 	try {
+	// 		return (await q).data;
+	// 	} catch (err) {
+	// 		console.error('API Error:', err.response);
+	// 		let message = err.response.data.message;
+	// 		throw Array.isArray(message) ? message : [message];
+	// 	}
+
 	static async request(endpoint, paramsOrData = {}, verb = 'get') {
-		// static async request(endpoint, params = {}, verb = 'get') {
-		// 	const _token = localStorage.getItem('user-token');
-		// 	console.debug('API Call: ', endpoint, params, verb);
-		// 	let q;
-		// 	if (verb === 'get') {
-		// 		q = axios.get(`${BASE_URL}/${endpoint}`, { params: { _token, ...params } });
-		// 	} else if (verb === 'post') {
-		// 		q = axios.post(`${BASE_URL}/${endpoint}`, { _token, ...params });
-		// 	} else if (verb === 'patch') {
-		// 		q = axios.patch(`${BASE_URL}/${endpoint}`, { _token, ...params });
-		// 	}
-
-		// 	try {
-		// 		return (await q).data;
-		// 	} catch (err) {
-		// 		console.error('API Error:', err.response);
-		// 		let message = err.response.data.message;
-		// 		throw Array.isArray(message) ? message : [message];
-		// 	}
-
 		if (!paramsOrData._token) {
 			paramsOrData._token = localStorage.getItem('user-token');
 		}
@@ -127,15 +127,24 @@ class CapstoneApi {
 	// ##################### API ENDPOINTS ####################
 	// ########################################################
 
+	// GET TRENDING MOVIES
 	static async getTrending() {
 		const result = await this.request(`api/trending`);
 		return result;
 	}
 
-	static async getPopular(page) {
-		const result = await this.request(`api/popular`, page, 'get');
+	// GET POPULAR MOVIES
+	static async getPopular() {
+		const result = await this.request(`api/trending`);
 		return result;
 	}
+
+	// static async getPopular(page) {
+	// 	const result = await axios.get(`${BASE_URL2}/${popular}`, {
+	// 		params: { api_key: API, page, include_adult: false }
+	// 	});
+	// 	return result.data;
+	// }
 
 	// GET MOVIE BY ID
 	static async getById(movie_id) {
@@ -146,12 +155,6 @@ class CapstoneApi {
 	// GET MOVIE CREDITS BY ID
 	static async getMovieCredits(movie_id) {
 		const result = await this.request(`api/credits/${movie_id}`);
-		return result;
-	}
-
-	// SEARCH FOR A MOVIE
-	static async search(movie) {
-		const result = await this.request(`api/search/${movie}`);
 		return result;
 	}
 }
