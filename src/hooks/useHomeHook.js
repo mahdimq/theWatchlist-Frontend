@@ -31,19 +31,19 @@ export const useHomeHook = (searchQuery) => {
 
 	// Fetch popular movies initially on mount
 	useEffect(() => {
-		// if (sessionStorage.homeState) {
-		// 	setState(JSON.parse(sessionStorage.homeState));
-		// 	setLoading(false);
-		// } else {
-		fetchMovies(POPULAR_ENDPOINT);
-		// }
+		if (sessionStorage.homepageState) {
+			setState(JSON.parse(sessionStorage.homepageState));
+			setLoading(false);
+		} else {
+			fetchMovies(POPULAR_ENDPOINT);
+		}
 	}, []);
 
-	// useEffect(() => {
-	// 	if (!searchQuery) {
-	// 		sessionStorage.setItem('homeState', JSON.stringify(state));
-	// 	}
-	// }, [searchQuery, state]);
+	useEffect(() => {
+		if (!searchQuery) {
+			sessionStorage.setItem('homepageState', JSON.stringify(state));
+		}
+	}, [searchQuery, state]);
 
 	return [{ state, loading, error }, fetchMovies];
 };

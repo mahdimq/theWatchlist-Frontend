@@ -20,7 +20,6 @@ const watchlistReducer = (state = INITIAL_STATE, action) => {
 		// 	return { ...state.filter((movie) => movie.id !== action.payload.id) };
 
 		case LOAD_WATCHLIST:
-			console.log('WATCHLIST REDUCER LOAD ###', action.payload);
 			return { ...state, watchlist: action.payload };
 
 		case LOGOUT_USER:

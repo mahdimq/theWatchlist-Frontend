@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
 
-class CapstoneApi {
+class WatchlistAPI {
 	// static async request(endpoint, params = {}, verb = 'get') {
 	// 	const _token = localStorage.getItem('user-token');
 	// 	console.debug('API Call: ', endpoint, params, verb);
@@ -27,7 +27,7 @@ class CapstoneApi {
 		if (!paramsOrData._token) {
 			paramsOrData._token = localStorage.getItem('user-token');
 		}
-		console.debug('API Call:', endpoint, paramsOrData, verb);
+		// console.debug('API Call:', endpoint, paramsOrData, verb);
 		try {
 			return (
 				await axios({
@@ -139,13 +139,6 @@ class CapstoneApi {
 		return result;
 	}
 
-	// static async getPopular(page) {
-	// 	const result = await axios.get(`${BASE_URL2}/${popular}`, {
-	// 		params: { api_key: API, page, include_adult: false }
-	// 	});
-	// 	return result.data;
-	// }
-
 	// GET MOVIE BY ID
 	static async getById(movie_id) {
 		const result = await this.request(`api/${movie_id}`);
@@ -159,4 +152,4 @@ class CapstoneApi {
 	}
 }
 
-export default CapstoneApi;
+export default WatchlistAPI;

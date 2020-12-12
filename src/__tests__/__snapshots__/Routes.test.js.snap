@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <h1
+    style="color: rgb(194, 10, 10); margin: 1.2em auto; text-align: center;"
+  >
+    NO RESULTS FOUND 
+    <p>
+      (Please refresh the page)
+    </p>
+    <div
+      class="sc-iBPRYJ dgnvzH"
+    />
+  </h1>
+</DocumentFragment>
+`;

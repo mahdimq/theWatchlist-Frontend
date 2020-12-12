@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useMovieHook } from './hooks/useMovieHook';
 
-// Components
+// Component Imports
 import Navigation from './components/Navigation';
 import MovieInfoBar from './components/MovieInfoBar';
 import MovieInfo from './components/MovieInfo';
@@ -16,8 +16,6 @@ function Movie() {
 
 	if (error) return <div>Oops.. Please try again, error!</div>;
 	if (loading) return <Spinner />;
-
-	// console.log('### MOVIE in MOVIE INFO: ', movie);
 
 	return (
 		<div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyledLoadMoreBtn } from '../styles/StyledComponents';
+import { StyledLoadMoreBtn } from '../styles/StyledLoadMoreBtn';
 
 function LoadMore({ text, callback }) {
 	return (

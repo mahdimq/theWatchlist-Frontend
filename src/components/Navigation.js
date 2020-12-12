@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { StyledNavigation } from '../styles/StyledComponents';
+
+// Style Imports
+import { StyledNavigation } from '../styles/StyledNavigation';
 
 function Navigation({ movie }) {
 	return (

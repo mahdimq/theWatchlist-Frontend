@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bdfBwQ eWgdkP"
+  >
+    <h3>
+      First Name: 
+      <span />
+    </h3>
+    <h3>
+      Last Name: 
+      <span />
+    </h3>
+    <h3>
+      Email: 
+      <span />
+    </h3>
+    <button
+      class="MuiButtonBase-root MuiButton-root MuiButton-contained profile-btn MuiButton-containedSecondary MuiButton-containedSizeLarge MuiButton-sizeLarge"
+      tabindex="0"
+      type="button"
+    >
+      <span
+        class="MuiButton-label"
+      >
+        Edit Profile
+      </span>
+      <span
+        class="MuiTouchRipple-root"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

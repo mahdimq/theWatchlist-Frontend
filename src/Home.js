@@ -51,14 +51,13 @@ const Home = () => {
 		fetchMovies(endpoint);
 	};
 
-	if (movies.length === 0)
+	if (!movies[0])
 		return (
 			<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
 				NO RESULTS FOUND <p>(Please refresh the page)</p>
 				<Spinner />
 			</h1>
 		);
-	if (!movies[0]) return <Spinner />;
 	if (error) return <h3>Uh Oh! Something went wrong!</h3>;
 
 	return (

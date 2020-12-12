@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import MovieTile from '../components/MovieTile';
-import NoPoster from '../images/no_poster.jpg';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addMovie, addToWatchlist, removeWatchlist } from '../actions/actions';
 import { IMAGE_URL, poster_size } from '../helpers/config';
-import CapstoneApi from '../CapstoneApi';
+import WatchlistAPI from '../WatchlistAPI';
+
+// Component Imports
+import MovieTile from '../components/MovieTile';
+import NoPoster from '../images/no_poster.jpg';
 
 // Trailer Imports
 import YouTube from 'react-youtube';
 import movieTrailer from 'movie-trailer';
 
 // Style Imports
-import { StyledMovieInfo } from '../styles/StyledComponents';
+import { StyledMovieInfo } from '../styles/StyledMovieInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,7 +31,7 @@ const opts = {
 };
 
 const useStyles = makeStyles(() => ({
-	root: { width: '90%', margin: '100px auto' }
+	root: { width: '80%', margin: '150px auto' }
 }));
 
 function MovieInfo({ movie }) {
@@ -55,9 +57,9 @@ function MovieInfo({ movie }) {
 
 	// Check for movie in the DB first before pulling from API
 	const checkDbFirst = async (id) => {
-		let result = await CapstoneApi.getMovie(id);
+		let result = await WatchlistAPI.getMovie(id);
 		if (!result) {
-			result = await CapstoneApi.getById(id);
+			result = await WatchlistAPI.getById(id);
 		}
 		return result;
 	};
@@ -124,7 +126,7 @@ function MovieInfo({ movie }) {
 						</div>
 
 						<div className='director'>
-							<h3>DIRECTOR{movie.directors.length > 1 ? "'s" : ''}</h3>
+							<h3>DIRECTOR{movie.directors.length > 1 ? 'S' : ''}</h3>
 							{movie.directors.map((person) => (
 								<p className='director-name' key={person.credit_id}>
 									{person.name}
@@ -139,7 +141,7 @@ function MovieInfo({ movie }) {
 								<button style={{ background: 'none', border: 'none' }}>
 									<FontAwesomeIcon
 										className='icon'
-										style={{ color: 'skyBlue' }}
+										style={{ color: 'blue' }}
 										icon={faPlus}
 										onClick={handleAddMovie}
 									/>
@@ -147,7 +149,7 @@ function MovieInfo({ movie }) {
 								<button style={{ background: 'none', border: 'none' }}>
 									<FontAwesomeIcon
 										className='icon'
-										style={{ color: 'tomato' }}
+										style={{ color: 'red' }}
 										icon={faMinus}
 										onClick={handleRemoveMovie}
 									/>

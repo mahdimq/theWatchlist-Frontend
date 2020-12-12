@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { debounce } from 'lodash';
 
+// Style Imports
+import { StyledSearchBar, StyledSearchBarContent } from '../styles/StyledSearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import { StyledSearchBar, StyledSearchBarContent } from '../styles/StyledComponents';
 
 function Search({ callback }) {
 	const [search, setSearch] = useState('');
@@ -21,7 +22,6 @@ function Search({ callback }) {
 			callback(value);
 		}, 400);
 		debouncedSave(value);
-		console.log('## DEBOUNBCED ##', debouncedSave);
 	};
 
 	return (

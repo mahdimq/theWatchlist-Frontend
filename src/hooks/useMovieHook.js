@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import CapstoneApi from '../CapstoneApi';
+import WatchlistAPI from '../WatchlistAPI';
 
 export const useMovieHook = (movieId) => {
 	const [movie, setMovie] = useState({});
@@ -13,11 +13,11 @@ export const useMovieHook = (movieId) => {
 
 		try {
 			// Pull from API
-			const result = await CapstoneApi.getById(movieId);
+			const result = await WatchlistAPI.getById(movieId);
 
 			// Pull from Database
 			// const result = await checkDbFirst(movieId);
-			const credits = await CapstoneApi.getMovieCredits(movieId);
+			const credits = await WatchlistAPI.getMovieCredits(movieId);
 			const directors = credits.crew.filter((person) => person.job === 'Director');
 
 			setMovie({

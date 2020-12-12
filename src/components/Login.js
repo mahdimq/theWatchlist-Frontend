@@ -23,7 +23,7 @@ const Login = () => {
 	useEffect(() => {
 		async function checkLogin() {
 			if (user.token) {
-				history.push('/');
+				history.goBack();
 			}
 		}
 		checkLogin();

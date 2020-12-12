@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyledActor } from '../styles/StyledComponents';
-import NoImage from '../images/no_poster.jpg';
 import { IMAGE_URL, poster_size } from '../helpers/config';
+
+// Style Imports
+import { StyledActor } from '../styles/StyledActor';
+
+// No Image Import
+import NoImage from '../images/no_poster.jpg';
 
 function Actor({ actor }) {
 	return (

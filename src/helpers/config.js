@@ -3,7 +3,7 @@
 // Read more about the API here: https://developers.themoviedb.org/
 
 export const BASE_URL = 'https://api.themoviedb.org/3/';
-export const API_KEY = '844dba0bfd8f3a4f3799f6130ef9e335';
+export const API_KEY = 'a19fde14eb2f33b545cd78125e338397';
 
 export const SEARCH_ENDPOINT = `${BASE_URL}search/movie?api_key=${API_KEY}&include_adult=false&query=`;
 export const POPULAR_ENDPOINT = `${BASE_URL}movie/popular?api_key=${API_KEY}&include_adult=false`;

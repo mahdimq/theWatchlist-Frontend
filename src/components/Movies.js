@@ -3,9 +3,10 @@
 // ============================================ //
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { getAllFilms } from '../actions/actions';
+import { IMAGE_URL, poster_size } from '../helpers/config';
 
+// Component Imports
 import Grid from './Grid';
 import MovieTile from './MovieTile';
 import Spinner from './Spinner';
@@ -14,9 +15,6 @@ function Movies() {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const dispatch = useDispatch();
 	const { movie } = useSelector((state) => state.movies);
-
-	const IMAGE_URL = 'http://image.tmdb.org/t/p';
-	const poster_size = 'w500';
 
 	useEffect(() => {
 		async function getFilms() {

@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { StyledMovieInfoBar } from '../styles/StyledComponents';
 import { calculateTime, formatDate } from '../helpers/helpers';
+
+// Style Imports
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClock, faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
+import { StyledMovieInfoBar } from '../styles/StyledMovieInfoBar';
 
 function MovieInfoBar({ time, released, budget }) {
 	return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { logoutUser, addAlert, updateUser, removeUser, getUserInfo } from '../actions/actions';
+import { addAlert, updateUser, removeUser, getUserInfo } from '../actions/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
@@ -58,14 +58,6 @@ const Profile = () => {
 			console.error(error);
 		}
 	};
-
-	// Logout the user, remove token from localstorage
-	// then redirect user to homepage
-	async function logout() {
-		await dispatch(logoutUser());
-		localStorage.removeItem('user-token');
-		history.push('/login');
-	}
 
 	// Delete the user and remove token from localstorage
 	// then redirect user to homepage
@@ -141,25 +133,14 @@ const Profile = () => {
 									</Button>
 								</div>
 
-								<div className='btn-col'>
-									<Button
-										onClick={logout}
-										className='profile-btns'
-										variant='contained'
-										size='large'
-										color='default'>
-										Logout
-									</Button>
-
-									<Button
-										onClick={deleteUser}
-										className='profile-btns'
-										variant='contained'
-										size='large'
-										color='default'>
-										Delete
-									</Button>
-								</div>
+								<Button
+									onClick={deleteUser}
+									className='profile-btns'
+									variant='contained'
+									size='large'
+									color='default'>
+									Delete
+								</Button>
 							</div>
 						</Form>
 					</Formik>

@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-dlfnbm gkePLV"
+  >
+    <nav
+      class="sc-hKgILt gBZkPf"
+    >
+      <nav
+        class="container logo-container row "
+      >
+        <button
+          aria-label="open navigation"
+          class="nav-toggle"
+        >
+          <span
+            class="hamburger"
+          />
+        </button>
+        <div
+          class="logo"
+        >
+          <a
+            href="/"
+          >
+            <img
+              alt="watchlist-logo"
+              class="sc-gsTCUz eJyyJN"
+              src="theWatchlist.png"
+            />
+          </a>
+        </div>
+        <div
+          class="nav"
+        >
+          <ul
+            class="nav__list "
+          >
+            <a
+              href="/login"
+            >
+              <li
+                class="nav__item"
+              >
+                Log In
+              </li>
+            </a>
+            <a
+              href="/signup"
+            >
+              <li
+                class="nav__item"
+              >
+                Sign Up
+              </li>
+            </a>
+          </ul>
+        </div>
+        <div
+          class="tmdb-logo"
+        >
+          <img
+            alt="tmdb-logo"
+            class="sc-bdfBwQ llmVuF"
+            src="tmdb_logo.svg"
+          />
+        </div>
+      </nav>
+    </nav>
+  </div>
+</DocumentFragment>
+`;

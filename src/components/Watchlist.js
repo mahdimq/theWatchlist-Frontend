@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { decode } from 'jsonwebtoken';
 import { loadWatchlist, addAlert } from '../actions/actions';
+import { useHistory } from 'react-router-dom';
+import { IMAGE_URL, poster_size } from '../helpers/config';
 
 // Import Components
 import Grid from './Grid';
 import MovieTile from './MovieTile';
 import NoPoster from '../images/no_poster.jpg';
 import Spinner from './Spinner';
-import { useHistory } from 'react-router-dom';
-import { IMAGE_URL, poster_size } from '../helpers/config';
 
 function Watchlist() {
 	const history = useHistory();
@@ -65,7 +65,7 @@ function Watchlist() {
 								movieId={film.id}
 								movieTitle={film.original_title}
 							/>
-							<p style={{ textAlign: 'center', margin: '0 auto' }}>{film.original_title}</p>
+							<p className='movietile-title'>{film.original_title}</p>
 						</div>
 					))}
 				</Grid>

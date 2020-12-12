@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledSpinner } from '../styles/StyledComponents';
+import { StyledSpinner } from '../styles/StyledSpinner';
 
 function Spinner() {
 	return <StyledSpinner />;

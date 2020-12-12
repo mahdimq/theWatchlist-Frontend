@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { StyledMovieTile } from '../styles/StyledComponents';
+
+// Style Imports
+import { StyledMovieTile } from '../styles/StyledMovieTile';
 
 function MovieTile({ image, movieId, clickable }) {
 	return (

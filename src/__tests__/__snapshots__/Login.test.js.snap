@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-bdfBwQ eWgdkP"
+  >
+    <form
+      action="#"
+    >
+      <input
+        class="input-box"
+        name="username"
+        placeholder="Username"
+        type="text"
+        value=""
+      />
+      <input
+        class="input-box"
+        name="password"
+        placeholder="Password"
+        type="password"
+        value=""
+      />
+      <div
+        class="button-group"
+      >
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained profile-btn MuiButton-containedSecondary MuiButton-containedSizeLarge MuiButton-sizeLarge"
+          tabindex="0"
+          type="submit"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Login
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+        <button
+          class="MuiButtonBase-root MuiButton-root MuiButton-contained profile-btn MuiButton-containedPrimary MuiButton-containedSizeLarge MuiButton-sizeLarge"
+          style="margin-left: 0.8em;"
+          tabindex="0"
+          type="button"
+        >
+          <span
+            class="MuiButton-label"
+          >
+            Signup
+          </span>
+          <span
+            class="MuiTouchRipple-root"
+          />
+        </button>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;

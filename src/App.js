@@ -10,7 +10,7 @@ import Header from './components/Header';
 import Spinner from './components/Spinner';
 
 // Styled components
-import { GlobalStyle } from './styles/StyledComponents';
+import { GlobalStyle } from './styles/GlobalStyles';
 
 function App() {
 	const [infoLoaded, setInfoLoaded] = useState(false);
