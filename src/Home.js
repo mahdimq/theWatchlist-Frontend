@@ -94,7 +94,7 @@ const Home = () => {
 				<LoadMore text='Load More' callback={loadMoreMovies} />
 			) : (
 				<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
-					END OF RESULTS
+					NO MORE RESULTS
 				</h1>
 			)}
 		</>
