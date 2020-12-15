@@ -60,7 +60,6 @@ class WatchlistAPI {
 	static async register(data) {
 		// Data --> USER INFORMATION (firstname, lastname, email)
 		const res = await this.request(`users`, data, 'post');
-		console.log('###### RES IN REGISTER #######', res);
 		return res;
 	}
 
@@ -101,7 +100,6 @@ class WatchlistAPI {
 
 	static async deleteMovie(movie_id, token) {
 		let res = await this.request(`movies/${movie_id}`, { _token: token }, 'delete');
-		console.log('MOVIE DELETE CAPSTONE', res);
 		return res;
 	}
 
