@@ -78,7 +78,9 @@ const Home = () => {
 						<MovieTile
 							clickable={true}
 							image={
-								film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
+								film.poster_path
+									? `${IMAGE_URL}/${poster_size}/${film.poster_path}`
+									: NoPoster
 							}
 							movieId={film.id}
 							movieTitle={film.original_title}
@@ -90,9 +92,11 @@ const Home = () => {
 
 			{loading && <Spinner />}
 
-			{currentPage < totalPages && !loading ? (
+			{currentPage < totalPages && !loading && (
 				<LoadMore text='Load More' callback={loadMoreMovies} />
-			) : (
+			)}
+
+			{currentPage === totalPages && !loading && (
 				<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
 					NO MORE RESULTS
 				</h1>
