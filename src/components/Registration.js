@@ -56,14 +56,34 @@ const Registration = () => {
 				validationSchema={validationSchema}
 				onSubmit={handleSubmit}>
 				<Form>
-					<Field className='input-box' placeholder='Username' name='username' type='text' />
+					<Field
+						className='input-box'
+						placeholder='Username'
+						name='username'
+						type='text'
+					/>
 					<ErrorMessage name='username' />
 
-					<Field className='input-box' placeholder='Password' name='password' type='password' />
+					<Field
+						className='input-box'
+						placeholder='Password'
+						name='password'
+						type='password'
+					/>
 					<ErrorMessage name='password' />
 
-					<Field className='input-box' placeholder='First Name' name='firstname' type='text' />
-					<Field className='input-box' placeholder='Last Name' name='lastname' type='text' />
+					<Field
+						className='input-box'
+						placeholder='First Name'
+						name='firstname'
+						type='text'
+					/>
+					<Field
+						className='input-box'
+						placeholder='Last Name'
+						name='lastname'
+						type='text'
+					/>
 
 					<Field className='input-box' placeholder='Email' name='email' type='email' />
 					<ErrorMessage name='email' />

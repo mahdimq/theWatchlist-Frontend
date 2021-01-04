@@ -6,7 +6,12 @@ import { logoutUser } from '../actions/actions';
 // Import logos
 import TMDBLogo from '../images/tmdb_logo.svg';
 import theWatchlist from '../images/theWatchlist.png';
-import { StyledNavbar, StyledTMDBLogo, StyledLogo, StyledHeader } from '../styles/StyledHeader';
+import {
+	StyledNavbar,
+	StyledTMDBLogo,
+	StyledLogo,
+	StyledHeader
+} from '../styles/StyledHeader';
 
 function Header() {
 	const navLinks = useRef(null);
@@ -22,24 +27,31 @@ function Header() {
 		localStorage.removeItem('user-token');
 	};
 
+	const reload = () => window.location.reload();
+
 	return (
 		<StyledHeader>
 			<StyledNavbar>
 				<nav className='container logo-container row '>
-					<button onClick={toggleNavbar} className='nav-toggle' aria-label='open navigation'>
+					<button
+						onClick={toggleNavbar}
+						className='nav-toggle'
+						aria-label='open navigation'>
 						<span className='hamburger'></span>
 					</button>
 
 					<div className='logo'>
-						<Link to='/'>
+						<span style={{ cursor: 'pointer' }} onClick={reload}>
 							<StyledLogo src={theWatchlist} alt='watchlist-logo' />
-						</Link>
+						</span>
 					</div>
 
 					<div ref={navLinks} className='nav'>
 						{user.token ? (
 							<ul className='nav__list '>
-								{user.token ? <li className='nav__item'>Welcome {user.username}</li> : null}
+								{user.token ? (
+									<li className='nav__item'>Welcome {user.username}</li>
+								) : null}
 
 								<Link to='/watchlist'>
 									<li className='nav__item'>Watchlist</li>

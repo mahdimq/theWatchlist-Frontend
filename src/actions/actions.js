@@ -57,8 +57,12 @@ export const getUserData = (token, username, id) => {
 // GET USER BIO
 export const getUserInfo = (id) => {
 	return async function (dispatch) {
-		const user = await WatchlistAPI.getUser(id);
-		return dispatch(getUserBio(user));
+		try {
+			const user = await WatchlistAPI.getUser(id);
+			return dispatch(getUserBio(user));
+		} catch (err) {
+			err.forEach((error) => dispatch(addAlert(error, 'error')));
+		}
 	};
 };
 
@@ -76,7 +80,8 @@ export const updateUser = (id, data) => {
 			await dispatch(addAlert(`User Information updated!`, 'info'));
 		} catch (err) {
 			err.forEach((error) => {
-				dispatch(addAlert('Invalid Password', 'error'));
+				dispatch(addAlert(error, 'error'));
+				// dispatch(addAlert('Invalid Password', 'error'));
 			});
 		}
 	};
@@ -94,7 +99,9 @@ export const registerUser = (data) => {
 		const user = await WatchlistAPI.register(data);
 		localStorage.setItem('user-token', user.token);
 		await dispatch(userRegistered(user));
-		await dispatch(addAlert(`Registration Successful! Welcome ${data.username}!`, 'success'));
+		await dispatch(
+			addAlert(`Registration Successful! Welcome ${data.username}!`, 'success')
+		);
 	};
 };
 
@@ -206,6 +213,7 @@ export const addToWatchlist = (user_id, data) => {
 		} catch (err) {
 			err.forEach((err) => {
 				console.error(err);
+				dispatch(err, 'error');
 			});
 		}
 	};

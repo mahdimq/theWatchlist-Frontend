@@ -42,7 +42,7 @@ class WatchlistAPI {
 			// so the key we need depends on the HTTP verb
 		} catch (err) {
 			console.error('API Error:', err.response);
-			let message = err.response.data.message;
+			let message = err.response.data.error.message;
 			throw Array.isArray(message) ? message : [message];
 		}
 	}
