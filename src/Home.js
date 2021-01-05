@@ -51,7 +51,7 @@ const Home = () => {
 		fetchMovies(endpoint);
 	};
 
-	if (loading) return <Spinner />;
+	// if (loading) return <Spinner />;
 
 	if (!movies[0])
 		return (
