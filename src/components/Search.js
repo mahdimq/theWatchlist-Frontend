@@ -28,7 +28,12 @@ function Search({ callback }) {
 		<StyledSearchBar>
 			<StyledSearchBarContent>
 				<FontAwesomeIcon className='search' icon={faSearch} />
-				<input type='text' placeholder='Search Movie...' onChange={handleSearch} value={search} />
+				<input
+					type='text'
+					placeholder='Search Movie...'
+					onChange={handleSearch}
+					value={search}
+				/>
 			</StyledSearchBarContent>
 		</StyledSearchBar>
 	);

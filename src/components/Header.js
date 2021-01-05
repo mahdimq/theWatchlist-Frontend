@@ -27,8 +27,6 @@ function Header() {
 		localStorage.removeItem('user-token');
 	};
 
-	const reload = () => window.location.reload();
-
 	return (
 		<StyledHeader>
 			<StyledNavbar>
@@ -41,9 +39,9 @@ function Header() {
 					</button>
 
 					<div className='logo'>
-						<span style={{ cursor: 'pointer' }} onClick={reload}>
+						<Link to='/'>
 							<StyledLogo src={theWatchlist} alt='watchlist-logo' />
-						</span>
+						</Link>
 					</div>
 
 					<div ref={navLinks} className='nav'>

@@ -51,12 +51,17 @@ const Home = () => {
 		fetchMovies(endpoint);
 	};
 
+	if (loading) return <Spinner />;
+
 	if (!movies[0])
 		return (
-			<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
-				NO RESULTS FOUND <p>(Please refresh the page)</p>
-				<Spinner />
-			</h1>
+			<>
+				<Search />
+				<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
+					NO RESULTS FOUND <p>(Please refresh the page)</p>
+					{/* <Spinner /> */}
+				</h1>
+			</>
 		);
 	if (error) return <h3>Uh Oh! Something went wrong!</h3>;
 
@@ -71,6 +76,8 @@ const Home = () => {
 			)}
 
 			<Search callback={searchMovies} />
+
+			{loading && <Spinner />}
 
 			<Grid header={searchQuery ? 'Search Results' : 'Popular Movies'}>
 				{movies.map((film) => (
@@ -89,8 +96,6 @@ const Home = () => {
 					</div>
 				))}
 			</Grid>
-
-			{loading && <Spinner />}
 
 			{currentPage < totalPages && !loading && (
 				<LoadMore text='Load More' callback={loadMoreMovies} />
