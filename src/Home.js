@@ -77,8 +77,6 @@ const Home = () => {
 
 			<Search callback={searchMovies} />
 
-			{loading && <Spinner />}
-
 			<Grid header={searchQuery ? 'Search Results' : 'Popular Movies'}>
 				{movies.map((film) => (
 					<div key={film.id}>
@@ -96,6 +94,8 @@ const Home = () => {
 					</div>
 				))}
 			</Grid>
+
+			{loading && <Spinner />}
 
 			{currentPage < totalPages && !loading && (
 				<LoadMore text='Load More' callback={loadMoreMovies} />
