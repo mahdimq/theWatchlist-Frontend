@@ -60,7 +60,9 @@ function Watchlist() {
 								key={film.id}
 								clickable={true}
 								image={
-									film.poster_path ? `${IMAGE_URL}/${poster_size}/${film.poster_path}` : NoPoster
+									film.poster_path
+										? `${IMAGE_URL}/${poster_size}/${film.poster_path}`
+										: NoPoster
 								}
 								movieId={film.id}
 								movieTitle={film.original_title}

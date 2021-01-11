@@ -28,7 +28,7 @@ class WatchlistAPI {
 		if (!paramsOrData._token) {
 			paramsOrData._token = localStorage.getItem('user-token');
 		}
-		// console.debug('API Call:', endpoint, paramsOrData, verb);
+		console.debug('API Call:', endpoint, paramsOrData, verb);
 		try {
 			return (
 				await axios({
