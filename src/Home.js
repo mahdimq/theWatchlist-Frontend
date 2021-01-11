@@ -51,15 +51,14 @@ const Home = () => {
 		fetchMovies(endpoint);
 	};
 
-	// if (loading) return <Spinner />;
+	if (!movies[0] && loading) return <Spinner />;
 
 	if (!movies[0])
 		return (
 			<>
-				<Search />
+				<Search callback={searchMovies} />
 				<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
 					NO RESULTS FOUND <p>(Please refresh the page)</p>
-					{/* <Spinner /> */}
 				</h1>
 			</>
 		);
