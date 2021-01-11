@@ -42,9 +42,9 @@ const Registration = () => {
 		try {
 			await dispatch(registerUser(data));
 			history.push('/');
-		} catch (errors) {
-			errors.forEach((e) => {
-				dispatch(addAlert(`Username/email already exists!`, 'error'));
+		} catch (err) {
+			err.forEach((error) => {
+				dispatch(addAlert(error, 'error'));
 			});
 		}
 	};

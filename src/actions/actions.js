@@ -100,12 +100,16 @@ const userUpdated = (user) => {
 // REGISTER A NEW USER
 export const registerUser = (data) => {
 	return async function (dispatch) {
-		const user = await WatchlistAPI.register(data);
-		localStorage.setItem('user-token', user.token);
-		await dispatch(userRegistered(user));
-		await dispatch(
-			addAlert(`Registration Successful! Welcome ${data.username}!`, 'success')
-		);
+		try {
+			const user = await WatchlistAPI.register(data);
+			localStorage.setItem('user-token', user.token);
+			await dispatch(userRegistered(user));
+			await dispatch(
+				addAlert(`Registration Successful! Welcome ${data.username}!`, 'success')
+			);
+		} catch (err) {
+			err.forEach((error) => dispatch(addAlert(error, 'error')));
+		}
 	};
 };
 
