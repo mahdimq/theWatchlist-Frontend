@@ -35,10 +35,14 @@ export const removeAlerts = () => {
 // LOGIN USER
 export const loginUser = (data) => {
 	return async function (dispatch) {
-		const user = await WatchlistAPI.login(data);
-		localStorage.setItem('user-token', user.token);
-		await dispatch(userLoggedIn(user));
-		await dispatch(addAlert(`Welcome back ${user.username}`, 'success'));
+		try {
+			const user = await WatchlistAPI.login(data);
+			localStorage.setItem('user-token', user.token);
+			await dispatch(userLoggedIn(user));
+			await dispatch(addAlert(`Welcome back ${user.username}`, 'success'));
+		} catch (err) {
+			err.forEach((error) => dispatch(addAlert(error, 'error')));
+		}
 	};
 };
 
@@ -211,9 +215,8 @@ export const addToWatchlist = (user_id, data) => {
 			await dispatch(addedWatchlist(res));
 			await dispatch(addAlert('Movie added to watchlist', 'info'));
 		} catch (err) {
-			err.forEach((err) => {
-				console.error(err);
-				dispatch(err, 'error');
+			err.forEach((error) => {
+				dispatch(addAlert(error, 'error'));
 			});
 		}
 	};

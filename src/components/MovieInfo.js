@@ -97,7 +97,9 @@ function MovieInfo({ movie }) {
 				<div className='movieinfo-tile'>
 					<MovieTile
 						image={
-							movie.poster_path ? `${IMAGE_URL}/${poster_size}/${movie.poster_path}` : NoPoster
+							movie.poster_path
+								? `${IMAGE_URL}/${poster_size}/${movie.poster_path}`
+								: NoPoster
 						}
 						clickable={false}
 					/>
@@ -181,7 +183,9 @@ function MovieInfo({ movie }) {
 						BackdropProps={{
 							timeout: 400
 						}}>
-						<Fade in={open}>{trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}</Fade>
+						<Fade in={open}>
+							{trailerUrl && <YouTube videoId={trailerUrl} opts={opts} />}
+						</Fade>
 					</Modal>
 				</div>
 			</div>

@@ -35,7 +35,8 @@ const Login = () => {
 			history.push('/');
 		} catch (err) {
 			err.forEach((error) => {
-				dispatch(addAlert(`Invalid Credentials`, 'error'));
+				dispatch(addAlert(error, 'error'));
+				// dispatch(addAlert(`Invalid Credentials`, 'error'));
 				console.error(err);
 			});
 		}
@@ -45,8 +46,18 @@ const Login = () => {
 		<StyledFormComp>
 			<Formik initialValues={initialValues} onSubmit={handleSubmit}>
 				<Form>
-					<Field className='input-box' placeholder='Username' name='username' type='text' />
-					<Field className='input-box' placeholder='Password' name='password' type='password' />
+					<Field
+						className='input-box'
+						placeholder='Username'
+						name='username'
+						type='text'
+					/>
+					<Field
+						className='input-box'
+						placeholder='Password'
+						name='password'
+						type='password'
+					/>
 					<div className='button-group'>
 						<Button
 							variant='contained'

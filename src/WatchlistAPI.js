@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
-const BASE_URL = process.env.BASE_URL || 'https://thewatchlist-backend.herokuapp.com';
+const BASE_URL = process.env.BASE_URL || 'http://localhost:3001';
+// const BASE_URL = process.env.BASE_URL || 'https://thewatchlist-backend.herokuapp.com';
 
 class WatchlistAPI {
 	// static async request(endpoint, params = {}, verb = 'get') {
