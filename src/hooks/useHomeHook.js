@@ -17,7 +17,10 @@ export const useHomeHook = (searchQuery) => {
 			const result = await (await fetch(endpoint)).json();
 			setState((prev) => ({
 				...prev,
-				movies: isLoadBtnPressed !== -1 ? [...prev.movies, ...result.results] : [...result.results],
+				movies:
+					isLoadBtnPressed !== -1
+						? [...prev.movies, ...result.results]
+						: [...result.results],
 				heroImage: prev.heroImage || result.results[0],
 				currentPage: result.page,
 				totalPages: result.total_pages
@@ -31,12 +34,13 @@ export const useHomeHook = (searchQuery) => {
 
 	// Fetch popular movies initially on mount
 	useEffect(() => {
-		if (sessionStorage.homepageState) {
-			setState(JSON.parse(sessionStorage.homepageState));
-			setLoading(false);
-		} else {
-			fetchMovies(POPULAR_ENDPOINT);
-		}
+		// if (sessionStorage.homepageState) {
+		// 	setState(JSON.parse(sessionStorage.homepageState));
+		// 	setLoading(false);
+		// } else {
+		// 	fetchMovies(POPULAR_ENDPOINT);
+		// }
+		fetchMovies(POPULAR_ENDPOINT);
 	}, []);
 
 	useEffect(() => {

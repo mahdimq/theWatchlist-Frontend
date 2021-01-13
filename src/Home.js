@@ -62,7 +62,13 @@ const Home = () => {
 				</h1>
 			</>
 		);
-	if (error) return <h3>Uh Oh! Something went wrong!</h3>;
+
+	if (error)
+		return (
+			<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
+				Uh Oh! Looks like a 404 Error!
+			</h1>
+		);
 
 	return (
 		<>

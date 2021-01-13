@@ -14,14 +14,24 @@ function Movie() {
 	const { movieId } = useParams();
 	const [movie, loading, error] = useMovieHook(movieId);
 
-	if (error) return <div>Oops.. Please try again, error!</div>;
+	if (error)
+		return (
+			<h1 style={{ color: '#c20a0a', margin: '1.2em auto', textAlign: 'center' }}>
+				Uh Oh! Looks like a 404 Error!
+			</h1>
+		);
+
 	if (loading) return <Spinner />;
 
 	return (
 		<div>
 			<Navigation movie={movie.original_title} />
 			<MovieInfo movie={movie} />
-			<MovieInfoBar time={movie.runtime} released={movie.release_date} revenue={movie.revenue} />
+			<MovieInfoBar
+				time={movie.runtime}
+				released={movie.release_date}
+				revenue={movie.revenue}
+			/>
 			<Grid header='Actors'>
 				{movie.actors.map((actor) => (
 					<Actor key={actor.credit_id} actor={actor} />

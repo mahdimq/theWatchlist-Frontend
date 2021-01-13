@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { decode } from 'jsonwebtoken';
-import { loadWatchlist, addAlert } from '../actions/actions';
+import { loadWatchlist } from '../actions/actions';
 import { useHistory } from 'react-router-dom';
 import { IMAGE_URL, poster_size } from '../helpers/config';
 
@@ -36,7 +36,7 @@ function Watchlist() {
 				if (user.id === id) {
 					await dispatch(loadWatchlist(id));
 				} else {
-					dispatch(addAlert('You must be authorized', 'error'));
+					// dispatch(addAlert('You must be authorized', 'error'));
 					history.push('/login');
 				}
 				setIsLoaded(true);
