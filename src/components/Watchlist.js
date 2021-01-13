@@ -25,7 +25,6 @@ function Watchlist() {
 				if (user.token) {
 					history.push('/');
 				} else {
-					dispatch(addAlert('Please Login First', 'error'));
 					history.push('/login');
 				}
 			}
